@@ -1,13 +1,14 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { Provider } from 'react-redux'
 import store from './src/state/store';
-import Login from './src/screens/Login'
 import './src/services/firebase'
+import Main from './Main';
+
 
 export default function App() {
   return (
     <Provider store={store}>
-      <Login/>
+      <Main/>
     </Provider>
   );
 }

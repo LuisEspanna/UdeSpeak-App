@@ -24,14 +24,17 @@ export default function useGoogleLogin () {
   useEffect(() => {
     setProvider(new Auth.GoogleAuthProvider());
     setIsLoading(true)
+    let isMounted = true
     
     setTimeout(()=>{
         console.log('Cargando sesión')
-
         readUserInfo(auth?.currentUser?.uid).then((user)=>{
-            const newUser = {...user}
-            newUser.isLogged = true;
-            dispatch(setUser(newUser));
+            if (isMounted && auth?.currentUser?.uid !== undefined){
+                const newUser = {...user}
+                newUser.isLogged = true;
+                dispatch(setUser(newUser));
+                console.log(newUser)
+            }
         })
         .finally(()=>{
             setIsLoading(false);
