@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 import { Provider } from 'react-redux'
 import store from './src/state/store';
 import Login from './src/screens/Login'
+import './src/services/firebase'
 
 export default function App() {
   return (

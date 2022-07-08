@@ -3,14 +3,13 @@ import { Auth, auth, db } from '../services/firebase';
 import { useDispatch } from 'react-redux';
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail}  from 'firebase/auth';
 import { getUserDataFromResult } from '../services/functions'
-//import constants from '../config/constants.json'
 import { COLLECTIONS } from '../constants'
 //import { useNavigate } from 'react-router-dom'
 
 // Redux actions
 import { setUser } from '../state/reducers/userSlice';
-import useUsers from '../hooks/useUsers';
-//import useDbCounters from './useDbCounters';
+import useUsers from './useUsers';
+import useDbCounters from './useDbCounters';
 
 export default function useGoogleLogin () {
   const [provider, setProvider] = useState(null);
@@ -20,25 +19,24 @@ export default function useGoogleLogin () {
   const {getUser} = useUsers();
 
   //const navigate = useNavigate();
-  //const { incrementUsers } = useDbCounters();
+  const { incrementUsers } = useDbCounters();
 
   useEffect(() => {
     setProvider(new Auth.GoogleAuthProvider());
-    /*
-    const uid = window.sessionStorage.getItem('uid');
-    if ( uid ) {
-      // Load info from db, automatically login
-      setIsLoading(true);
-      readUserInfo(uid).then((user)=>{
-        const newUser = {...user}
-        newUser.isLogged = true;
-        window.sessionStorage.setItem('uid', uid);
-        dispatch(setUser(newUser));
-      }).finally(()=>{
-        setIsLoading(false);
-      })
-    }
-    */
+    setIsLoading(true)
+    
+    setTimeout(()=>{
+        console.log('Cargando sesión')
+
+        readUserInfo(auth?.currentUser?.uid).then((user)=>{
+            const newUser = {...user}
+            newUser.isLogged = true;
+            dispatch(setUser(newUser));
+        })
+        .finally(()=>{
+            setIsLoading(false);
+        })
+    }, 2000);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   
