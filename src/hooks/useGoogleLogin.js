@@ -33,13 +33,13 @@ export default function useGoogleLogin () {
                 const newUser = {...user}
                 newUser.isLogged = true;
                 dispatch(setUser(newUser));
-                console.log(newUser)
             }
         })
         .finally(()=>{
             setIsLoading(false);
         })
     }, 2000);
+    return () => { isMounted = false };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   
@@ -68,6 +68,7 @@ export default function useGoogleLogin () {
         });
         */
       }).finally(()=>{
+        
         setIsLoading(false);
       });
   };
