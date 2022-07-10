@@ -1,30 +1,35 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import Login from './src/screens/Login'
+import LoginScreen from './src/screens/Login'
 import useGoogleLogin from './src/hooks/useGoogleLogin';
-import Onboarding from './src/screens/Onboarding'
+import OnboardingScreen from './src/screens/Onboarding'
 import useLocalStorage from './src/hooks/useLocalStorage';
 import { useState } from 'react';
+import {createStackNavigator} from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
+import HomeScreen from './src/screens/Home';
+
+const reset  = true;
+
+const Stack = createStackNavigator();
 
 export default function Main() {
     const auth = useSelector((state) => state.user?.isLogged)
-    const { logout } = useGoogleLogin()
     const { getData, storeData } = useLocalStorage()
-    const [firstSetup, setFirstSetup] = useState(false)
+    const [firstSetup, setFirstSetup] = useState(reset) //false
 
     useEffect(() => {
         let isMounted = true
-        //storeData('onboarding', null)
-        
+
+        if(reset) storeData('onboarding', null)
+        else 
         getData('onboarding').then((res) => {
-            console.log(!res && isMounted)
             if (!res && isMounted) {
                 setFirstSetup(true)
             }
         })
         
-
         return () => { isMounted = false }
     }, [])
 
@@ -32,20 +37,24 @@ export default function Main() {
     const onFinish = () => {
         setFirstSetup(false)
         storeData('onboarding', 'true')
-
-        console.log('Finish')
     }
 
     return (
-        <View>
-            { 
-                !auth ? ( firstSetup ? <Onboarding onFinish={onFinish}/> : <Login/>) :
-                <View>
-                    <TouchableOpacity onPress={logout}>
-                        <Text>Cerrar sesión</Text>
-                    </TouchableOpacity>
-                </View>
-            }
-        </View>
+        firstSetup && (
+            <NavigationContainer>
+                <Stack.Navigator screenOptions={{ headerShown: false }}>
+                    {firstSetup && (
+                        <Stack.Screen
+                            name="OnboardingScreen"
+                            component={OnboardingScreen}
+                        />
+                    )}
+                    {
+                        !auth && <Stack.Screen name="LoginScreen" component={LoginScreen} />
+                    }
+                    <Stack.Screen name="HomeScreen" component={HomeScreen} />
+                </Stack.Navigator>
+            </NavigationContainer>
+        )            
     )
 }

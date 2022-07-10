@@ -1,13 +1,18 @@
-import { StyleSheet, View } from 'react-native';
-import { useState } from 'react';
+import { FlatList, StyleSheet, View, Dimensions } from 'react-native';
+import { useState, useRef } from 'react';
 
 import slides from './functions/slides';
 import OnboardingItem  from './helpers/OnboardingItem';
 import Paginator from './helpers/paginator';
 import SkipButton from './helpers/SkipButton';
+import HeaderIcon from "./helpers/icons/HeaderIcon";
 
-export default function Onboarding({ onFinish }) {
+const {width, height} = Dimensions.get('window');
+
+export default function OnboardingScreen({ onFinish }) {
   const [index, setIndex] = useState(0);
+
+  const ref = useRef();
 
   const onNext = () => {
     setIndex(index < 2 ? index + 1: 0);
@@ -16,12 +21,24 @@ export default function Onboarding({ onFinish }) {
   };
 
   return (
-    <View  style={styles.container}>
-      <OnboardingItem item={slides[index]}/> 
-      <Paginator currentPage={index} slides={slides}/>      
+    <View style={styles.container}>
+      <HeaderIcon/>
+        
+      <FlatList
+        ref={ref}
+        data={slides}
+        contentContainerStyle={styles.flatList}
+        horizontal
+        showsVerticalScrollIndicator={false}
+        pagingEnabled
+        renderItem={({item}) => 
+          <OnboardingItem item={item}/>
+        //<View>Hola</View>
+        }
+      />
       <View style={styles.nextButton}>
         <SkipButton onPress={onNext} value={(index/slides.length)*100 + (100/slides.length)}/>
-      </View>  
+      </View>
     </View >
   );
 }
@@ -29,11 +46,12 @@ export default function Onboarding({ onFinish }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+  },
+  flatList: {
+    flex: 3
   },
   nextButton: {
-    flex: 0.3,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',    
   }

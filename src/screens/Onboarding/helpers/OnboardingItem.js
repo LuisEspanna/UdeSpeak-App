@@ -1,19 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
-import HeaderIcon from "./icons/HeaderIcon";
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
+
+
+const {width, height} = Dimensions.get('window');
 
 export default function OnboardingItem({item}) {
 
-    const {width} = useWindowDimensions();
-
     return (
-        <View style={[styles.container, {width}]}>
-            <View style={styles.header}>
-                <HeaderIcon/>
-            </View>
-            <View>
-                {item.image}
-            </View>
+        <View style={styles.container}>
+         
+            {item.image({style: styles.image})}
             
             <View>
                 <Text style={styles.title}>{item.title}</Text>
@@ -23,6 +19,20 @@ export default function OnboardingItem({item}) {
     );
 }
 
+const styles = StyleSheet.create({
+    container: {
+        alignItems: 'center',
+        width,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    image:{
+        marginTop: 70,
+        width: '70%'
+    }
+});
+
+/*
 const styles = StyleSheet.create({
   container: {
     flex: 0.8,
@@ -54,3 +64,4 @@ const styles = StyleSheet.create({
       alignSelf: 'flex-start'
   }
 });
+*/

@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import useGoogleLogin from '../../hooks/useGoogleLogin';
 
-export default function index() {
-  const { googleLogin, logout } = useGoogleLogin();
+export default function LoginScreen() {
+  const { googleLogin } = useGoogleLogin();
 
   return (
     <View>
