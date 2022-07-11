@@ -21,15 +21,31 @@ export default function OnboardingItem({item}) {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         alignItems: 'center',
         width,
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent: 'center'
     },
     image:{
-        marginTop: 70,
         width: '70%'
-    }
+    },
+    title:{
+        fontWeight: '700',
+        fontSize: '1.25em',
+        marginBottom: '0.75em',
+        color: '#1F1F1F',
+        textAlign: 'center', 
+        marginHorizontal: '2em',
+        padding: 0,
+        marginTop: '1.063em'
+    },
+    description:{
+        fontWeight: '400',
+        color: '##1F1F1F',
+        textAlign: 'center',
+        fontSize: '0.875em',
+        marginHorizontal: '2.75em',
+    },
 });
 
 /*

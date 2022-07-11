@@ -19,7 +19,8 @@ function Paginator({currentPage, slides}) {
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent: 'center'
     },
   });
 

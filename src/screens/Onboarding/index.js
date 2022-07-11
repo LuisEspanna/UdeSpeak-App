@@ -33,9 +33,11 @@ export default function OnboardingScreen({ onFinish }) {
         pagingEnabled
         renderItem={({item}) => 
           <OnboardingItem item={item}/>
-        //<View>Hola</View>
         }
       />
+
+      <Paginator slides={slides} currentPage={index}/>
+ 
       <View style={styles.nextButton}>
         <SkipButton onPress={onNext} value={(index/slides.length)*100 + (100/slides.length)}/>
       </View>
@@ -48,10 +50,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   flatList: {
-    flex: 3
+    flex: 2,
+    alignItems: 'center'
   },
   nextButton: {
-    flex: 1,
+    flex: 2,
     alignItems: 'center',
     justifyContent: 'center',    
   }
