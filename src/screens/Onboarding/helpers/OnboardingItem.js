@@ -47,37 +47,3 @@ const styles = StyleSheet.create({
         marginHorizontal: '2.75em',
     },
 });
-
-/*
-const styles = StyleSheet.create({
-  container: {
-    flex: 0.8,
-    alignItems: 'center',
-    justifyContent: 'flex-start'
-  },
-  image: {
-      flex: 0.7,
-      justifyContent: 'center'
-  },
-  title:{
-      fontWeight: '700',
-      fontSize: '1.25em',
-      marginBottom: '0.75em',
-      color: '#1F1F1F',
-      textAlign: 'center', 
-      marginHorizontal: '2em',
-      padding: 0,
-      marginTop: '1.063em'
-  },
-  description:{
-    fontWeight: '400',
-    color: '##1F1F1F',
-    textAlign: 'center',
-    fontSize: '0.875em',
-    marginHorizontal: '2.75em',
-  },
-  header: {
-      alignSelf: 'flex-start'
-  }
-});
-*/

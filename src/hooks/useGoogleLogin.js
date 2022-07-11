@@ -118,6 +118,7 @@ export default function useGoogleLogin () {
       })
       .finally(()=>{
         setIsLoading(false);
+        //if(next) next()
       });
   };
 

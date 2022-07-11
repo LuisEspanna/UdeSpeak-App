@@ -12,5 +12,12 @@ const getUserDataFromResult = (userResult) => {
     return user;
   }
   
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
   
-  module.exports = {getUserDataFromResult}
+module.exports = {
+    getUserDataFromResult,
+    sleep
+}

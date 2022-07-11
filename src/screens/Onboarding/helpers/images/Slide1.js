@@ -1,7 +1,6 @@
 import Svg, { G, Path, Defs, ClipPath } from "react-native-svg"
 
 function Slide1(props) {
-  console.log(props)
   return (
     <Svg
     viewBox="0 0 261 230"
