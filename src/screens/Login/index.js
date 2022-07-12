@@ -11,7 +11,9 @@ export default function LoginScreen({navigation}) {
 
   return (
     <View style={styles.container}>
-        <HeaderIcon/>
+        <View style={styles.headerIcon}>
+          <HeaderIcon/>
+        </View>
         <View style={styles.form}>
           <LogoIcon style={styles.logo}/>
           <Button onPress={googleLogin}>
@@ -22,13 +24,15 @@ export default function LoginScreen({navigation}) {
           <Text style={{marginBottom: 20}}>Inicia con tu correo electrónico</Text>
           <TextInput style={styles.textInput} placeholder='Correo' keyboardType='email-address'/>
           <TextInput style={styles.textInput} placeholder='Contraseña' secureTextEntry/>
-          <Text>Olvidaste tu contraseña?</Text>
-          <Button>
-            <Text>Iniciar sesión</Text>
-          </Button>
           <TouchableOpacity>
-            <Text>No tienes una cuenta?</Text>
-            <Text>Registrate</Text>
+            <Text style={styles.textLink}>Olvidaste tu contraseña?</Text>
+          </TouchableOpacity>
+          <Button style={styles.button}>
+            <Text style={styles.buttonText}>Iniciar sesión</Text>
+          </Button>
+          <TouchableOpacity style={styles.footer}>
+            <Text>No tienes una cuenta? </Text>
+            <Text style={styles.textLink}>Registrate</Text>
           </TouchableOpacity>
         </View>
     </View>
@@ -38,7 +42,11 @@ export default function LoginScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F6FBFF'
+    backgroundColor: '#F6FBFF',
+    alignItems: 'center'
+  },
+  headerIcon: {
+    width: '100%'
   },
   googleIcon:{
     width:25,
@@ -48,7 +56,9 @@ const styles = StyleSheet.create({
   form:{
     padding:25,
     flex:1,
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center',
+    maxWidth: 500
   },
   hr:{
     borderTopWidth: 1,
@@ -72,5 +82,32 @@ const styles = StyleSheet.create({
   logo:{
     width:'80%',
     marginBottom: 20
+  },
+  button:{
+    backgroundColor: '#0FB4B9',
+    borderRadius:30,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    height:53,
+    alignItems: 'center',
+    width: '100%',
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 19,
+    fontWeight: 'bold'
+  },
+  textLink: {
+    color: '#0FB4B9',
+    fontWeight: 'bold',
+    display: 'flex'
+  },
+  footer: {
+    flex: 1,
+    flexDirection: 'row',
+    maxHeight: 20
   }
 });

@@ -1,9 +1,9 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
 
-export default function Button({children, onPress}) {
+export default function Button({children, onPress, style}) {
   return (
-      <TouchableOpacity onPress={onPress} style={styles.googleButton}>
+      <TouchableOpacity onPress={onPress} style={style ? style : styles.googleButton}>
         {children}
       </TouchableOpacity>
   )
