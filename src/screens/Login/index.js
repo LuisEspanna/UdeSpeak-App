@@ -1,13 +1,17 @@
-import { StyleSheet, Text, View, TextInput } from 'react-native';
-import { TouchableOpacity } from 'react-native-web';
-import Button from '../../components/form/Button';
-import LogoIcon from '../../components/icons/LogoIcon';
-import useGoogleLogin from '../../hooks/useGoogleLogin';
-import HeaderIcon from '../Onboarding/helpers/icons/HeaderIcon';
-import GoogleIcon from './helpers/GoogleIcon'
+import { StyleSheet, Text, View, TextInput } from 'react-native'
+import { TouchableOpacity } from 'react-native-web'
+import Button from '../../components/form/Button'
+import LogoIcon from '../../components/icons/LogoIcon'
+import useGoogleLogin from '../../hooks/useGoogleLogin'
+import HeaderIcon from '../Onboarding/helpers/icons/HeaderIcon'
+import GoogleIcon from '../../components/icons/GoogleIcon'
 
 export default function LoginScreen({navigation}) {
   const { googleLogin } = useGoogleLogin();
+
+  const onRegister = () => {
+    navigation.replace('RegisterScreen')
+  }
 
   return (
     <View style={styles.container}>
@@ -30,7 +34,7 @@ export default function LoginScreen({navigation}) {
           <Button style={styles.button}>
             <Text style={styles.buttonText}>Iniciar sesión</Text>
           </Button>
-          <TouchableOpacity style={styles.footer}>
+          <TouchableOpacity style={styles.footer} onPress={onRegister}>
             <Text>No tienes una cuenta? </Text>
             <Text style={styles.textLink}>Registrate</Text>
           </TouchableOpacity>
@@ -54,11 +58,12 @@ const styles = StyleSheet.create({
     marginRight: 10
   },
   form:{
-    padding:25,
+    padding:35,
     flex:1,
     alignItems: 'center',
     justifyContent: 'center',
-    maxWidth: 500
+    width: '100%',
+    maxWidth: 500,
   },
   hr:{
     borderTopWidth: 1,

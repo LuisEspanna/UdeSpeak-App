@@ -7,8 +7,7 @@ import {NavigationContainer} from '@react-navigation/native'
 import HomeScreen from './src/screens/Home'
 import LoginScreen from './src/screens/Login'
 import OnboardingScreen from './src/screens/Onboarding'
-
-const reset  = false;
+import RegisterScreen from './src/screens/Register'
 
 const Stack = createStackNavigator();
 
@@ -38,7 +37,10 @@ export default function Main() {
                     </Stack.Screen>
                 )}
                 {!auth ? (
-                    <Stack.Screen name="LoginScreen" component={LoginScreen} />
+                    <>
+                        <Stack.Screen name="LoginScreen" component={LoginScreen} />
+                        <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+                    </>
                 ) : (
                     <Stack.Screen name="HomeScreen" component={HomeScreen} />
                 )}
