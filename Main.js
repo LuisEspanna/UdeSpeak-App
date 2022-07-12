@@ -14,8 +14,8 @@ const Stack = createStackNavigator();
 
 export default function Main() {
     const auth = useSelector((state) => state.user?.isLogged)
-    const { getData, storeData } = useLocalStorage()
-    const [firstSetup, setFirstSetup] = useState(true) //false
+    const { getData } = useLocalStorage()
+    const [firstSetup, setFirstSetup] = useState(true)
 
     useEffect(() => {
         let isMounted = true
@@ -43,6 +43,6 @@ export default function Main() {
                     <Stack.Screen name="HomeScreen" component={HomeScreen} />
                 )}
             </Stack.Navigator>
-        </NavigationContainer>     
+        </NavigationContainer>
     )
 }

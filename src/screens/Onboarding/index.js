@@ -41,11 +41,8 @@ export default function OnboardingScreen({navigation, onFinish}) {
   const onScroll = e => {    
     const contentOffsetX = e.nativeEvent.contentOffset.x;
     const currentIndex = Math.round(contentOffsetX / width);
-    
-    if(lstIndex.includes(contentOffsetX)) {
-      setIndex(currentIndex)
-    }
 
+    setIndex(currentIndex)
     setSkipButtonValue(((e.nativeEvent.contentOffset.x*100)/(lstIndex.length*width)))
   };
 
@@ -56,7 +53,7 @@ export default function OnboardingScreen({navigation, onFinish}) {
       <FlatList
         keyExtractor={(item) => item.id }
         ref={ref}
-        onScroll={onScroll}  
+        onScroll={onScroll}
         data={slides}
         contentContainerStyle={styles.flatList}
         horizontal
@@ -82,6 +79,7 @@ export default function OnboardingScreen({navigation, onFinish}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#F6FBFF'
   },
   flatList: {
     flex: 2,
