@@ -5,9 +5,19 @@ import LogoIcon from '../../components/icons/LogoIcon'
 import useGoogleLogin from '../../hooks/useGoogleLogin'
 import HeaderIcon from '../Onboarding/helpers/icons/HeaderIcon'
 import GoogleIcon from '../../components/icons/GoogleIcon'
+import Toast from '../../components/Toast'
+import useAlert from '../../hooks/useAlert'
 
 export default function LoginScreen({navigation}) {
   const { googleLogin } = useGoogleLogin();
+  const {  
+    alertIsVisible,
+    alertMessage,
+    alertType,
+    alertValue,
+    showAlert,
+    alertOnClose 
+  } = useAlert();
 
   const onRegister = () => {
     navigation.replace('RegisterScreen')
@@ -31,7 +41,7 @@ export default function LoginScreen({navigation}) {
           <TouchableOpacity>
             <Text style={styles.textLink}>Olvidaste tu contraseña?</Text>
           </TouchableOpacity>
-          <Button style={styles.button}>
+          <Button style={styles.button} onPress={()=>showAlert('Mensaje de error', 'Error', true)}>
             <Text style={styles.buttonText}>Iniciar sesión</Text>
           </Button>
           <TouchableOpacity style={styles.footer} onPress={onRegister}>
@@ -39,6 +49,13 @@ export default function LoginScreen({navigation}) {
             <Text style={styles.textLink}>Registrate</Text>
           </TouchableOpacity>
         </View>
+        <Toast
+          isVisible={alertIsVisible}
+          message={alertMessage}
+          type={alertType}
+          value={alertValue}
+          onClose={alertOnClose}
+          />
     </View>
   )
 }

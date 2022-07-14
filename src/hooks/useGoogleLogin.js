@@ -67,6 +67,7 @@ export default function useGoogleLogin () {
           text: error
         });
         */
+        setError(err);
       }).finally(()=>{
         
         setIsLoading(false);
@@ -138,6 +139,7 @@ export default function useGoogleLogin () {
           text: error
         });
         */
+        setError(err);
       })
       .finally(()=>{
         setIsLoading(false);
@@ -158,6 +160,7 @@ export default function useGoogleLogin () {
           text: error
         });
         */
+        setError(err);
       })
       .finally(()=>{
         setIsLoading(false);
@@ -192,6 +195,7 @@ export default function useGoogleLogin () {
           text: error
         });
         */
+        setError(err);
       })
       .finally(()=>{
         setIsLoading(false);
@@ -227,7 +231,6 @@ export default function useGoogleLogin () {
     });
     //window.sessionStorage.setItem('uid', uid);
   };
-
 
   return {
     error,

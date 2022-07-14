@@ -16,8 +16,15 @@ const getUserDataFromResult = (userResult) => {
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+function emailValidator(text) {
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    if (reg.test(text) === false) return false
+    else return true
+  }
   
 module.exports = {
     getUserDataFromResult,
-    sleep
+    sleep,
+    emailValidator
 }
