@@ -5,37 +5,45 @@ import HeaderIcon from '../Onboarding/helpers/icons/HeaderIcon'
 import GoogleIcon from '../../components/icons/GoogleIcon'
 import useRegister from './helpers/useRegister'
 import Toast from '../../components/Toast'
+import useToast from '../../hooks/useToast'
 
 
 export default function RegisterScreen({ navigation }) {
-    const { error, onLogin, onRegister, onChange, googleLogin } = useRegister(navigation)
 
-    return (
-        <View style={styles.container}>
-            <View style={styles.headerIcon}>
-                <HeaderIcon />
-            </View>
-            <View style={styles.form}>
-                <Button onPress={googleLogin}>
-                    <GoogleIcon style={styles.googleIcon} />
-                    <Text style={{ marginBottom: 3 }}>Iniciar sesión con google</Text>
-                </Button>
-                <View style={styles.hr} />
-                <TextInput style={styles.textInput} placeholder='Nombre completo' onChangeText={(text) => onChange({ name: text })} />
-                <TextInput style={styles.textInput} placeholder='Correo' keyboardType='email-address' onChangeText={(text) => onChange({ email: text })} />
-                <TextInput style={styles.textInput} placeholder='Contraseña' secureTextEntry onChangeText={(text) => onChange({ password: text })} />
-                <TextInput style={styles.textInput} placeholder='Confirmar contraseña' secureTextEntry onChangeText={(text) => onChange({ rpassword: text })}/>
-                <Button style={styles.button} onPress={onRegister}>
-                    <Text style={styles.buttonText}>Registrarse</Text>
-                </Button>
-                <TouchableOpacity style={styles.footer} onPress={onLogin}>
-                    <Text>¿ya tienes una cuenta? </Text>
-                    <Text style={styles.textLink}>Inicia sesión</Text>
-                </TouchableOpacity>
-            </View>
-            <Toast/>
-        </View>
-    )
+  const alertProps = useToast()
+  const {
+    onLogin,
+    onRegister,
+    onChange,
+    onGoogleLogin
+  } = useRegister(navigation, alertProps.showAlert)
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.headerIcon}>
+        <HeaderIcon />
+      </View>
+      <View style={styles.form}>
+        <Button onPress={onGoogleLogin}>
+          <GoogleIcon style={styles.googleIcon} />
+          <Text style={{ marginBottom: 3 }}>Iniciar sesión con google</Text>
+        </Button>
+        <View style={styles.hr} />
+        <TextInput style={styles.textInput} placeholder='Nombre completo' onChangeText={(text) => onChange({ name: text })} />
+        <TextInput style={styles.textInput} placeholder='Correo' keyboardType='email-address' onChangeText={(text) => onChange({ email: text })} />
+        <TextInput style={styles.textInput} placeholder='Contraseña' secureTextEntry onChangeText={(text) => onChange({ password: text })} />
+        <TextInput style={styles.textInput} placeholder='Confirmar contraseña' secureTextEntry onChangeText={(text) => onChange({ rpassword: text })} />
+        <Button style={styles.button} onPress={onRegister}>
+          <Text style={styles.buttonText}>Registrarse</Text>
+        </Button>
+        <TouchableOpacity style={styles.footer} onPress={onLogin}>
+          <Text>¿ya tienes una cuenta? </Text>
+          <Text style={styles.textLink}>Inicia sesión</Text>
+        </TouchableOpacity>
+      </View>
+      <Toast {...alertProps}/>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({

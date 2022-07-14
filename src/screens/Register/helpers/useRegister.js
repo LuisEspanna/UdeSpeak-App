@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { emailValidator } from '../../../services/functions'
 import useGoogleLogin from '../../../hooks/useGoogleLogin'
 
 export default function useRegister(navigation) {
 
-    const { googleLogin } = useGoogleLogin();
-    const [error, setError] = useState(undefined)
-    const [values, setValues] = useState({
+    const { googleLogin, register, isLoading } = useGoogleLogin();
+    const [user, setUser] = useState({
         name: '',
         email: '',
         password: '',
@@ -18,35 +17,43 @@ export default function useRegister(navigation) {
     }
 
     const onChange = (e) => {
-        setValues({ ...values, ...e })
+        setUser({ ...user, ...e })
     }
 
     const onRegister = () => {
-        let isValid = emailValidator(values.email);
-         if(!isValid) setError('Correo inválido')
+        let isValid = emailValidator(user.email);
+         if(!isValid) showAlert('Correo inválido', 'Error', true)
 
-        for (const key in values) {
-            if (Object.hasOwnProperty.call(values, key)) {
-                if (values[key].length === 0) {
+        for (const key in user) {
+            if (Object.hasOwnProperty.call(user, key)) {
+                if (user[key].length === 0) {
                     isValid = false
-                    setError('Debe llenar todos los campos')
+                    showAlert('Debe llenar todos los campos', 'Error', true)
                 }
             }
         }
 
-        if (values.password !== values.rpassword) {
+        if (user.password !== user.rpassword) {
             isValid = false
-            setError('Las contraseñas no coinciden')
+            showAlert('Las contraseñas no coinciden', 'Error', true)
         }
         
-        if(isValid)console.log('Registrando....')
+        if(isValid)register(user.email, user.password, user.name, (err)=>{
+            showAlert(err, 'Error', true)
+        })
+    }
+
+    const onGoogleLogin = () => {
+        googleLogin((err) => {
+            showAlert(err, 'Error', true)
+        })
     }
 
     return {
+        isLoading,
         onLogin,
         onChange,
         onRegister,
-        googleLogin,
-        error
+        onGoogleLogin,
     }
 }

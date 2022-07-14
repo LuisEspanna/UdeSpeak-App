@@ -10,7 +10,7 @@ import useLogin from './helpers/useLogin'
 
 export default function LoginScreen({navigation}) {
 
-  const alertProps = useToast();
+  const alertProps = useToast()
 
   const {
     isLoading,
@@ -19,7 +19,7 @@ export default function LoginScreen({navigation}) {
     onGoogleLogin,
     iforgotMyPassword,
     onLogin
-  } = useLogin(navigation, alertProps.showAlert);
+  } = useLogin(navigation, alertProps.showAlert)
 
   return (
     <View style={styles.container}>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { emailValidator } from '../../../services/functions'
 import useGoogleLogin from '../../../hooks/useGoogleLogin'
 
