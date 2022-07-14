@@ -2,26 +2,24 @@ import { StyleSheet, Text, View, TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native-web'
 import Button from '../../components/form/Button'
 import LogoIcon from '../../components/icons/LogoIcon'
-import useGoogleLogin from '../../hooks/useGoogleLogin'
 import HeaderIcon from '../Onboarding/helpers/icons/HeaderIcon'
 import GoogleIcon from '../../components/icons/GoogleIcon'
 import Toast from '../../components/Toast'
-import useAlert from '../../hooks/useAlert'
+import useToast from '../../hooks/useToast'
+import useLogin from './helpers/useLogin'
 
 export default function LoginScreen({navigation}) {
-  const { googleLogin } = useGoogleLogin();
-  const {  
-    alertIsVisible,
-    alertMessage,
-    alertType,
-    alertValue,
-    showAlert,
-    alertOnClose 
-  } = useAlert();
 
-  const onRegister = () => {
-    navigation.replace('RegisterScreen')
-  }
+  const alertProps = useToast();
+
+  const {
+    isLoading,
+    onRegister,
+    onChange,
+    onGoogleLogin,
+    iforgotMyPassword,
+    onLogin
+  } = useLogin(navigation, alertProps.showAlert);
 
   return (
     <View style={styles.container}>
@@ -30,18 +28,18 @@ export default function LoginScreen({navigation}) {
         </View>
         <View style={styles.form}>
           <LogoIcon style={styles.logo}/>
-          <Button onPress={googleLogin}>
+          <Button onPress={onGoogleLogin}>
             <GoogleIcon style={styles.googleIcon}/>
             <Text style={{ marginBottom: 3 }}>Iniciar sesión con google</Text>
           </Button>
           <View style={styles.hr}/>
           <Text style={{marginBottom: 20}}>Inicia con tu correo electrónico</Text>
-          <TextInput style={styles.textInput} placeholder='Correo' keyboardType='email-address'/>
-          <TextInput style={styles.textInput} placeholder='Contraseña' secureTextEntry/>
-          <TouchableOpacity>
+          <TextInput style={styles.textInput} placeholder='Correo' keyboardType='email-address' onChangeText={(text)=>onChange({'email': text})}/>
+          <TextInput style={styles.textInput} placeholder='Contraseña' secureTextEntry onChangeText={(text)=>onChange({'password': text})}/>
+          <TouchableOpacity onPress={iforgotMyPassword}>
             <Text style={styles.textLink}>Olvidaste tu contraseña?</Text>
           </TouchableOpacity>
-          <Button style={styles.button} onPress={()=>showAlert('Mensaje de error', 'Error', true)}>
+          <Button style={styles.button} onPress={onLogin}>
             <Text style={styles.buttonText}>Iniciar sesión</Text>
           </Button>
           <TouchableOpacity style={styles.footer} onPress={onRegister}>
@@ -49,13 +47,7 @@ export default function LoginScreen({navigation}) {
             <Text style={styles.textLink}>Registrate</Text>
           </TouchableOpacity>
         </View>
-        <Toast
-          isVisible={alertIsVisible}
-          message={alertMessage}
-          type={alertType}
-          value={alertValue}
-          onClose={alertOnClose}
-          />
+        <Toast {...alertProps}/>
     </View>
   )
 }

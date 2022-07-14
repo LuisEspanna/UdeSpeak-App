@@ -21,10 +21,17 @@ function emailValidator(text) {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     if (reg.test(text) === false) return false
     else return true
-  }
+}
+
+function getAuthErrorMessage(errorMesssage) {
+  return errorMesssage
+    .replace('Firebase: ', '')
+    .replace('Error ', '')
+}
   
 module.exports = {
     getUserDataFromResult,
     sleep,
-    emailValidator
+    emailValidator,
+    getAuthErrorMessage
 }

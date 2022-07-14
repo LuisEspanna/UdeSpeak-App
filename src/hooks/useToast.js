@@ -8,16 +8,16 @@ const messageTypes = {
     INFO: 'Info'
 }
 
-export default function useAlert() {
-    const [alertMessage, setMessage] = useState('')
-    const [alertType, setType] = useState(messageTypes.INFO)
-    const [alertIsVisible, setIsVisible] = useState(false)
-    const [alertValue, setValue] = useState(100)
+export default function useToast() {
+    const [message, setMessage] = useState('')
+    const [type, setType] = useState(messageTypes.INFO)
+    const [isVisible, setIsVisible] = useState(false)
+    const [value, setValue] = useState(100)
 
     /**
      * 
      * @param {String} text
-     * @param {messageTypes} typeMessage
+     * @param {String: ['Error', 'Success', 'Warning', 'Info']} typeMessage
      * @param {Boolean} autoClose
      * @returns
      */
@@ -34,7 +34,7 @@ export default function useAlert() {
                     await sleep(35)
                 }
                 alertOnClose()
-            }, 1000);
+            }, 1000)
             return () => clearTimeout(timer)
         }
     }
@@ -45,10 +45,10 @@ export default function useAlert() {
     }
 
     return {
-        alertIsVisible,
-        alertMessage,
-        alertType,
-        alertValue,
+        isVisible,
+        message,
+        type,
+        value,
         showAlert,
         alertOnClose,
     }

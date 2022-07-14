@@ -1,15 +1,16 @@
-import { useEffect, useState } from 'react';
-import { Auth, auth, db } from '../services/firebase';
-import { useDispatch } from 'react-redux';
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail}  from 'firebase/auth';
-import { getUserDataFromResult } from '../services/functions'
+import { useEffect, useState } from 'react'
+import { Auth, auth, db } from '../services/firebase'
+import { useDispatch } from 'react-redux'
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail}  from 'firebase/auth'
+import { getUserDataFromResult, getAuthErrorMessage } from '../services/functions'
 import { COLLECTIONS } from '../constants'
-//import { useNavigate } from 'react-router-dom'
 
 // Redux actions
-import { setUser } from '../state/reducers/userSlice';
-import useUsers from './useUsers';
-import useDbCounters from './useDbCounters';
+import { setUser } from '../state/reducers/userSlice'
+import useUsers from './useUsers'
+import useDbCounters from './useDbCounters'
+
+
 
 export default function useGoogleLogin () {
   const [provider, setProvider] = useState(null);
@@ -51,25 +52,18 @@ export default function useGoogleLogin () {
 
   /**
    * Receive a next function that it will be executed
-   * @param {function} next
+   * @param {function} onError 
    */
-  const googleLogin = (next) => {
+  const googleLogin = (onError) => {
     setIsLoading(true);
-    Auth().signInWithPopup(provider)
+    return Auth().signInWithPopup(provider)
       .then(result => {
         login(result?.user);
       })
       .catch(err => {
-        /*
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: error
-        });
-        */
+        if(onError) onError(err)
         setError(err);
-      }).finally(()=>{
-        
+      }).finally(()=>{        
         setIsLoading(false);
       });
   };
@@ -78,7 +72,7 @@ export default function useGoogleLogin () {
    * Receive a next function that it will be executed
    * @param {function} next
    */
-  const otherAccount = (next) => {
+  const otherAccount = (onError) => {
     provider.setCustomParameters({
       prompt: 'select_account'
     });
@@ -132,13 +126,6 @@ export default function useGoogleLogin () {
         login(user);
       })
       .catch((error) => {
-        /*
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: error
-        });
-        */
         setError(err);
       })
       .finally(()=>{
@@ -146,21 +133,17 @@ export default function useGoogleLogin () {
       });
   };
 
-  const loginWithEmailAndPassword = (email, password) => {
+  const loginWithEmailAndPassword = (email, password, onError) => {
     setIsLoading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then((result) => {
         login(result?.user);
       })
-      .catch((error) => {
-        /*
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: error
-        });
-        */
-        setError(err);
+      .catch((err) => {
+        setError(err)
+        //console.log(err?.message)
+        //console.log(getAuthErrorMessage(err))
+        if(onError)onError(getAuthErrorMessage(err?.message))
       })
       .finally(()=>{
         setIsLoading(false);
@@ -187,14 +170,7 @@ export default function useGoogleLogin () {
         });
         */
       })
-      .catch((error) => {
-        /*
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: error
-        });
-        */
+      .catch((err) => {
         setError(err);
       })
       .finally(()=>{
