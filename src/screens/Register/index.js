@@ -6,12 +6,13 @@ import GoogleIcon from '../../components/icons/GoogleIcon'
 import useRegister from './helpers/useRegister'
 import Toast from '../../components/Toast'
 import useToast from '../../hooks/useToast'
-
+import LoadingOverlay from '../../components/LoadingOverlay'
 
 export default function RegisterScreen({ navigation }) {
 
   const alertProps = useToast()
   const {
+    isLoading,
     onLogin,
     onRegister,
     onChange,
@@ -42,6 +43,7 @@ export default function RegisterScreen({ navigation }) {
         </TouchableOpacity>
       </View>
       <Toast {...alertProps}/>
+      <LoadingOverlay isLoading={isLoading}/>
     </View>
   )
 }

@@ -7,6 +7,7 @@ import GoogleIcon from '../../components/icons/GoogleIcon'
 import Toast from '../../components/Toast'
 import useToast from '../../hooks/useToast'
 import useLogin from './helpers/useLogin'
+import LoadingOverlay from '../../components/LoadingOverlay'
 
 export default function LoginScreen({navigation}) {
 
@@ -48,6 +49,7 @@ export default function LoginScreen({navigation}) {
           </TouchableOpacity>
         </View>
         <Toast {...alertProps}/>
+        <LoadingOverlay isLoading={isLoading}/>
     </View>
   )
 }
