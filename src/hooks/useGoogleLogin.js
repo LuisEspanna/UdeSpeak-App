@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Auth, auth, db } from '../services/firebase'
 import { useDispatch } from 'react-redux'
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail}  from 'firebase/auth'
@@ -22,27 +22,23 @@ export default function useGoogleLogin () {
   //const navigate = useNavigate()
   const { incrementUsers } = useDbCounters()
 
-  useEffect(() => {
+  const autoLogin = () => {
     setProvider(new Auth.GoogleAuthProvider())
     setIsLoading(true)
-    let isMounted = true
-    
-    setTimeout(()=>{
-        console.log('Cargando sesión')
-        readUserInfo(auth?.currentUser?.uid).then((user)=>{
-            if (isMounted && auth?.currentUser?.uid !== undefined){
-                const newUser = {...user}
-                newUser.isLogged = true
-                dispatch(setUser(newUser))
-            }
-        })
-        .finally(()=>{
-            setIsLoading(false)
-        })
-    }, 2000)
-    return () => { isMounted = false }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
+    setTimeout(()=>{
+      readUserInfo(auth?.currentUser?.uid).then((user)=>{
+          if (auth?.currentUser?.uid !== undefined){
+              const newUser = {...user}
+              newUser.isLogged = true
+              dispatch(setUser(newUser))
+          }
+      })
+      .finally(()=>{
+          setIsLoading(false)
+      })
+    }, 2000)
+  }
   
   const readUserInfo = async( uid ) => {
     const res = await getUser(uid)
@@ -215,6 +211,7 @@ export default function useGoogleLogin () {
     otherAccount,
     register,
     loginWithEmailAndPassword,
-    recoverAccount
+    recoverAccount,
+    autoLogin
   }
 }
