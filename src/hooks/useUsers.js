@@ -1,5 +1,5 @@
 import { COLLECTIONS } from '../constants'
-import { db } from '../services/firebase'
+import { readFromFirebase } from '../services/expoFirebase'
 
 export default function useUsers() {
 
@@ -17,9 +17,13 @@ export default function useUsers() {
     }
 
     const getUser = async(uid) => {
+        /*
         const userRef = db.collection(COLLECTIONS.USERS).doc(uid);
         const snapshot = await userRef.get();
         return snapshot.data();
+        */
+        const res = await readFromFirebase(COLLECTIONS.USERS, uid)
+        return res.data()
     }
 
     const saveUser = (user) => {

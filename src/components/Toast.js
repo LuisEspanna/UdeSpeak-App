@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
         right: 0
     },
     indicator:{
-        height: '100%',
+        height: 85,
         backgroundColor: '#FFC007',
         left: 0,
         top: 0,
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
         width: 25,
         height: 25,
         margin: 20,
-        borderRadius: '50%',
+        borderRadius: 50,
         padding: 5
     },
     textContainer: {

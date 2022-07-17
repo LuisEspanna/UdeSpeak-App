@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { //Auth, 
   auth } from '../services/expoFirebase'
 import { useDispatch } from 'react-redux'
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail}  from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup}  from 'firebase/auth'
 import { getUserDataFromResult, getAuthErrorMessage } from '../services/functions'
 import { COLLECTIONS } from '../constants'
 
@@ -23,7 +23,28 @@ export default function useGoogleLogin () {
   //const navigate = useNavigate()
   //const { incrementUsers } = useDbCounters()
 
+  useEffect(() => {
+    //setProvider(new GoogleAuthProvider())
+  }, [])
+  
+
   const autoLogin = () => {
+    setIsLoading(true)
+
+    setTimeout(()=>{
+      if(auth?.currentUser?.uid !== undefined){
+        readUserInfo(auth?.currentUser?.uid ).then((user)=>{
+            if (user){
+                const newUser = {...user}
+                newUser.isLogged = true
+                dispatch(setUser(newUser))
+            }
+        })
+        .finally(()=>{
+            setIsLoading(false)
+        })
+      }
+    }, 2000)
   }
   
   const readUserInfo = async( uid ) => {
@@ -37,6 +58,17 @@ export default function useGoogleLogin () {
    * @param {function} onError 
    */
   const googleLogin = (onError) => {
+    setIsLoading(true)
+    return signInWithPopup(provider)
+      .then(result => {
+        login(result?.user)
+      })
+      .catch(err => {
+        if(onError) onError(getAuthErrorMessage(err?.message))
+        setError(err)
+      }).finally(()=>{        
+        setIsLoading(false)
+      })
   }
 
   /**

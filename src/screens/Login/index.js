@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View, TextInput } from 'react-native'
-import { TouchableOpacity } from 'react-native-web'
-import Button from '../../components/form/Button'
-import LogoIcon from '../../components/icons/LogoIcon'
+import { TouchableOpacity } from 'react-native'
 import HeaderIcon from '../Onboarding/helpers/icons/HeaderIcon'
+import LogoIcon from '../../components/icons/LogoIcon'
+import Button from '../../components/form/Button'
 import GoogleIcon from '../../components/icons/GoogleIcon'
 import Toast from '../../components/Toast'
 import useToast from '../../hooks/useToast'
 import useLogin from './helpers/useLogin'
-import LoadingOverlay from '../../components/LoadingOverlay'
+//import LoadingOverlay from '../../components/LoadingOverlay'
 
 export default function LoginScreen({navigation}) {
 
@@ -24,32 +24,36 @@ export default function LoginScreen({navigation}) {
 
   return (
     <View style={styles.container}>
-        <View style={styles.headerIcon}>
-          <HeaderIcon/>
-        </View>
-        <View style={styles.form}>
-          <LogoIcon style={styles.logo}/>
-          <Button onPress={onGoogleLogin}>
-            <GoogleIcon style={styles.googleIcon}/>
-            <Text style={{ marginBottom: 3 }}>Iniciar sesión con google</Text>
-          </Button>
-          <View style={styles.hr}/>
-          <Text style={{marginBottom: 20}}>Inicia con tu correo electrónico</Text>
-          <TextInput style={styles.textInput} placeholder='Correo' keyboardType='email-address' onChangeText={(text)=>onChange({'email': text})}/>
-          <TextInput style={styles.textInput} placeholder='Contraseña' secureTextEntry onChangeText={(text)=>onChange({'password': text})}/>
-          <TouchableOpacity onPress={iforgotMyPassword}>
-            <Text style={styles.textLink}>Olvidaste tu contraseña?</Text>
-          </TouchableOpacity>
-          <Button style={styles.button} onPress={onLogin}>
-            <Text style={styles.buttonText}>Iniciar sesión</Text>
-          </Button>
-          <TouchableOpacity style={styles.footer} onPress={onRegister}>
-            <Text>No tienes una cuenta? </Text>
-            <Text style={styles.textLink}>Registrate</Text>
-          </TouchableOpacity>
-        </View>
-        <Toast {...alertProps}/>
+      <View style={styles.headerIcon}>
+        <HeaderIcon/>
+      </View>
+      <View style={styles.form}>
+        <LogoIcon style={styles.logo} />
+        <Button onPress={onGoogleLogin}>
+          <GoogleIcon style={styles.googleIcon} />
+          <Text style={{ marginBottom: 3 }}>Iniciar sesión con google</Text>
+        </Button>
+        <View style={styles.hr} />
+        <Text style={{ marginBottom: 20 }}>Inicia con tu correo electrónico</Text>
+        <TextInput style={styles.textInput} placeholder='Correo' keyboardType='email-address' onChangeText={(text) => onChange({ 'email': text })} />
+        <TextInput style={styles.textInput} placeholder='Contraseña' secureTextEntry onChangeText={(text) => onChange({ 'password': text })} />
+        <TouchableOpacity onPress={iforgotMyPassword}>
+          <Text style={styles.textLink}>Olvidaste tu contraseña?</Text>
+        </TouchableOpacity>        
+        <Button style={styles.button} onPress={onLogin}>
+          <Text style={styles.buttonText}>Iniciar sesión</Text>
+        </Button>
+        <TouchableOpacity style={styles.footer} onPress={onRegister}>
+          <Text>No tienes una cuenta? </Text>
+          <Text style={styles.textLink}>Registrate</Text>
+        </TouchableOpacity>
+      </View>
+      <Toast {...alertProps}/>
+      {/*
+        
         <LoadingOverlay isLoading={isLoading}/>
+         */}
+        
     </View>
   )
 }
@@ -96,8 +100,9 @@ const styles = StyleSheet.create({
     marginBottom:20
   },
   logo:{
-    width:'80%',
-    marginBottom: 20
+    marginBottom: 20,
+    height: 70,
+    width: 300,
   },
   button:{
     backgroundColor: '#0FB4B9',

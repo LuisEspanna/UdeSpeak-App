@@ -5,7 +5,7 @@ import { useState } from 'react'
 import {createStackNavigator} from '@react-navigation/stack'
 import {NavigationContainer} from '@react-navigation/native'
 import HomeScreen from './src/screens/Home'
-//import LoginScreen from './src/screens/Login'
+import LoginScreen from './src/screens/Login'
 //import OnboardingScreen from './src/screens/Onboarding'
 //import RegisterScreen from './src/screens/Register'
 
@@ -33,7 +33,7 @@ export default function Main() {
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="HomeScreen" component={HomeScreen} />
+                <Stack.Screen name="LoginScreen" component={LoginScreen} /> 
             </Stack.Navigator>
         </NavigationContainer>
     )

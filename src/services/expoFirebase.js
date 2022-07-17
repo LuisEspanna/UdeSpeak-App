@@ -1,9 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { initializeApp } from 'firebase/app';
+import {  } from 'firebase/auth';
+import { getDoc, setDoc, getFirestore, doc } from 'firebase/firestore';
 import {
   initializeAuth,
   getReactNativePersistence
 } from 'firebase/auth/react-native';
+
+//https://travis.media/how-to-use-firebase-with-react/
 
 // add firebase config here
 let firebaseConfig = {
@@ -24,4 +28,18 @@ const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(AsyncStorage)
 });
 
-export { auth };
+const firestore = getFirestore()
+
+const readFromFirebase = (collection, document) => {
+  return getDoc(doc(firestore, collection, document))
+}
+
+const saveOnFirebase = (collection, document, data) => {
+  return setDoc(doc(firestore, collection, document, data))
+}
+
+export { 
+  auth,
+  saveOnFirebase,
+  readFromFirebase
+};

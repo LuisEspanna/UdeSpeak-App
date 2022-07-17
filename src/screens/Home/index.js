@@ -1,14 +1,19 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import useGoogleLogin from '../../hooks/useGoogleLogin'
 
 export default function HomeScreen({}) {
 
-  const { logout } = useGoogleLogin()
+  const { logout, autoLogin } = useGoogleLogin()
 
   const onLogout = () => {
     logout()
   }
+
+  useEffect(() => {
+    autoLogin()
+  }, [])
+  
 
   return (
     <View>
