@@ -1,11 +1,20 @@
-import firebase from 'firebase/compat/app';
+import { initializeApp } from 'firebase/app';
+import { collection } from 'firebase/firestore';
+import { getDatabase } from 'firebase/database';
+//import { User } from 'firebase/auth';
+//import messaging from 'firebase/messaging';
+import { getAuth } from 'firebase/auth';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+/*
 import 'firebase/compat/firestore';
 import 'firebase/compat/database';
 import 'firebase/compat/auth';
 import 'firebase/compat/messaging';
 import { getAuth } from 'firebase/auth';
-import 'dotenv/config';
+*/
+//import 'dotenv/config';
 
+/*
 let firebaseConfig = {
     apiKey: `${process.env.REACT_APP_API_KEY}`,
     authDomain: `${process.env.REACT_APP_AUTH_DOMAIN}`,
@@ -15,9 +24,24 @@ let firebaseConfig = {
     appId: `${process.env.REACT_APP_APP_ID}`,
     measurementId: `${process.env.REACT_APP_MEASUREMENT_ID}`
 };
+*/
 
-const app = firebase.initializeApp(firebaseConfig);
+let firebaseConfig = {
+  apiKey: `AIzaSyAIMwu0uo_SZL37KerTQm1BbK7qJJdsSDw`,
+  authDomain: `udespeak-b580c.firebaseapp.com`,
+  projectId: `udespeak-b580c`,
+  storageBucket: `udespeak-b580c.appspot.com`,
+  messagingSenderId: `1096997546225`,
+  appId: `1096997546225:web:e8bb8b6e179cced1fae150`,
+  measurementId: `G-FLNKGZZFHK`
+};
 
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const db = { collection }
+const rtdb = { database: getDatabase }
+/*
 const db = firebase.firestore();
 const rtdb = firebase.database();
 const Auth = firebase.auth;
@@ -39,11 +63,13 @@ const sendFCM = async (data = {}) => {
   });
   return response.json();
 };
+*/
 
 export {
+  
   db,
   rtdb,
-  Auth,
-  sendFCM,
+  //Auth,
+  //sendFCM,
   auth
 };

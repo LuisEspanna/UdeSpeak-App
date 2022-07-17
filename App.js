@@ -1,8 +1,9 @@
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet} from 'react-native'
 import { Provider } from 'react-redux'
-import store from './src/state/store';
-import './src/services/firebase'
-import Main from './Main';
+import store from './src/state/store'
+//import './src/services/firebase'
+import Main from './Main'
+import 'react-native-gesture-handler'
 
 
 export default function App() {

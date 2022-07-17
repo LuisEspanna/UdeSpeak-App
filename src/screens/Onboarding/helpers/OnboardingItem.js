@@ -18,7 +18,7 @@ export default function OnboardingItem({item}) {
         </View>
     );
 }
-
+/*
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -44,6 +44,36 @@ const styles = StyleSheet.create({
         color: '##1F1F1F',
         textAlign: 'center',
         fontSize: '0.875em',
+        marginHorizontal: '2.75em',
+    },
+});
+*/
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        width,
+        justifyContent: 'center'
+    },
+    image:{
+        width: '70%'
+    },
+    title:{
+        fontWeight: '700',
+        fontSize: 20,
+        marginBottom: 20,
+        color: '#1F1F1F',
+        textAlign: 'center', 
+        marginHorizontal: '2em',
+        padding: 0,
+        marginTop: '1.063em'
+    },
+    description:{
+        fontWeight: '400',
+        color: '#1F1F1F',
+        textAlign: 'center',
+        fontSize: 20,
         marginHorizontal: '2.75em',
     },
 });

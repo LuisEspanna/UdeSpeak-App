@@ -1,22 +1,23 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import useLocalStorage from './src/hooks/useLocalStorage'
+//import useLocalStorage from './src/hooks/useLocalStorage'
 import { useState } from 'react'
 import {createStackNavigator} from '@react-navigation/stack'
 import {NavigationContainer} from '@react-navigation/native'
 import HomeScreen from './src/screens/Home'
-import LoginScreen from './src/screens/Login'
-import OnboardingScreen from './src/screens/Onboarding'
-import RegisterScreen from './src/screens/Register'
+//import LoginScreen from './src/screens/Login'
+//import OnboardingScreen from './src/screens/Onboarding'
+//import RegisterScreen from './src/screens/Register'
 
 const Stack = createStackNavigator();
 
 export default function Main() {
     const auth = useSelector((state) => state.user?.isLogged)
-    const { getData } = useLocalStorage()
+    //const { getData } = useLocalStorage()
     const [firstSetup, setFirstSetup] = useState(true)
 
     useEffect(() => {
+        /*
         let isMounted = true
 
         getData('onboarding').then((res) => {
@@ -26,10 +27,21 @@ export default function Main() {
         })
         
         return () => { isMounted = false }
+        */
     }, [])
 
     return (
         <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    )
+}
+
+/**
+ 
+<NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 {firstSetup && (
                     <Stack.Screen name="OnboardingScreen">
@@ -46,5 +58,4 @@ export default function Main() {
                 )}
             </Stack.Navigator>
         </NavigationContainer>
-    )
-}
+ */

@@ -3,7 +3,7 @@ import { useState, useRef } from 'react';
 import useLocalStorage from '../../hooks/useLocalStorage'
 import slides from './functions/slides';
 import OnboardingItem  from './helpers/OnboardingItem';
-import Paginator from './helpers/paginator';
+//import Paginator from './helpers/paginator';
 import SkipButton from './helpers/SkipButton';
 import HeaderIcon from "./helpers/icons/HeaderIcon";
 import { sleep } from '../../services/functions'
@@ -64,7 +64,11 @@ export default function OnboardingScreen({navigation, onFinish}) {
         }
       />
 
-      <Paginator slides={slides} currentPage={index}/>
+      {
+        /*
+        <Paginator slides={slides} currentPage={index}/>
+        */
+      }
  
       <View style={styles.nextButton}>
         <SkipButton
