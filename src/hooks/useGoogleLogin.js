@@ -2,10 +2,13 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import  { useState } from 'react';
 import auth from '@react-native-firebase/auth';
 import { getUserDataFromResult } from '../functions'
+import { useDispatch } from 'react-redux'
+import { setUser } from '../state/reducers/userSlice';
 
 
 export default function useGoogleLogin() {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const googleLogin = async () => {
     try {
@@ -14,7 +17,7 @@ export default function useGoogleLogin() {
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       await auth().signInWithCredential(googleCredential);
       const user = getUserDataFromResult(auth().currentUser);
-      console.log(user)
+      login(user);
     } catch (error) {
       console.log(error);
     }
@@ -27,6 +30,10 @@ export default function useGoogleLogin() {
 
   const autoLogin = async () => {
 
+  }
+
+  const login = (user) => {
+    dispatch(setUser(user));
   }
 
   return {

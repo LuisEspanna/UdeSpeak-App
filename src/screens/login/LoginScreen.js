@@ -27,7 +27,7 @@ export default function LoginScreen() {
         iforgotMyPassword,
         onLogin
     } = useLoginScreen(
-        //navigation, 
+        //navigation,
         alertProps.showAlert);
         
     return (
