@@ -4,7 +4,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 
 
-export default function useApp() {
+export default function useStatusBar() {
     const isDarkMode = useColorScheme() === 'dark';
 
     const backgroundStyle = {
@@ -14,6 +14,8 @@ export default function useApp() {
     const getStatusBar = () => {
         return (<StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />)
     }
+
+    
 
     return {
         backgroundStyle,

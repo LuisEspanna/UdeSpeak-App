@@ -2,9 +2,7 @@ import { useState, useEffect } from 'react'
 import { emailValidator } from '../../../functions'
 import useGoogleLogin from '../../../hooks/useGoogleLogin'
 
-export default function useLoginScreen(
-    //navigation, 
-    showAlert) {
+export default function useLoginScreen(navigation, showAlert) {
 
     const { isLoading, googleLogin, loginWithEmailAndPassword, autoLogin} = useGoogleLogin()
     const [user, setUser] = useState({
@@ -20,7 +18,7 @@ export default function useLoginScreen(
     
 
     const onRegister = () => {
-        //navigation.replace('RegisterScreen')
+        navigation.replace('RegisterScreen')
     }
 
     const onChange = (e) => {

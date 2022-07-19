@@ -15,7 +15,7 @@ import useToast from '../../hooks/useToast';
 /*
 
 */
-export default function LoginScreen() {
+export default function LoginScreen({navigation}) {
 
     
     const alertProps = useToast();
@@ -26,9 +26,7 @@ export default function LoginScreen() {
         onGoogleLogin,
         iforgotMyPassword,
         onLogin
-    } = useLoginScreen(
-        //navigation,
-        alertProps.showAlert);
+    } = useLoginScreen(navigation, alertProps.showAlert);
         
     return (
         <SafeAreaView>

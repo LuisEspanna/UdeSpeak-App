@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const getUserDataFromResult = (userResult) => {
     let user = {
         displayName: `${userResult?.displayName}`,
@@ -28,10 +30,32 @@ function getAuthErrorMessage(errorMesssage) {
     .replace('Firebase: ', '')
     .replace('Error ', '')
 }
+
+const localStorageSet = async (key,value) => {
+    try {
+        await AsyncStorage.setItem(key, value)
+    } catch (e) {
+        // saving error
+        console.log(e)
+    }
+}
+
+const localStorageGet = async (key) => {
+    try {
+      const value = await AsyncStorage.getItem(key)
+      return eval(value)
+    } catch(e) {
+      // error reading value
+      console.log(e)
+      return null
+    }
+}
   
 module.exports = {
     getUserDataFromResult,
     sleep,
     emailValidator,
-    getAuthErrorMessage
+    getAuthErrorMessage,
+    localStorageSet,
+    localStorageGet
 }
