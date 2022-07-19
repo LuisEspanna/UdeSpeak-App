@@ -12,9 +12,16 @@
   "dependencies": {
     "@react-native-firebase/app": "^15.1.1",
     "@react-native-firebase/auth": "^15.1.1",
+    "@react-native-firebase/firestore": "^15.1.1",
     "@react-native-google-signin/google-signin": "^8.0.0",
+    "@reduxjs/toolkit": "^1.8.3",
     "react": "18.0.0",
-    "react-native": "0.69.1"
+    "react-devtools": "^4.25.0",
+    "react-native": "0.69.1",
+    "react-native-svg": "^12.4.0",
+    "react-redux": "^8.0.2",
+    "redux": "^4.2.0",
+    "remote-redux-devtools": "^0.5.16"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

@@ -15,14 +15,6 @@ export default function useApp() {
         webClientId: '1096997546225-89pqegmr2fi0plrt4ccdqsfomfp0vta7.apps.googleusercontent.com',
     });
 
-    useEffect(() => {
-        /*
-        GoogleSignin.configure({
-            webClientId: '1096997546225-89pqegmr2fi0plrt4ccdqsfomfp0vta7.apps.googleusercontent.com',
-        });
-        */
-    }, [])
-    
 
     return {
         backgroundStyle,
