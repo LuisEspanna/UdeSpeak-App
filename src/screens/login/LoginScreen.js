@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, ScrollView, SafeAreaView } from 'react-native';
 import Toast from '../../components/Toast'
 import Button from '../../components/Button'
 import LoadingOverlay from '../../components/LoadingOverlay'
@@ -31,35 +31,38 @@ export default function LoginScreen() {
         alertProps.showAlert);
         
     return (
-        <View style={styles.container}>
-            <View style={styles.headerIcon}>
-                <HeaderIcon />
-            </View>
-            <View style={styles.form}>
-                <LogoIcon style={styles.logo} />
-                <Button onPress={onGoogleLogin}>
-                    <GoogleIcon style={styles.googleIcon} />
-                    <Text style={{ marginBottom: 3 }}>Iniciar sesión con google</Text>
-                </Button>
-                <View style={styles.hr} />
-                <Text style={{ marginBottom: 20 }}>Inicia con tu correo electrónico</Text>
-                <TextInput style={styles.textInput} placeholder='Correo' keyboardType='email-address' onChangeText={(text) => onChange({ 'email': text })} />
-                <TextInput style={styles.textInput} placeholder='Contraseña' secureTextEntry onChangeText={(text) => onChange({ 'password': text })} />
-                <TouchableOpacity onPress={iforgotMyPassword}>
-                    <Text style={styles.textLink}>Olvidaste tu contraseña?</Text>
-                </TouchableOpacity>
-                <Button style={styles.button} onPress={onLogin}>
-                    <Text style={styles.buttonText}>Iniciar sesión</Text>
-                </Button>
-                <TouchableOpacity style={styles.footer} onPress={onRegister}>
-                    <Text>No tienes una cuenta? </Text>
-                    <Text style={styles.textLink}>Registrate</Text>
-                </TouchableOpacity>
-            </View>
-
+        <SafeAreaView>
+            <ScrollView >
+                <View style={styles.container}>
+                    <View style={styles.headerIcon}>
+                        <HeaderIcon />
+                    </View>
+                    <View style={styles.form}>
+                        <LogoIcon style={styles.logo} />
+                        <Button onPress={onGoogleLogin}>
+                            <GoogleIcon style={styles.googleIcon} />
+                            <Text style={{ marginBottom: 3 }}>Iniciar sesión con google</Text>
+                        </Button>
+                        <View style={styles.hr} />
+                        <Text style={{ marginBottom: 20 }}>Inicia con tu correo electrónico</Text>
+                        <TextInput style={styles.textInput} placeholder='Correo' keyboardType='email-address' onChangeText={(text) => onChange({ 'email': text })} />
+                        <TextInput style={styles.textInput} placeholder='Contraseña' secureTextEntry onChangeText={(text) => onChange({ 'password': text })} />
+                        <TouchableOpacity onPress={iforgotMyPassword}>
+                            <Text style={styles.textLink}>Olvidaste tu contraseña?</Text>
+                        </TouchableOpacity>
+                        <Button style={styles.button} onPress={onLogin}>
+                            <Text style={styles.buttonText}>Iniciar sesión</Text>
+                        </Button>
+                        <TouchableOpacity style={styles.footer} onPress={onRegister}>
+                            <Text>No tienes una cuenta? </Text>
+                            <Text style={styles.textLink}>Registrate</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </ScrollView>
             <LoadingOverlay isLoading={isLoading} />
             <Toast {...alertProps} />
-        </View>
+        </SafeAreaView>
     )
 }
 

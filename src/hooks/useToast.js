@@ -33,13 +33,13 @@ export default function useToast() {
                     setValue(100-i)
                     await sleep(35)
                 }
-                alertOnClose()
+                onClose()
             }, 1000)
             return () => clearTimeout(timer)
         }
     }
 
-    const alertOnClose = () => {
+    const onClose = () => {
         setIsVisible(false)
         setValue(100)
     }
@@ -50,6 +50,6 @@ export default function useToast() {
         type,
         value,
         showAlert,
-        alertOnClose,
+        onClose,
     }
 }
