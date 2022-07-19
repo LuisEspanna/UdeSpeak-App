@@ -1,13 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import Toast from '../../components/Toast'
 import Button from '../../components/Button'
+import LoadingOverlay from '../../components/LoadingOverlay'
 
 //import HeaderIcon from '../Onboarding/helpers/icons/HeaderIcon'
-/*
+
 import LogoIcon from '../../components/icons/LogoIcon'
 import GoogleIcon from '../../components/icons/GoogleIcon'
-*/
+import HeaderIcon from '../../components/icons/HeaderIcon'
+
 import useLoginScreen from './helpers/useLoginScreen';
 import useToast from '../../hooks/useToast';
 /*
@@ -30,24 +32,10 @@ export default function LoginScreen() {
         
     return (
         <View style={styles.container}>
-            <Text>Hola</Text>
-            {
-                /*
-                <View style={styles.headerIcon}>
-                    <HeaderIcon />
-                </View>
-                 */
-            }
-            
-            <Button style={styles.button} onPress={onLogin}>
-                    <Text style={styles.buttonText}>Iniciar sesión</Text>
-                </Button>
-            
-            
-            {/*
-            
-        <View style={styles.form}>
-                
+            <View style={styles.headerIcon}>
+                <HeaderIcon />
+            </View>
+            <View style={styles.form}>
                 <LogoIcon style={styles.logo} />
                 <Button onPress={onGoogleLogin}>
                     <GoogleIcon style={styles.googleIcon} />
@@ -68,13 +56,13 @@ export default function LoginScreen() {
                     <Text style={styles.textLink}>Registrate</Text>
                 </TouchableOpacity>
             </View>
-        <LoadingOverlay isLoading={isLoading}/>
-         */}
+
+            <LoadingOverlay isLoading={isLoading} />
             <Toast {...alertProps} />
         </View>
     )
 }
-//F6FBFF
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -144,8 +132,6 @@ const styles = StyleSheet.create({
         display: 'flex'
     },
     footer: {
-        flex: 1,
-        flexDirection: 'row',
-        maxHeight: 20
+        flexDirection: 'row'
     }
 })

@@ -9,6 +9,7 @@ export default function useGoogleLogin() {
 
   const googleLogin = async () => {
     try {
+      setIsLoading(true)
       const { idToken } = await GoogleSignin.signIn();
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       await auth().signInWithCredential(googleCredential);
@@ -17,6 +18,7 @@ export default function useGoogleLogin() {
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false)
   }
 
   const loginWithEmailAndPassword = async () => {
