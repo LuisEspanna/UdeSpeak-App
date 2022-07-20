@@ -8,23 +8,38 @@ import LoginScreen from '../screens/login/LoginScreen';
 import OnboardingScreen from '../screens/onboarding/OnboardingScreen';
 import RegisterScreen from '../screens/register/RegisterScreen';
 import HomeScreen from '../screens/home/HomeScreen';
+import FlatlistScreen from '../screens/flatlist/FlatlistScreen';
 
 //functions
-import { localStorageGet } from '../functions'
+import { localStorageGet } from '../functions';
 
 
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
   const auth = useSelector((state) => state.user?.isLogged);
-  const [firstSetup, setFirstSetup] = useState(false);
+  const [firstSetup, setFirstSetup] = useState(true);
   //const { getData } = useLocalStorage()
+  
+  useEffect(() => {
+    let isMounted = true;
+
+    localStorageGet('onboarding').then((res) => {
+      if (res !== null && isMounted) {
+        setFirstSetup(false);
+      }
+    });
+
+    return () => { isMounted = false; }
+  }, [])
+  
 
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {
           firstSetup && <Stack.Screen name='Onboarding' component={OnboardingScreen} />
+          //<Stack.Screen name='Onboarding' component={FlatlistScreen} />
         }
         {!auth ? (
           <>

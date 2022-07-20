@@ -10,7 +10,7 @@ import LogoIcon from '../../components/icons/LogoIcon'
 import GoogleIcon from '../../components/icons/GoogleIcon'
 import HeaderIcon from '../../components/icons/HeaderIcon'
 
-import useLoginScreen from './helpers/useLoginScreen';
+import useLoginScreen from './hooks/useLoginScreen';
 import useToast from '../../hooks/useToast';
 /*
 
