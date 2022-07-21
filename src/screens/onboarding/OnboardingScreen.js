@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { FlatList, StyleSheet, View, Dimensions, SafeAreaView } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { FlatList, StyleSheet, View, SafeAreaView, ScrollView, Dimensions } from 'react-native';
 import { localStorageSet, sleep } from '../../functions'
 import { slides } from './constants';
 import OnboardingItem from './helpers/OnboardingItem';
@@ -8,14 +8,28 @@ import SkipButton from './helpers/SkipButton';
 import HeaderIcon from "../../components/icons/HeaderIcon";
 
 
-const { width } = Dimensions.get('window');
-const lstIndex = slides.map((item, index) => index * width);
-
 export default function OnboardingScreen({ navigation, onFinish }) {
   const [index, setIndex] = useState(0);
   const [skipButtonValue, setSkipButtonValue] = useState(0);
+  const [width, setwidth] = useState(Dimensions.get('window').width);
 
   const ref = useRef();
+  const lstIndex = slides.map((item, index) => index * width);
+
+  useEffect(() => {
+    const onChange = () => {
+      const { width, height } = Dimensions.get('window');
+      const offset = index * width;
+
+      setwidth(width);
+      ref?.current.scrollToOffset({ offset });
+    };
+
+    const subscription  = Dimensions.addEventListener('change', onChange);
+
+    return () => subscription.remove()
+  });
+  
 
   const onNext = async () => {
     const nextSlideIndex = index + 1;
@@ -45,46 +59,45 @@ export default function OnboardingScreen({ navigation, onFinish }) {
   };
 
   const renderItem = ({ item }) => (
-    <OnboardingItem item={item} />
+    <OnboardingItem item={item} width={width} />
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <HeaderIcon />
+    <ScrollView style={styles.container}>
+      <SafeAreaView style={{height: '100%'}}>
+        <HeaderIcon />
 
-      <FlatList
-        keyExtractor={(item) => item.id}
-        ref={ref}
-        onScroll={onScroll}
-        data={slides}
-        contentContainerStyle={styles.flatList}
-        horizontal
-        showsVerticalScrollIndicator={false}
-        pagingEnabled
-        renderItem={renderItem}
-      />
-
-
-      {
-        /*
-        
-        */
-      }
-      <Paginator slides={slides} currentPage={index} />
-      <View style={styles.nextButton}>
-        <SkipButton
-          onPress={onNext}
-          value={skipButtonValue}
-        />
-      </View>
-    </SafeAreaView >
+        <View style={{flex: 2}}>
+          <FlatList
+            keyExtractor={(item) => item.id}
+            ref={ref}
+            onScroll={onScroll}
+            data={slides}
+            contentContainerStyle={styles.flatList}
+            horizontal
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+            pagingEnabled
+            renderItem={renderItem}
+          />
+        </View>
+        <Paginator slides={slides} currentPage={index} />
+        <View style={styles.nextButton}>
+          <SkipButton
+            onPress={onNext}
+            value={skipButtonValue}
+          />
+        </View>
+      </SafeAreaView >
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F6FBFF'
+    backgroundColor: '#F6FBFF',
+    width: '100%'
   },
   flatList: {
     //flex: 2,

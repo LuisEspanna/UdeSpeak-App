@@ -2,12 +2,11 @@ import React from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 
 
-const {width, height} = Dimensions.get('window');
+//const {width, height} = Dimensions.get('window');
 
-export default function OnboardingItem({item}) {
-
+export default function OnboardingItem({item, width}) {
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, {width}]}>
          
             {item.image({style: styles.image})}
             
@@ -18,42 +17,11 @@ export default function OnboardingItem({item}) {
         </View>
     );
 }
-/*
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        width,
-        justifyContent: 'center'
-    },
-    image:{
-        width: '70%'
-    },
-    title:{
-        fontWeight: '700',
-        fontSize: '1.25em',
-        marginBottom: '0.75em',
-        color: '#1F1F1F',
-        textAlign: 'center', 
-        marginHorizontal: '2em',
-        padding: 0,
-        marginTop: '1.063em'
-    },
-    description:{
-        fontWeight: '400',
-        color: '##1F1F1F',
-        textAlign: 'center',
-        fontSize: '0.875em',
-        marginHorizontal: '2.75em',
-    },
-});
-*/
 
 const styles = StyleSheet.create({
     container: {
-        //flex: 1,
+        marginBottom: 15,
         alignItems: 'center',
-        width: 400,
         justifyContent: 'center'
     },
     image:{
@@ -61,7 +29,7 @@ const styles = StyleSheet.create({
     },
     title:{
         fontWeight: '700',
-        fontSize: 20,
+        fontSize: 25,
         marginBottom: 20,
         color: '#1F1F1F',
         textAlign: 'center', 
