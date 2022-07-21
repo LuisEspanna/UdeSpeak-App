@@ -8,7 +8,7 @@ import SkipButton from './helpers/SkipButton';
 import HeaderIcon from "../../components/icons/HeaderIcon";
 
 
-export default function OnboardingScreen({ navigation, onFinish }) {
+export default function OnboardingScreen({onFinish }) {
   const [index, setIndex] = useState(0);
   const [skipButtonValue, setSkipButtonValue] = useState(0);
   const [width, setwidth] = useState(Dimensions.get('window').width);
@@ -41,11 +41,10 @@ export default function OnboardingScreen({ navigation, onFinish }) {
 
     if (index + 1 === 3) {
       for (let i = skipButtonValue; i < 100; i++) {
-        await sleep(10)
+        await sleep(5)
         setSkipButtonValue(i)
       }
       await localStorageSet('onboarding', 'true')
-      //navigation.replace('')
       if(onFinish)onFinish()
     }
   };
