@@ -2,11 +2,17 @@ import React from 'react';
 import {StyleSheet, View, TouchableOpacity } from 'react-native';
 //import CanvasSemiCircle from './CanvasSemiCircle';
 import Svg, { G, Circle, Path, Defs } from "react-native-svg";
+//import SemiCircle from './SemiCircle';
+import * as Progress from 'react-native-progress';
 
 function SkipButton({ onPress, value }) {
     return (
         <TouchableOpacity onPress={onPress} >
-            <View>
+            <View style={styles.container}>
+                <View style={styles.progress}>
+                    <Progress.Circle size={72} progress={value} borderWidth={0} color={'#0FB4B9'}/>
+                </View>
+                <View style={styles.circle}/>
                 <Svg
                     width={72}
                     height={72}
@@ -23,10 +29,6 @@ function SkipButton({ onPress, value }) {
                     />
                     <Defs></Defs>
                 </Svg>
-                {/*
-                <CanvasSemiCircle value={value} />
-                */}
-                
             </View>
         </TouchableOpacity>
     );
@@ -36,8 +38,18 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#F6FBFF',
-      alignItems: 'flex-start',
-      justifyContent: 'flex-start'
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+    progress: {
+        position: 'absolute'
+    },
+    circle: {
+        position: 'absolute',
+        width: 69,
+        height: 69,
+        backgroundColor: '#F6FBFF',
+        borderRadius: 60,
     }
 });
 

@@ -46,7 +46,7 @@ export default function OnboardingScreen({ navigation, onFinish }) {
       }
       await localStorageSet('onboarding', 'true')
       //navigation.replace('')
-      onFinish()
+      if(onFinish)onFinish()
     }
   };
 
@@ -85,7 +85,7 @@ export default function OnboardingScreen({ navigation, onFinish }) {
         <View style={styles.nextButton}>
           <SkipButton
             onPress={onNext}
-            value={skipButtonValue}
+            value={skipButtonValue/100}
           />
         </View>
       </SafeAreaView >
@@ -101,11 +101,13 @@ const styles = StyleSheet.create({
   },
   flatList: {
     //flex: 2,
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start'
   },
   nextButton: {
     flex: 2,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 20
   },
 });

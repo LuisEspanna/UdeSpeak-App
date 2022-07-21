@@ -4,8 +4,8 @@ import Svg, { G, Path, Defs, ClipPath } from "react-native-svg"
 function Slide1(props) {
   return (
     <Svg
-      width={300}
-      height={300}
+      width={250}
+      height={250}
       viewBox="0 0 261 230"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     },
     title:{
         fontWeight: '700',
-        fontSize: 25,
+        fontSize: 23,
         marginBottom: 20,
         color: '#1F1F1F',
         textAlign: 'center', 
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         color: '#1F1F1F',
         textAlign: 'center',
-        fontSize: 20,
+        fontSize: 16,
         marginHorizontal: 20,
     },
 });

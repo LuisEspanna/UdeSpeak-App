@@ -38,7 +38,11 @@ const Navigation = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {
-          firstSetup && <Stack.Screen name='Onboarding' component={OnboardingScreen} />
+          firstSetup && (
+            <Stack.Screen name="OnboardingScreen">
+                {props => <OnboardingScreen {...props} onFinish={() => setFirstSetup(false)} />}
+            </Stack.Screen>
+        )
           //<Stack.Screen name='Onboarding' component={FlatlistScreen} />
         }
         {!auth ? (
