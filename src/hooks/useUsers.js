@@ -1,5 +1,5 @@
 import { COLLECTIONS } from '../constants'
-import { readFromFirestore, saveOnFirestore } from '../services/firebase'
+import { readFromFirestore, saveOnFirestore,  } from '../services/firebase'
 
 export default function useUsers() {
 
@@ -12,7 +12,8 @@ export default function useUsers() {
         return await saveOnFirestore(COLLECTIONS.USERS, user.uid, user);
     }
 
-    const editUser = (user) => {
+    const editUser = (user, data) => {
+        return;
     }
 
     const deleteUser = (uid) => {

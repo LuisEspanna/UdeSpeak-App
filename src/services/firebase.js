@@ -7,8 +7,8 @@ import firestore from '@react-native-firebase/firestore';
  * @returns 
  */
 const saveOnFirestore = async(collection, document, data) => {
-    if(document)return  firestore().collection(collection).doc(document).set(data)
-    else return firestore().collection(collection).add(data)
+    if(document)return  firestore().collection(collection).doc(document).set(data);
+    else return firestore().collection(collection).add(data);
 }
 
 /**
@@ -17,21 +17,36 @@ const saveOnFirestore = async(collection, document, data) => {
  * @returns 
  */
 const readFromFirestore = async(collection, document) => {
-    if(document)return  firestore().collection(collection).doc(document).get()
-    else return firestore().collection(collection).get()
+    if(document)return  firestore().collection(collection).doc(document).get();
+    else return firestore().collection(collection).get();
 }
 
 /**
- * @param {String} collection 
- * @param {String} document 
- * @returns 
+ * 
+ * @param {String} collection
+ * @param {String} document
+ * @param {*} data 
  */
- const updateFirestoreDoc = async(collection, document) => {
+const updateFirestoreDoc = async(collection, document, data) => {
+    if(document)return  firestore().collection(collection).doc(document).update(data);
+}
 
+/**
+ * 
+ * @param {String} collection
+ * @param {String} document
+ * @param {*} data 
+ */
+ const incrementFieldValue = async(collection, document, value) => {
+    const increment = firestore.FieldValue.increment(value);
+    return firestore().collection(collection).doc(document).update({
+       value : increment
+    });
 }
 
 module.exports = {
     saveOnFirestore,
     readFromFirestore,
-    updateFirestoreDoc
+    updateFirestoreDoc,
+    incrementFieldValue
 }
