@@ -30,7 +30,7 @@ export default function LoginScreen({navigation}) {
         
     return (
         <SafeAreaView>
-            <ScrollView >
+            <ScrollView>
                 <View style={styles.container}>
                     <View style={styles.headerIcon}>
                         <HeaderIcon />

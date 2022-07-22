@@ -1,16 +1,21 @@
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import  { useState } from 'react';
 import auth from '@react-native-firebase/auth';
-import { getUserDataFromResult } from '../functions';
+import { getUserDataFromResult, getAuthErrorMessage } from '../functions';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../state/reducers/userSlice';
 import useUsers from './useUsers';
-
+import useDBCounters from '../hooks/useDBCounters';
 
 export default function useGoogleLogin() {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-  const { getUser } = useUsers();
+  const { getUser, createUser } = useUsers();
+  const { incrementUsers } = useDBCounters();
+
+  const autoLogin = async () => {
+
+  }
 
   const googleLogin = async () => {
     try {
@@ -24,11 +29,6 @@ export default function useGoogleLogin() {
       console.log(error);
     }
     setIsLoading(false)
-  }
-
-  const readUserInfo = async( uid ) => {
-    const res = await getUser(uid);
-    return res;
   }
 
   const loginWithEmailAndPassword = async (email, password, onError) => {
@@ -45,13 +45,9 @@ export default function useGoogleLogin() {
       })
   }
 
-  const autoLogin = async () => {
-
-  }
-
   const login = (user) => {   
     if(user?.uid !== null && user?.uid !== undefined){
-      readUserInfo(user?.uid).then(userRes => {
+      getUser(user?.uid).then(userRes => {
         if (userRes !== undefined) {
           console.log("Loading from database")
           const newUser = { ...userRes }
@@ -59,12 +55,12 @@ export default function useGoogleLogin() {
           dispatch(setUser(newUser));
         }
         else {
-          const localUser = getUserDataFromResult(user)
+          const localUser = getUserDataFromResult(user);
           console.log("Saving on database");
           const newUser = { ...localUser };
           delete newUser['isLogged'];
 
-          db.collection(COLLECTIONS.USERS).doc(localUser.uid).set(newUser).then(() => {
+          createUser(newUser).then(()=>{
             dispatch(setUser(localUser));
             incrementUsers(1);
           });
@@ -73,12 +69,33 @@ export default function useGoogleLogin() {
     }
   }
 
+  const register = (email, password, displayName, onError) => {
+    setIsLoading(true);
+    auth().createUserWithEmailAndPassword( email, password)
+      .then((result) => {
+        const newUser = {
+          displayName,
+          email,
+          uid: `${result?.user.uid}`
+        };
+
+        login(newUser);
+      })
+      .catch((err) => {
+        if(onError) onError(getAuthErrorMessage(err?.message));
+      })
+      .finally(()=>{
+        setIsLoading(false);
+      });
+  }
+
   return {
     //state
     isLoading,
     //functions
     googleLogin,
     loginWithEmailAndPassword,
-    autoLogin
+    autoLogin,
+    register
   }
 }

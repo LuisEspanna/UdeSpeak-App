@@ -21,7 +21,17 @@ const readFromFirestore = async(collection, document) => {
     else return firestore().collection(collection).get()
 }
 
+/**
+ * @param {String} collection 
+ * @param {String} document 
+ * @returns 
+ */
+ const updateFirestoreDoc = async(collection, document) => {
+
+}
+
 module.exports = {
     saveOnFirestore,
-    readFromFirestore
+    readFromFirestore,
+    updateFirestoreDoc
 }

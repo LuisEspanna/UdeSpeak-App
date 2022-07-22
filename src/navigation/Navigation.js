@@ -8,7 +8,6 @@ import LoginScreen from '../screens/login/LoginScreen';
 import OnboardingScreen from '../screens/onboarding/OnboardingScreen';
 import RegisterScreen from '../screens/register/RegisterScreen';
 import HomeScreen from '../screens/home/HomeScreen';
-import FlatlistScreen from '../screens/flatlist/FlatlistScreen';
 
 //functions
 import { localStorageGet } from '../functions';
@@ -42,9 +41,7 @@ const Navigation = () => {
             <Stack.Screen name="OnboardingScreen">
                 {props => <OnboardingScreen {...props} onFinish={() => setFirstSetup(false)} />}
             </Stack.Screen>
-        )
-          //<Stack.Screen name='Onboarding' component={FlatlistScreen} />
-        }
+        )}
         {!auth ? (
           <>
             <Stack.Screen name="LoginScreen" component={LoginScreen} />
