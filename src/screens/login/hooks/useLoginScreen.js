@@ -1,22 +1,15 @@
-import { useState, useEffect } from 'react'
-import { emailValidator } from '../../../functions'
-import useGoogleLogin from '../../../hooks/useGoogleLogin'
+import { useState } from 'react';
+import { emailValidator } from '../../../functions';
+import useGoogleLogin from '../../../hooks/useGoogleLogin';
 
 export default function useLoginScreen(navigation, showAlert) {
 
-    const { isLoading, googleLogin, loginWithEmailAndPassword, autoLogin} = useGoogleLogin()
+    const { isLoading, googleLogin, loginWithEmailAndPassword} = useGoogleLogin()
     const [user, setUser] = useState({
         email: '',
         password: ''
-    })
-
-    useEffect(() => {
-        let isMounted = true;
-        autoLogin();
-        return () => { isMounted = false }
-    }, [])
+    });
     
-
     const onRegister = () => {
         navigation.replace('RegisterScreen')
     }

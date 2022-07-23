@@ -12,6 +12,7 @@ import SplashScreen from '../screens/splash/SplashScreen';
 
 //functions
 import { localStorageGet, sleep } from '../functions';
+import useGoogleLogin from '../hooks/useGoogleLogin';
 
 
 const Stack = createNativeStackNavigator();
@@ -20,7 +21,7 @@ const Navigation = () => {
   const auth = useSelector((state) => state.user?.isLogged);
   const [firstSetup, setFirstSetup] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  //const { getData } = useLocalStorage()
+  const { autoLogin } = useGoogleLogin();
   
   useEffect(() => {
     let isMounted = true;
@@ -29,6 +30,7 @@ const Navigation = () => {
       if (res !== null && isMounted) {
         setFirstSetup(false);
       }
+      autoLogin();
       await sleep(5000);
       setIsLoading(false);
     });
