@@ -14,7 +14,19 @@ export default function useGoogleLogin() {
   const { incrementUsers } = useDBCounters();
 
   const autoLogin = async () => {
-
+    setTimeout(()=>{
+      const uid = auth().currentUser?.uid;
+      if(uid === null || uid === undefined ) return;
+      setIsLoading(true);
+      getUser(uid).then((user)=>{
+        const newUser = {...user};
+        newUser.isLogged = true;
+        dispatch(setUser(newUser));
+      })
+      .finally(()=>{
+          setIsLoading(false);
+      })
+    }, 1000);
   }
 
   const googleLogin = async () => {
@@ -90,9 +102,7 @@ export default function useGoogleLogin() {
   }
 
   return {
-    //state
     isLoading,
-    //functions
     googleLogin,
     loginWithEmailAndPassword,
     autoLogin,

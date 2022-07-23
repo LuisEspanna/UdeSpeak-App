@@ -8,9 +8,10 @@ import LoginScreen from '../screens/login/LoginScreen';
 import OnboardingScreen from '../screens/onboarding/OnboardingScreen';
 import RegisterScreen from '../screens/register/RegisterScreen';
 import HomeScreen from '../screens/home/HomeScreen';
+import SplashScreen from '../screens/splash/SplashScreen';
 
 //functions
-import { localStorageGet } from '../functions';
+import { localStorageGet, sleep } from '../functions';
 
 
 const Stack = createNativeStackNavigator();
@@ -18,15 +19,18 @@ const Stack = createNativeStackNavigator();
 const Navigation = () => {
   const auth = useSelector((state) => state.user?.isLogged);
   const [firstSetup, setFirstSetup] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   //const { getData } = useLocalStorage()
   
   useEffect(() => {
     let isMounted = true;
 
-    localStorageGet('onboarding').then((res) => {
+    localStorageGet('onboarding').then(async(res) => {
       if (res !== null && isMounted) {
         setFirstSetup(false);
       }
+      await sleep(5000);
+      setIsLoading(false);
     });
 
     return () => { isMounted = false; }
@@ -34,6 +38,7 @@ const Navigation = () => {
   
 
   return (
+    !isLoading ? (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {
@@ -51,7 +56,13 @@ const Navigation = () => {
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
         )}
       </Stack.Navigator>
-    </NavigationContainer>
+    </NavigationContainer>)
+    : (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="splashScreen" component={SplashScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>)
   );
 };
 

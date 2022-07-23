@@ -11,8 +11,8 @@ export default function useLoginScreen(navigation, showAlert) {
     })
 
     useEffect(() => {
-        let isMounted = true
-        autoLogin()
+        let isMounted = true;
+        autoLogin();
         return () => { isMounted = false }
     }, [])
     
@@ -22,35 +22,35 @@ export default function useLoginScreen(navigation, showAlert) {
     }
 
     const onChange = (e) => {
-        setUser({ ...user, ...e })
+        setUser({ ...user, ...e });
     }
 
     const onLogin = () => {
         let isValid = emailValidator(user.email)
-         if(!isValid) showAlert('Correo inválido', 'Error', true)
+         if(!isValid) showAlert('Correo inválido', 'Error', true);
 
         for (const key in user) {
             if (Object.hasOwnProperty.call(user, key)) {
                 if (user[key].length === 0) {
-                    isValid = false
-                    showAlert('Debe llenar todos los campos', 'Error', true)
+                    isValid = false;
+                    showAlert('Debe llenar todos los campos', 'Error', true);
                 }
             }
         }
         
         if(isValid)loginWithEmailAndPassword(user.email, user.password, (err)=>{
-            showAlert(err, 'Error', true)
+            showAlert(err, 'Error', true);
         })
     }
 
     const onGoogleLogin = () => {
         googleLogin((err) => {
-            showAlert(err, 'Error', true)
+            showAlert(err, 'Error', true);
         })
     }
 
     const iforgotMyPassword = () => {
-        console.log('Olvidé la constraseña')
+        console.log('Olvidé la constraseña');
     }
 
     return {
