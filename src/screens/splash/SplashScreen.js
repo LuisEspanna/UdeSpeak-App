@@ -1,22 +1,24 @@
-import { StyleSheet, Text, SafeAreaView, View } from 'react-native';
 import React from 'react';
+import { StyleSheet, SafeAreaView } from 'react-native';
+import CustomLogoIcon from './helpers/CustomLogoIcon';
+import ColorLogoIcon from './helpers/ColorLogoIcon'
+import AnimatedLayout from './helpers/AnimatedLayout';
 
 export default function SplashScreen() {
-
-    console.log('Splash')
-
-  return (
-    <SafeAreaView>
-      <View style={styles.container}>
-        <Text>SplashScreen</Text>
-      </View>
-    </SafeAreaView>
-  )
+    return (
+        <SafeAreaView style={styles.container}>
+            <AnimatedLayout/>
+            <ColorLogoIcon/>
+            <CustomLogoIcon/>
+        </SafeAreaView>
+    )
 }
 
 const styles = StyleSheet.create({
     container:  {
         flex: 1,
-        padding: 200
+        backgroundColor: '#F6FBFF',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 })

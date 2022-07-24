@@ -31,7 +31,7 @@ const Navigation = () => {
         setFirstSetup(false);
       }
       autoLogin();
-      await sleep(5000);
+      await sleep(3000);
       setIsLoading(false);
     });
 
@@ -61,7 +61,7 @@ const Navigation = () => {
     </NavigationContainer>)
     : (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="splashScreen" component={SplashScreen} />
       </Stack.Navigator>
     </NavigationContainer>)
