@@ -7,12 +7,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import LoginScreen from '../screens/login/LoginScreen';
 import OnboardingScreen from '../screens/onboarding/OnboardingScreen';
 import RegisterScreen from '../screens/register/RegisterScreen';
-import HomeScreen from '../screens/home/HomeScreen';
 import SplashScreen from '../screens/splash/SplashScreen';
 
 //functions
 import { localStorageGet, sleep } from '../functions';
 import useGoogleLogin from '../hooks/useGoogleLogin';
+
+//Drawer
+import NavigationDrawer from './NavigationDrawer';
 
 
 const Stack = createNativeStackNavigator();
@@ -41,31 +43,37 @@ const Navigation = () => {
 
   return (
     !isLoading ? (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {
-          firstSetup && (
-            <Stack.Screen name="OnboardingScreen">
+      !auth ?
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          {
+            firstSetup && (
+              <Stack.Screen name="OnboardingScreen">
                 {props => <OnboardingScreen {...props} onFinish={() => setFirstSetup(false)} />}
-            </Stack.Screen>
-        )}
-        {!auth ? (
-          <>
-            <Stack.Screen name="LoginScreen" component={LoginScreen} />
-            <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-          </>
-        ) : (
-          <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>)
-    : (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="splashScreen" component={SplashScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>)
+              </Stack.Screen>
+          )}
+          <Stack.Screen name="LoginScreen" component={LoginScreen} />
+          <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+      : <NavigationDrawer/>
+      )
+      : (
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="splashScreen" component={SplashScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      )
   );
 };
 
 export default Navigation;
+
+
+/*
+
+
+
+
+*/
