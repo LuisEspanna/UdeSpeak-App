@@ -53,9 +53,9 @@ const Navigation = () => {
                 {props => <OnboardingScreen {...props} onFinish={() => setFirstSetup(false)} />}
               </Stack.Screen>
           )}
-          <Stack.Screen name="RestoreScreen" component={RestoreScreen} />
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+          <Stack.Screen name="RestoreScreen" component={RestoreScreen} />
         </Stack.Navigator>
       </NavigationContainer>
       : <NavigationDrawer/>

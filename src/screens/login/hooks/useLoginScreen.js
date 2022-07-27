@@ -43,7 +43,7 @@ export default function useLoginScreen(navigation, showAlert) {
     }
 
     const iforgotMyPassword = () => {
-        console.log('Olvidé la constraseña');
+        navigation.replace('RestoreScreen')
     }
 
     return {
