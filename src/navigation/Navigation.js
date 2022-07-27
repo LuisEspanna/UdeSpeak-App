@@ -8,6 +8,7 @@ import LoginScreen from '../screens/login/LoginScreen';
 import OnboardingScreen from '../screens/onboarding/OnboardingScreen';
 import RegisterScreen from '../screens/register/RegisterScreen';
 import SplashScreen from '../screens/splash/SplashScreen';
+import RestoreScreen from '../screens/restore/RestoreScreen';
 
 //functions
 import { localStorageGet, sleep } from '../functions';
@@ -52,6 +53,7 @@ const Navigation = () => {
                 {props => <OnboardingScreen {...props} onFinish={() => setFirstSetup(false)} />}
               </Stack.Screen>
           )}
+          <Stack.Screen name="RestoreScreen" component={RestoreScreen} />
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
         </Stack.Navigator>

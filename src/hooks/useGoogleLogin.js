@@ -101,11 +101,23 @@ export default function useGoogleLogin() {
       });
   }
 
+  const restore = (email, onError) => {
+    setIsLoading(true);
+    auth().sendPasswordResetEmail(email)
+      .catch((err) => {
+        if(onError) onError(err?.message);
+      })
+      .finally(()=>{
+        setIsLoading(false);
+      });
+  }
+
   return {
     isLoading,
     googleLogin,
     loginWithEmailAndPassword,
     autoLogin,
-    register
+    register,
+    restore
   }
 }

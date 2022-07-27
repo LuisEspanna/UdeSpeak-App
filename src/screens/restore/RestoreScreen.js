@@ -4,52 +4,40 @@ import Toast from '../../components/Toast';
 import Button from '../../components/Button';
 import LoadingOverlay from '../../components/LoadingOverlay';
 
-import LogoIcon from '../../components/icons/LogoIcon';
-import GoogleIcon from '../../components/icons/GoogleIcon';
 import HeaderIcon from '../../components/icons/HeaderIcon';
 
-import useLoginScreen from './hooks/useLoginScreen';
+import useRestoreScreen from './hooks/useRestoreScreen';
 import useToast from '../../hooks/useToast';
 
 
-export default function LoginScreen({navigation}) {
+export default function RestoreScreen({navigation}) {
 
     const alertProps = useToast();
     const {
         isLoading,
-        onRegister,
         onChange,
-        onGoogleLogin,
-        iforgotMyPassword,
-        onLogin
-    } = useLoginScreen(navigation, alertProps.showAlert);
+        onSend,
+        onLogin,
+    } = useRestoreScreen(navigation, alertProps.showAlert);
         
     return (
-        <SafeAreaView>
-            <ScrollView>
+        <SafeAreaView style={{flex: 1, height: '100%', backgroundColor: '#F6FBFF'}}>
+            <ScrollView style={{flex: 1, height: '100%'}}>
                 <View style={styles.container}>
                     <View style={styles.headerIcon}>
                         <HeaderIcon />
                     </View>
-                    <View style={styles.form}>
-                        <LogoIcon style={styles.logo} />
-                        <Button onPress={onGoogleLogin}>
-                            <GoogleIcon style={styles.googleIcon} />
-                            <Text style={{ marginBottom: 3 }}>Iniciar sesión con google</Text>
+                    <View style={styles.form}>        
+                        <Text style={styles.title}>Ingresa el correo electrónico asociado a tu cuenta</Text>
+                        <View style={{flex: 1, alignItems: 'flex-start', justifyContent: 'flex-start', width: '100%'}}>
+                            <TextInput style={styles.textInput} placeholder='Correo electrónico' keyboardType='email-address' onChangeText={(text) => onChange({ 'email': text })} />
+                        </View>                        
+                        <Button style={styles.button} onPress={onSend}>
+                            <Text style={styles.buttonText}>Enviar</Text>
                         </Button>
-                        <View style={styles.hr} />
-                        <Text style={{ marginBottom: 20 }}>Inicia con tu correo electrónico</Text>
-                        <TextInput style={styles.textInput} placeholder='Correo' keyboardType='email-address' onChangeText={(text) => onChange({ 'email': text })} />
-                        <TextInput style={styles.textInput} placeholder='Contraseña' secureTextEntry onChangeText={(text) => onChange({ 'password': text })} />
-                        <TouchableOpacity onPress={iforgotMyPassword}>
-                            <Text style={styles.textLink}>Olvidaste tu contraseña?</Text>
-                        </TouchableOpacity>
-                        <Button style={styles.button} onPress={onLogin}>
-                            <Text style={styles.buttonText}>Iniciar sesión</Text>
-                        </Button>
-                        <TouchableOpacity style={styles.footer} onPress={onRegister}>
-                            <Text>No tienes una cuenta? </Text>
-                            <Text style={styles.textLink}>Registrate</Text>
+                        <TouchableOpacity style={styles.footer} onPress={onLogin}>
+                            <Text>¿ya tienes una cuenta? </Text>
+                            <Text style={styles.textLink}>Inicia sesión</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -62,12 +50,19 @@ export default function LoginScreen({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: '#F6FBFF',
         alignItems: 'center',
+        height: 660
+    },
+    title:{
+        fontSize: 22,        
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 30,
+        color: '#08677C'
     },
     headerIcon: {
-        width: '100%'
+        width: '100%',
     },
     googleIcon: {
         width: 25,
@@ -82,13 +77,6 @@ const styles = StyleSheet.create({
         width: '100%',
         maxWidth: 500,
     },
-    hr: {
-        borderTopWidth: 1,
-        borderTopColor: '#B8BCBF59',
-        marginTop: 20,
-        marginBottom: 20,
-        width: '100%'
-    },
     textInput: {
         width: '100%',
         height: 54,
@@ -99,12 +87,7 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         paddingLeft: 25,
         paddingRight: 25,
-        marginBottom: 20
-    },
-    logo: {
         marginBottom: 20,
-        height: 70,
-        width: 300,
     },
     button: {
         backgroundColor: '#0FB4B9',
