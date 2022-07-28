@@ -7,7 +7,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import LoginScreen from '../screens/login/LoginScreen';
 import OnboardingScreen from '../screens/onboarding/OnboardingScreen';
 import RegisterScreen from '../screens/register/RegisterScreen';
-import SplashScreen from '../screens/splash/SplashScreen';
 import RestoreScreen from '../screens/restore/RestoreScreen';
 
 //functions
@@ -15,14 +14,15 @@ import { localStorageGet, sleep } from '../functions';
 import useGoogleLogin from '../hooks/useGoogleLogin';
 
 //Drawer
-import NavigationDrawer from './NavigationDrawer';
+import AppStack from './AppStack';
+import SplashStack from './SplashStack'
+import AuthStack from './AuthStack';
+import OnboardingStack from './OnboardingStack';
 
-
-const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
-  const auth = useSelector((state) => state.user?.isLogged);
-  const [firstSetup, setFirstSetup] = useState(true);
+  const isAuth = useSelector((state) => state.user?.isLogged);
+  const [isFirstSetup, setIsFirstSetup] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const { autoLogin } = useGoogleLogin();
   
@@ -31,7 +31,7 @@ const Navigation = () => {
 
     localStorageGet('onboarding').then(async(res) => {
       if (res !== null && isMounted) {
-        setFirstSetup(false);
+        setIsFirstSetup(false);
       }
       autoLogin();
       await sleep(3000);
@@ -43,39 +43,13 @@ const Navigation = () => {
   
 
   return (
-    !isLoading ? (
-      !auth ?
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {
-            firstSetup && (
-              <Stack.Screen name="OnboardingScreen">
-                {props => <OnboardingScreen {...props} onFinish={() => setFirstSetup(false)} />}
-              </Stack.Screen>
-          )}
-          <Stack.Screen name="LoginScreen" component={LoginScreen} />
-          <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-          <Stack.Screen name="RestoreScreen" component={RestoreScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-      : <NavigationDrawer/>
-      )
-      : (
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="splashScreen" component={SplashScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      )
-  );
+    <NavigationContainer>
+      <SplashStack isLoading={isLoading} />
+      <OnboardingStack isFirstSetup={isFirstSetup} isLoading={isLoading} onFinish={() => setIsFirstSetup(false)}/>
+      <AuthStack isAuth={isAuth} isLoading={isLoading} isFirstSetup={isFirstSetup}/>
+      <AppStack isAuth={isAuth} isLoading={isLoading}/>
+    </NavigationContainer>
+  )
 };
 
 export default Navigation;
-
-
-/*
-
-
-
-
-*/
