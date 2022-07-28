@@ -1,7 +1,7 @@
 import * as React from "react"
 import Svg, { G, Path, Defs, ClipPath } from "react-native-svg"
 
-function HamburguerIcon(props) {
+function HamburgerIcon(props) {
   return (
     <Svg
       width={28}
@@ -26,4 +26,4 @@ function HamburguerIcon(props) {
   )
 }
 
-export default HamburguerIcon;
+export default HamburgerIcon;

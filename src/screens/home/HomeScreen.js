@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux';
 import { getDisplayName } from '../../functions'
 import NavBar from '../../components/NavBar';
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
     const user = useSelector((state) => state.user);
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar/>
+            <NavBar navigation={navigation}/>
             <ScrollView>
                 <View style={{marginTop: 20}}>
                     <Text style={styles.greeting}>Hello,</Text>
