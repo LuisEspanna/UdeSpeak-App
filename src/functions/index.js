@@ -50,6 +50,11 @@ const localStorageGet = async (key) => {
       return null
     }
 }
+
+const getDisplayName = (user) => {
+    const userName = user.displayName.split(' ');
+    return (`${userName[0]}  ${userName[2] ?userName[2] : userName[1]}`)
+}
   
 module.exports = {
     getUserDataFromResult,
@@ -57,5 +62,6 @@ module.exports = {
     emailValidator,
     getAuthErrorMessage,
     localStorageSet,
-    localStorageGet
+    localStorageGet,
+    getDisplayName
 }
