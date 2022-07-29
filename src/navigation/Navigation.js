@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-
-//Screens
-import LoginScreen from '../screens/login/LoginScreen';
-import OnboardingScreen from '../screens/onboarding/OnboardingScreen';
-import RegisterScreen from '../screens/register/RegisterScreen';
-import RestoreScreen from '../screens/restore/RestoreScreen';
 
 //functions
 import { localStorageGet, sleep } from '../functions';
