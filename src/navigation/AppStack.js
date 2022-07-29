@@ -1,5 +1,6 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import StarIcon from '../components/icons/StarIcon';
 
 // Screens
 import HomeScreen from '../screens/home/HomeScreen';
@@ -15,7 +16,12 @@ export default function NavigationDrawer({isAuth, isLoading}) {
           screenOptions={{ headerShown: false }} initialRouteName="Home"
           drawerContent={props => <CustomDrawer {...props}/>}
         >
-            <Drawer.Screen name="Home" component={HomeScreen} />
+            <Drawer.Screen name="Mis cursos" component={HomeScreen} options={{
+              title: 'Mis curso',
+              drawerIcon: () => {
+                <StarIcon/>
+              }
+            }}/>
             <Drawer.Screen name="Settings" component={SettingsScreen} />
         </Drawer.Navigator> : null
   )

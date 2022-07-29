@@ -6,6 +6,7 @@ import { getDisplayName } from '../functions'
 
 export default function CustomDrawer(props) {
     const user = useSelector((state) => state.user);
+    console.log(props);
 
     return (
         <View style={styles.container}>
@@ -15,21 +16,15 @@ export default function CustomDrawer(props) {
                 >
                     <View style={styles.userInfo}>
                         <Image source={{uri: user.photoURL}} style={styles.userImage}/>
-                        <View>
+                        <View style={{marginLeft: 13}}>
                             <Text style={styles.name}>{getDisplayName(user)}</Text>
                             <Text style={styles.email}>{user.email}</Text>
                         </View>
                     </View>
             </ImageBackground>
             <DrawerContentScrollView {...props} contentContainerStyle={{padding: 0, margin:0}}>
-                <DrawerItemList {...props} />
-                <View>
-                    <Text></Text>
-                </View>                
+                <DrawerItemList {...props} />               
             </DrawerContentScrollView>
-            <View>
-
-            </View>
         </View>
     )
 }
@@ -48,22 +43,22 @@ const styles = StyleSheet.create({
         padding: 15,
     },
     userImage: {
-        height: 72,
-        width: 72,
+        height: 63,
+        width: 63,
         borderRadius: 37
     },
     name: {
         color: '#FFF',
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 15,
         marginTop: 8,
-        marginBottom: 5
+        marginBottom: 10
     },
     email:{
-        color: '#FFF'
+        color: '#FFF',
+        fontSize: 11
     },
     userInfo:{
-        justifyContent: 'space-between',
         flexDirection: 'row',
         alignContent: 'center',
         height: 73,
