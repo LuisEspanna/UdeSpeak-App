@@ -16,13 +16,12 @@ export default function NavigationDrawer({isAuth, isLoading}) {
           screenOptions={{ headerShown: false }} initialRouteName="Home"
           drawerContent={props => <CustomDrawer {...props}/>}
         >
-            <Drawer.Screen name="Mis cursos" component={HomeScreen} options={{
-              title: 'Mis curso',
-              drawerIcon: () => {
-                <StarIcon/>
-              }
-            }}/>
-            <Drawer.Screen name="Settings" component={SettingsScreen} />
+            <Drawer.Screen name="Mis cursos" component={HomeScreen}/>
+            <Drawer.Screen name="Explorar cursos" component={SettingsScreen}/>
+            <Drawer.Screen name="Mi cuenta" component={HomeScreen}/>
+            <Drawer.Screen name="Configuración" component={SettingsScreen}/>
+            <Drawer.Screen name="Reportar problema" component={HomeScreen}/>
+            <Drawer.Screen name="Ayuda" component={SettingsScreen}/>
         </Drawer.Navigator> : null
   )
 }

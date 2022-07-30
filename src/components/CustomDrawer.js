@@ -1,13 +1,30 @@
 import { StyleSheet, Text, View, Image, ImageBackground } from 'react-native';
 import React from 'react';
-import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
+import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { useSelector } from 'react-redux';
 import { getDisplayName } from '../functions'
+import DrawerButton from './DrawerButton';
+
+import StarIcon from './icons/StarIcon';
+import BookmarkIcon from './icons/BookmarkIcon';
+import UserIcon from './icons/UserIcon';
+import SettingIcon from './icons/SettingIcon';
+import AlertIcon from './icons/AlertIcon';
+import HelpIcon from './icons/HelpIcon';
+
+
+const icons = [
+    <StarIcon/>,
+    <BookmarkIcon/>,
+    <UserIcon/>,
+    <SettingIcon/>,
+    <AlertIcon/>,
+    <HelpIcon/>
+];
 
 export default function CustomDrawer(props) {
     const user = useSelector((state) => state.user);
-    console.log(props);
-
+    
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -23,7 +40,17 @@ export default function CustomDrawer(props) {
                     </View>
             </ImageBackground>
             <DrawerContentScrollView {...props} contentContainerStyle={{padding: 0, margin:0}}>
-                <DrawerItemList {...props} />               
+                {
+                    props.state.routes.map((route, i) => 
+                        <DrawerButton 
+                            key = {i}
+                            route = {route}
+                            icons = {icons}
+                            index = {i}
+                            active = {props.state.index === i}
+                            onPress = {() => props.navigation.navigate(route.name)}
+                        />)
+                }
             </DrawerContentScrollView>
         </View>
     )

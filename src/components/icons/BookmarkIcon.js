@@ -4,8 +4,8 @@ import Svg, { Path } from "react-native-svg";
 function BookmarkIcon(props) {
   return (
     <Svg
-      width={16}
-      height={20}
+      width={22}
+      height={22}
       viewBox="0 0 16 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
