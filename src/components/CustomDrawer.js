@@ -12,6 +12,8 @@ import SettingIcon from './icons/SettingIcon';
 import AlertIcon from './icons/AlertIcon';
 import HelpIcon from './icons/HelpIcon';
 
+import defaultUserImg from '../assets/drawerBg.png';
+
 
 const icons = [
     <StarIcon/>,
@@ -24,7 +26,6 @@ const icons = [
 
 export default function CustomDrawer(props) {
     const user = useSelector((state) => state.user);
-    
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -32,7 +33,11 @@ export default function CustomDrawer(props) {
                     style={styles.header}
                 >
                     <View style={styles.userInfo}>
-                        <Image source={{uri: user.photoURL}} style={styles.userImage}/>
+                        {                        
+                            user.photoURL && eval(user.photoURL) !== null? 
+                            <Image source={{uri: user.photoURL}} style={styles.userImage}/> :
+                            <Image source={require('../assets/defaultUser.png')} style={styles.userImage}/> 
+                        }
                         <View style={{marginLeft: 13}}>
                             <Text style={styles.name}>{getDisplayName(user)}</Text>
                             <Text style={styles.email}>{user.email}</Text>
