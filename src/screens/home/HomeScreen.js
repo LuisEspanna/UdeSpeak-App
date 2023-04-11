@@ -3,9 +3,14 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { getDisplayName } from '../../functions'
 import NavBar from '../../components/NavBar';
+import SectionLanguages from './sections/SectionLanguages';
 
 export default function HomeScreen({navigation}) {
     const user = useSelector((state) => state.user);
+    
+
+    //console.log(languages);
+
     return (
         <SafeAreaView style={styles.container}>
             <NavBar navigation={navigation}/>
@@ -15,6 +20,8 @@ export default function HomeScreen({navigation}) {
                     <Text style={styles.name}>{getDisplayName(user)}</Text>
                     <Text style={styles.title}>Explore your course</Text>
                 </View>
+
+                <SectionLanguages/>
             </ScrollView>
         </SafeAreaView>
     )
