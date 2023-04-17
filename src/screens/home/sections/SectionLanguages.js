@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, SafeAreaView } from 'react-native';
 import React from 'react';
 import useLanguages from '../../../hooks/useLanguages';
 import { useState, useEffect } from 'react';
@@ -20,7 +20,7 @@ export default function Language() {
     }, []);
 
   return (
-    <View>
+    <View style={styles.container}>
       {
         languages.map((item, i) =>
           <View key={i}>
@@ -31,3 +31,13 @@ export default function Language() {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container:{
+      padding: 15,
+      backgroundColor: '#003BFF',
+      flex: 1,
+      height: 1500,
+      position: 'relative'
+  }
+});
