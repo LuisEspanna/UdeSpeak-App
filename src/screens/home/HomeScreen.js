@@ -15,7 +15,7 @@ export default function HomeScreen({navigation}) {
         <SafeAreaView style={styles.container}>
             <NavBar navigation={navigation}/>
             <ScrollView>
-                <View style={{marginTop: 20}}>
+                <View style={{marginTop: 20, marginBottom: 20}}>
                     <Text style={styles.greeting}>Hello,</Text>
                     <Text style={styles.name}>{getDisplayName(user)}</Text>
                     <Text style={styles.title}>Explore your course</Text>
