@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
 import useLanguages from '../../../hooks/useLanguages';
 import { useState, useEffect } from 'react';
@@ -23,10 +23,10 @@ export default function Language() {
     <View style={styles.container}>
       {
         languages.map((item, i) =>
-          <View key={i} style={styles.languageItem}>
+          <TouchableOpacity key={i} style={styles.languageItem} onPress={()=>console.log("--->" + item.name)}>
             <Image source={{uri: item.image}} style={styles.languageImage}/>
             <Text style={styles.languageText}>{item.name}</Text>
-          </View>
+          </TouchableOpacity>
         )        
       }
     </View>
