@@ -22,6 +22,15 @@ const readFromFirestore = async(collection, document) => {
 }
 
 /**
+ * @param {String} collection 
+ * @param {String} document 
+ * @returns 
+ */
+const readFromFirestoreWhere = async(collection, field, operator, value) => {
+    return  firestore().collection(collection).where(field, operator, value).get();
+}
+
+/**
  * 
  * @param {String} collection
  * @param {String} document
@@ -48,5 +57,6 @@ module.exports = {
     saveOnFirestore,
     readFromFirestore,
     updateFirestoreDoc,
-    incrementFieldValue
+    incrementFieldValue,
+    readFromFirestoreWhere
 }

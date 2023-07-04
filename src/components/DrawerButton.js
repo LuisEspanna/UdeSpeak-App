@@ -1,14 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-export default function DrawerButton({onPress, route, icons, index, active}) {
+export default function DrawerButton({onPress, route, icons, index, active, hidden}) {
   return (
+    (!hidden || null) ? 
     <TouchableOpacity onPress={onPress} style={active ? [styles.container, styles.btnActive] : styles.container}>
         <View style={styles.icon}>
             { icons[index] }
         </View>
         <Text>{route.name}</Text>
     </TouchableOpacity>
+     : null
   )
 }
 

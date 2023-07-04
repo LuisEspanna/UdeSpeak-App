@@ -51,7 +51,8 @@ export default function CustomDrawer(props) {
                             icons = {icons}
                             index = {i}
                             active = {props.state.index === i}
-                            onPress = {() => props.navigation.navigate(route.name)}
+                            onPress = {() => props.navigation.navigate(route.name)}     
+                            hidden={ route.name.indexOf('_') === 0 }                       
                         />)
                 }
             </DrawerContentScrollView>

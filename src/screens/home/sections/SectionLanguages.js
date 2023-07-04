@@ -3,8 +3,8 @@ import React from 'react';
 import useLanguages from '../../../hooks/useLanguages';
 import { useState, useEffect } from 'react';
 
-export default function Language() {
-  const { getAll } = useLanguages();
+export default function Language(props) {
+    const { getAll } = useLanguages();
     const [languages, setLanguages] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -19,18 +19,32 @@ export default function Language() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-  return (
-    <View style={styles.container}>
-      {
-        languages.map((item, i) =>
-          <TouchableOpacity key={i} style={styles.languageItem} onPress={()=>console.log("--->" + item.name)}>
-            <Image source={{uri: item.image}} style={styles.languageImage}/>
-            <Text style={styles.languageText}>{item.name}</Text>
-          </TouchableOpacity>
-        )        
-      }
-    </View>
-  )
+    const handleLanguage = (item) => {
+      props.navigation.navigate('_levels', {id_language: item.id});
+    }
+
+    return (
+      <View style={styles.container}>
+        {
+          /*
+          Por usuario mostrar los lenguages que ha practicado
+          */
+        }
+        {
+          languages.map((item, i) =>
+            <TouchableOpacity key={i} style={styles.languageItem} onPress={() => handleLanguage(item)}>
+              <Image source={{uri: item.image}} style={styles.languageImage}/>
+              <Text style={styles.languageText}>{item.name}</Text>
+            </TouchableOpacity>
+          )        
+        }
+        {
+          /*
+          TODO: Implementar barra de carga
+          */
+        }
+      </View>
+    )
 }
 
 const styles = StyleSheet.create({

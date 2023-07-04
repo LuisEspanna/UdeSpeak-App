@@ -7,9 +7,6 @@ import SectionLanguages from './sections/SectionLanguages';
 
 export default function HomeScreen({navigation}) {
     const user = useSelector((state) => state.user);
-    
-
-    //console.log(languages);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -21,7 +18,7 @@ export default function HomeScreen({navigation}) {
                     <Text style={styles.title}>Explore your course</Text>
                 </View>
 
-                <SectionLanguages/>
+                <SectionLanguages navigation={navigation} />
             </ScrollView>
         </SafeAreaView>
     )
