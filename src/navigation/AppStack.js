@@ -4,6 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 // Screens
 import HomeScreen from '../screens/home/HomeScreen';
 import SettingsScreen from '../screens/settings/SettingsScreen';
+import LanguagesScreen from '../screens/languages/LanguagesScreen';
 import LevelsScreen from '../screens/levels/LevelsScreen';
 
 //Drawers
@@ -19,7 +20,7 @@ export default function NavigationDrawer({isAuth, isLoading}) {
           drawerContent={props => <CustomDrawer {...props}/>}
         >
             <Drawer.Screen name="Mis cursos" component={HomeScreen}/>
-            <Drawer.Screen name="Explorar cursos" component={SettingsScreen}/>
+            <Drawer.Screen name="Explorar cursos" component={LanguagesScreen}/>
             <Drawer.Screen name="Mi cuenta" component={HomeScreen}/>
             <Drawer.Screen name="Configuración" component={SettingsScreen}/>
             <Drawer.Screen name="Reportar problema" component={HomeScreen}/>

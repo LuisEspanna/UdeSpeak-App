@@ -1,29 +1,29 @@
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
 import { useEffect } from 'react';
-import useLevels from '../../hooks/useLevels';
+import useLanguages from '../../hooks/useLanguages';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
 import { getDisplayName } from '../../functions'
 
-export default function LevelsScreen(props) {
-    const [levels, setLevels] = useState([]);
+export default function LanguageScreen(props) {
+    const [languages, setLevels] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const { getAll } = useLevels();
+    const { getAll } = useLanguages();
     const user = useSelector((state) => state.user);
 
     const handleLanguage = (item) => {
-        //props.navigation.navigate('_levels', { id_language: item.id });
-        console.log(item)
+        props.navigation.navigate('_levels', { id_language: item.id });
+        //console.log(item)
     }
 
     useEffect(() => {
 
         async function fetchLevels() {
             setIsLoading(true);
-            const localLevels = await getAll(props.route.params.id_language);
-            setLevels(localLevels);
+            const localLanguages = await getAll();
+            setLevels(localLanguages);
             setIsLoading(false);
         }
         fetchLevels();
@@ -34,20 +34,12 @@ export default function LevelsScreen(props) {
         <SafeAreaView style={styles.container}>
             <NavBar navigation={props.navigation} />
             <ScrollView>
-                {/*
-                <View style={{ marginTop: 20, marginBottom: 20 }}>
-                    <Text style={styles.greeting}>Hello,</Text>
-                    <Text style={styles.name}>{getDisplayName(user)}</Text>
-                    <Text style={styles.title}>Explore your course</Text>
-                </View>
-                */}                
-
                 {
-                    levels.map((item, i) =>
-                        <TouchableOpacity key={i} style={styles.levelItem} onPress={() => handleLanguage(item)}>
-                            <Text style={styles.levelTitle}>{item.title}</Text>
-                            <Text style={styles.levelText}>{item.description}</Text>
-                        </TouchableOpacity>
+                    languages.map((item, i) =>
+                    <TouchableOpacity key={i} style={styles.languageItem} onPress={() => handleLanguage(item)}>
+                      <Image source={{ uri: item.image }} style={styles.languageImage} />
+                      <Text style={styles.languageText}>{item.name}</Text>
+                    </TouchableOpacity>
                     )
                 }                
             </ScrollView>
@@ -78,7 +70,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#0FB4B9'
     },
-    levelItem: {
+    languageItem: {
         backgroundColor: '#FFFFFF',
         shadowColor: "#000",
         shadowOffset: {
@@ -94,18 +86,18 @@ const styles = StyleSheet.create({
         height: 100,
         padding: 20,
         flexDirection: 'row',
-        alignItems: 'center'    
-    },
-    levelTitle: {
+        alignItems: 'center'
+    
+      },
+      languageImage: {
         height: 63,
         width: 63,
-        fontSize: 46,
-        fontWeight: 'bold',
-        color: '#0FB4B9'
-    },
-    levelText: {
+        borderRadius: 37
+      },
+      languageText: {
         marginLeft: 20,
         fontSize: 16,
-        
-    }
+        fontWeight: 'bold',
+        color: '#0FB4B9'
+      }
 })
