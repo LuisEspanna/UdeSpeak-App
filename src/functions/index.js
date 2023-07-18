@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment/moment';
 
 const getUserDataFromResult = (userResult) => {
     let user = {
@@ -55,6 +56,22 @@ const getDisplayName = (user) => {
     const userName = user.displayName.split(' ');
     return (`${userName[0]}  ${userName[2] ?userName[2] : userName[1]}`)
 }
+
+const toDateFormat = (date) => {
+    return moment(date).format('DD/MM/YYYY h:mm a').toString();
+}
+
+const toDateFormatShort = (date) => {
+    return moment(date).format('DD/MM/YYYY').toString();
+}
+  
+const getHour = () => {
+    return moment(new Date()).format('h:mm a').toString();
+}
+  
+const toISOFormat = (date) => {
+    return moment(date).format().toString();
+}
   
 module.exports = {
     getUserDataFromResult,
@@ -63,5 +80,9 @@ module.exports = {
     getAuthErrorMessage,
     localStorageSet,
     localStorageGet,
-    getDisplayName
+    getDisplayName,
+    toDateFormat,
+    getHour,
+    toISOFormat,
+    toDateFormatShort
 }

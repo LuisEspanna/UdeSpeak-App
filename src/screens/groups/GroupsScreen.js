@@ -1,27 +1,30 @@
 import { StyleSheet, Text, View, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useEffect } from 'react';
-import useLevels from '../../hooks/useLevels';
+import useGroups from '../../hooks/useGroups';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
+import GroupItem from './helper/GroupItem';
 //import { getDisplayName } from '../../functions'
 
-export default function LevelsScreen(props) {
+export default function GroupsScreen(props) {
     const [levels, setLevels] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const { getAll } = useLevels();
+    const { getAll } = useGroups();
     const user = useSelector((state) => state.user);
 
-    const handleLanguage = (item) => {
-        props.navigation.navigate('_groups', { id_level: item.id });
+    const handleGroup = (item) => {
+        //props.navigation.navigate('_levels', { id_language: item.id });
+        console.log(item)
     }
 
     useEffect(() => {
 
         async function fetchLevels() {
             setIsLoading(true);
-            const localLevels = await getAll(props.route.params.id_language);
+            const localLevels = await getAll(props.route.params.id_level);
+            localLevels.forEach((item) => { item.collapsed = true });
             setLevels(localLevels);
             setIsLoading(false);
         }
@@ -35,10 +38,7 @@ export default function LevelsScreen(props) {
             <ScrollView>
                 {
                     levels.map((item, i) =>
-                        <TouchableOpacity key={i} style={styles.levelItem} onPress={() => handleLanguage(item)}>
-                            <Text style={styles.levelTitle}>{item.title}</Text>
-                            <Text style={styles.levelText}>{item.description}</Text>
-                        </TouchableOpacity>
+                        <GroupItem item={item} key={i}/>                   
                     )
                 }                
             </ScrollView>
@@ -69,34 +69,4 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#0FB4B9'
     },
-    levelItem: {
-        backgroundColor: '#FFFFFF',
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 1,
-        },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
-        elevation: 3,
-        marginTop: 10,
-        marginBottom: 10,
-        borderRadius: 7,
-        height: 100,
-        padding: 20,
-        flexDirection: 'row',
-        alignItems: 'center'    
-    },
-    levelTitle: {
-        height: 63,
-        width: 63,
-        fontSize: 46,
-        fontWeight: 'bold',
-        color: '#0FB4B9'
-    },
-    levelText: {
-        marginLeft: 20,
-        fontSize: 16,
-        
-    }
 })

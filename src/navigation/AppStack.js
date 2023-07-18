@@ -6,6 +6,7 @@ import HomeScreen from '../screens/home/HomeScreen';
 import SettingsScreen from '../screens/settings/SettingsScreen';
 import LanguagesScreen from '../screens/languages/LanguagesScreen';
 import LevelsScreen from '../screens/levels/LevelsScreen';
+import GroupsScreen from '../screens/groups/GroupsScreen';
 
 //Drawers
 import CustomDrawer from '../components/CustomDrawer';
@@ -26,6 +27,7 @@ export default function NavigationDrawer({isAuth, isLoading}) {
             <Drawer.Screen name="Reportar problema" component={HomeScreen}/>
             <Drawer.Screen name="Ayuda" component={SettingsScreen} />
             <Drawer.Screen name="_levels" component={LevelsScreen} />
+            <Drawer.Screen name="_groups" component={GroupsScreen} />
         </Drawer.Navigator> : null
   )
 }
