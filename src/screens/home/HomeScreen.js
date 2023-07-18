@@ -11,7 +11,7 @@ export default function HomeScreen({navigation}) {
     return (
         <SafeAreaView style={styles.container}>
             <NavBar navigation={navigation}/>
-            <ScrollView>
+            <ScrollView style={styles.scrollView}>
                 <View style={{marginTop: 20, marginBottom: 20}}>
                     <Text style={styles.greeting}>Hello,</Text>
                     <Text style={styles.name}>{getDisplayName(user)}</Text>
@@ -46,5 +46,8 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         color: '#0FB4B9'
+    },
+    scrollView: {
+        marginTop: 50
     }
 });

@@ -31,8 +31,8 @@ export default function LevelsScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} />
-            <ScrollView>
+            <NavBar navigation={props.navigation} title={'Niveles'} onSearch={() => console.log('Searching levels ...')}/>
+            <ScrollView style={styles.scrollView}>
                 {
                     levels.map((item, i) =>
                         <TouchableOpacity key={i} style={styles.levelItem} onPress={() => handleLanguage(item)}>
@@ -85,7 +85,8 @@ const styles = StyleSheet.create({
         height: 100,
         padding: 20,
         flexDirection: 'row',
-        alignItems: 'center'    
+        alignItems: 'center',
+        margin: 3
     },
     levelTitle: {
         height: 63,
@@ -98,5 +99,8 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         fontSize: 16,
         
+    },
+    scrollView: {
+        marginTop: 50
     }
 })

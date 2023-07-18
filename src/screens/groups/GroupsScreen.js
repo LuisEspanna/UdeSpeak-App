@@ -34,8 +34,8 @@ export default function GroupsScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} />
-            <ScrollView>
+            <NavBar navigation={props.navigation} title={'Grupos'} onSearch={() => console.log('Searching groups ...')}/>
+            <ScrollView style={styles.scrollView}>
                 {
                     levels.map((item, i) =>
                         <GroupItem item={item} key={i}/>                   
@@ -69,4 +69,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#0FB4B9'
     },
+    scrollView: {
+        marginTop: 50
+    }
 })

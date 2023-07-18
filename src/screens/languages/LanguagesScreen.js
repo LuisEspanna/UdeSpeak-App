@@ -1,11 +1,10 @@
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, ScrollView, SafeAreaView, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
 import { useEffect } from 'react';
 import useLanguages from '../../hooks/useLanguages';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
-import { getDisplayName } from '../../functions'
 
 export default function LanguageScreen(props) {
     const [languages, setLevels] = useState([]);
@@ -32,8 +31,8 @@ export default function LanguageScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} />
-            <ScrollView>
+            <NavBar navigation={props.navigation} title={'Idiomas'} onSearch={() => console.log('Searching languages ...')}/>
+            <ScrollView style={styles.scrollView}>
                 {
                     languages.map((item, i) =>
                     <TouchableOpacity key={i} style={styles.languageItem} onPress={() => handleLanguage(item)}>
@@ -99,5 +98,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: '#0FB4B9'
+      },
+      scrollView: {
+          marginTop: 50
       }
+
 })
