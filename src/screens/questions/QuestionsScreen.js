@@ -1,28 +1,29 @@
 import { StyleSheet, Text, View, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useEffect } from 'react';
-import useQuestionnaries from '../../hooks/useQuestionnaries';
+import useQuestions from '../../hooks/useQuestions';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
 
-export default function QuestionnariesScreen(props) {
-    const [questionnaries, setQuestionnaries] = useState([]);
+export default function QuestionsScreen(props) {
+    const [questions, setQuestions] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const { getAll } = useQuestionnaries();
+    const { getAll } = useQuestions();
     const user = useSelector((state) => state.user);
 
     const handleItem = (item) => {
-        props.navigation.navigate('_questions', { questionnary_id: item.id });
-        //console.log('go to questions list...');
+        // TODO: IFs cons tipos de questions
+        //props.navigation.navigate('_questionnaries', { id_level: item.id });
+        console.log('go to questions list...');
     }
 
     useEffect(() => {
 
         async function fetchLevels() {
             setIsLoading(true);
-            const localQuestionnaries = await getAll(props.route.params.group_id);
-            setQuestionnaries(localQuestionnaries);
+            const local = await getAll(props.route.params.questionnary_id);
+            setQuestions(local);
             setIsLoading(false);
         }
         fetchLevels();
@@ -31,13 +32,13 @@ export default function QuestionnariesScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} title={'Cuestionarios'} onSearch={() => console.log('Searching quesrionnarie ...')}/>
+            <NavBar navigation={props.navigation} title={'Preguntas/Ejercicios'} onSearch={() => console.log('Searching question ...')}/>
             <ScrollView style={styles.scrollView}>
                 {
-                    questionnaries.map((item, i) =>
+                    questions.map((item, i) =>
                         <TouchableOpacity key={i} style={styles.item} onPress={() => handleItem(item)}>
-                            <Text style={styles.itemTitle}>{item.name}</Text>
-                            <Text style={styles.itemText}>{item.description}</Text>
+                            <Text style={styles.itemTitle}>{item.title}</Text>
+                            <Text style={styles.itemText}>{item.type}</Text>
                         </TouchableOpacity>
                     )
                 }                
@@ -92,8 +93,9 @@ const styles = StyleSheet.create({
         color: '#0FB4B9'
     },
     itemText: {
-        fontSize: 16,
-        marginTop: 7
+        fontSize: 14,
+        marginTop: 7,
+        textTransform: 'capitalize'
     },
     scrollView: {
         marginTop: 50

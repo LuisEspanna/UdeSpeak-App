@@ -6,7 +6,8 @@ const COLLECTIONS = {
     LEVELS: 'levels',
     LANGUAGES: 'languages',
     GROUPS: 'groups',
-    QUESTIONNARIES: 'questionnaries'
+    QUESTIONNARIES: 'questionnaries',
+    QUESTIONS: 'questions'
 }
 
 const PERMISSIONS = {
