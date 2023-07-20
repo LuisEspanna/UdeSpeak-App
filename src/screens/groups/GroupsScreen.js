@@ -14,9 +14,9 @@ export default function GroupsScreen(props) {
     const { getAll } = useGroups();
     const user = useSelector((state) => state.user);
 
-    const handleGroup = (item) => {
-        //props.navigation.navigate('_levels', { id_language: item.id });
-        console.log(item)
+    const handleItem = (item) => {
+        props.navigation.navigate('_questionnaries', { group_id: item.id });
+        //console.log(item)
     }
 
     useEffect(() => {
@@ -34,11 +34,11 @@ export default function GroupsScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} title={'Grupos'} onSearch={() => console.log('Searching groups ...')}/>
+            <NavBar navigation={props.navigation} title={'Grupos'} onSearch={() => console.log('Searching questionnarie...')}/>
             <ScrollView style={styles.scrollView}>
                 {
                     levels.map((item, i) =>
-                        <GroupItem item={item} key={i}/>                   
+                        <GroupItem item={item} key={i} handleItem={()=>handleItem(item)}/>                   
                     )
                 }                
             </ScrollView>

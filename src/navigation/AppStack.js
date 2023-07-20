@@ -7,6 +7,7 @@ import SettingsScreen from '../screens/settings/SettingsScreen';
 import LanguagesScreen from '../screens/languages/LanguagesScreen';
 import LevelsScreen from '../screens/levels/LevelsScreen';
 import GroupsScreen from '../screens/groups/GroupsScreen';
+import QuestionnariesScreen from '../screens/questionnaries/QuestionnariesScreen';
 
 //Drawers
 import CustomDrawer from '../components/CustomDrawer';
@@ -28,6 +29,7 @@ export default function NavigationDrawer({isAuth, isLoading}) {
             <Drawer.Screen name="Ayuda" component={SettingsScreen} />
             <Drawer.Screen name="_levels" component={LevelsScreen} />
             <Drawer.Screen name="_groups" component={GroupsScreen} />
+            <Drawer.Screen name="_questionnaries" component={QuestionnariesScreen} />
         </Drawer.Navigator> : null
   )
 }
