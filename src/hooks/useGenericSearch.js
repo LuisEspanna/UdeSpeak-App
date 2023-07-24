@@ -13,7 +13,7 @@ export default function useGenericSearch() {
 
     const search = (text) => {
         let aux = [];
-
+        // TODO: Eliminar de la busqueda a IDs y URLs 
         if(text.length > 0){
             aux = localItems.map((item)=>{
                 for (var clave in item){

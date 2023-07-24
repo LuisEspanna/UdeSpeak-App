@@ -5,17 +5,19 @@ import useQuestions from '../../hooks/useQuestions';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
+import useGenericSearch from '../../hooks/useGenericSearch';
 
 export default function QuestionsScreen(props) {
-    const [questions, setQuestions] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const { getAll } = useQuestions();
     const user = useSelector((state) => state.user);
+    const { results, search, setItems } = useGenericSearch();
 
     const handleItem = (item) => {
         // TODO: IFs cons tipos de questions
         //props.navigation.navigate('_questionnaries', { id_level: item.id });
         console.log('go to questions list...');
+        console.log(item);
     }
 
     useEffect(() => {
@@ -23,7 +25,7 @@ export default function QuestionsScreen(props) {
         async function fetchLevels() {
             setIsLoading(true);
             const local = await getAll(props.route.params.questionnary_id);
-            setQuestions(local);
+            setItems(local);
             setIsLoading(false);
         }
         fetchLevels();
@@ -32,10 +34,10 @@ export default function QuestionsScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} title={'Preguntas/Ejercicios'} handleSearch={() => console.log('Searching question ...')}/>
+            <NavBar navigation={props.navigation} title={'Preguntas/Ejercicios'} handleSearch={(text) => search(text)}/>
             <ScrollView style={styles.scrollView}>
                 {
-                    questions.map((item, i) =>
+                    results.map((item, i) =>
                         <TouchableOpacity key={i} style={styles.item} onPress={() => handleItem(item)}>
                             <Text style={styles.itemTitle}>{item.title}</Text>
                             <Text style={styles.itemText}>{item.type}</Text>
