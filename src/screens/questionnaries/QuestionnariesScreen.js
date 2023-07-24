@@ -31,7 +31,7 @@ export default function QuestionnariesScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} title={'Cuestionarios'} onSearch={() => console.log('Searching quesrionnarie ...')}/>
+            <NavBar navigation={props.navigation} title={'Cuestionarios'} handleSearch={() => console.log('Searching quesrionnarie ...')}/>
             <ScrollView style={styles.scrollView}>
                 {
                     questionnaries.map((item, i) =>

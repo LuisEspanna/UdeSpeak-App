@@ -1,17 +1,18 @@
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useEffect } from 'react';
 import useLevels from '../../hooks/useLevels';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
-//import { getDisplayName } from '../../functions'
+import useGenericSearch from '../../hooks/useGenericSearch';
 
 export default function LevelsScreen(props) {
-    const [levels, setLevels] = useState([]);
+    //const [levels, setLevels] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const { getAll } = useLevels();
     const user = useSelector((state) => state.user);
+    const {results, search, setItems} = useGenericSearch();
 
     const handleLanguage = (item) => {
         props.navigation.navigate('_groups', { id_level: item.id });
@@ -22,7 +23,8 @@ export default function LevelsScreen(props) {
         async function fetchLevels() {
             setIsLoading(true);
             const localLevels = await getAll(props.route.params.id_language);
-            setLevels(localLevels);
+            //setLevels(localLevels);
+            setItems(localLevels);
             setIsLoading(false);
         }
         fetchLevels();
@@ -31,10 +33,10 @@ export default function LevelsScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} title={'Niveles'} onSearch={() => console.log('Searching levels ...')}/>
+            <NavBar navigation={props.navigation} title={'Niveles'} handleSearch={(text) => search(text)}/>
             <ScrollView style={styles.scrollView}>
                 {
-                    levels.map((item, i) =>
+                    results.map((item, i) =>
                         <TouchableOpacity key={i} style={styles.levelItem} onPress={() => handleLanguage(item)}>
                             <Text style={styles.levelTitle}>{item.title}</Text>
                             <Text style={styles.levelText}>{item.description}</Text>

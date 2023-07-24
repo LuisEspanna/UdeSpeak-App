@@ -34,7 +34,7 @@ export default function GroupsScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} title={'Grupos'} onSearch={() => console.log('Searching questionnarie...')}/>
+            <NavBar navigation={props.navigation} title={'Grupos'} handleSearch={() => console.log('Searching questionnarie...')}/>
             <ScrollView style={styles.scrollView}>
                 {
                     levels.map((item, i) =>

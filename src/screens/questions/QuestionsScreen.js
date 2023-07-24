@@ -32,7 +32,7 @@ export default function QuestionsScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} title={'Preguntas/Ejercicios'} onSearch={() => console.log('Searching question ...')}/>
+            <NavBar navigation={props.navigation} title={'Preguntas/Ejercicios'} handleSearch={() => console.log('Searching question ...')}/>
             <ScrollView style={styles.scrollView}>
                 {
                     questions.map((item, i) =>

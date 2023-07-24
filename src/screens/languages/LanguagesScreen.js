@@ -31,7 +31,7 @@ export default function LanguageScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} title={'Idiomas'} onSearch={() => console.log('Searching languages ...')}/>
+            <NavBar navigation={props.navigation} title={'Idiomas'} handleSearch={() => console.log('Searching languages ...')}/>
             <ScrollView style={styles.scrollView}>
                 {
                     languages.map((item, i) =>
