@@ -18,7 +18,11 @@ export default function useGenericSearch() {
             aux = localItems.map((item)=>{
                 for (var clave in item){
                     if (item.hasOwnProperty(clave)) {
-                        if(JSON.stringify(item[clave]).toLocaleLowerCase().includes(text.toLocaleLowerCase())){
+                        if(JSON.stringify(item[clave]).toLocaleLowerCase().includes(text.toLocaleLowerCase()) 
+                           && !JSON.stringify(item[clave]).toLocaleLowerCase().includes('http')
+                           && clave !== 'id'
+                           && !clave.includes('_id')
+                        ){
                             return item;
                         }
                     }

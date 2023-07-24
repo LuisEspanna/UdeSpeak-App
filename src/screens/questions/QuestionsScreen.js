@@ -17,7 +17,6 @@ export default function QuestionsScreen(props) {
         // TODO: IFs cons tipos de questions
         //props.navigation.navigate('_questionnaries', { id_level: item.id });
         console.log('go to questions list...');
-        console.log(item);
     }
 
     useEffect(() => {
