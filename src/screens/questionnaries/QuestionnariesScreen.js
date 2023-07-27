@@ -5,12 +5,13 @@ import useQuestionnaries from '../../hooks/useQuestionnaries';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
+import useGenericSearch from '../../hooks/useGenericSearch';
 
 export default function QuestionnariesScreen(props) {
-    const [questionnaries, setQuestionnaries] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const { getAll } = useQuestionnaries();
     const user = useSelector((state) => state.user);
+    const { results, search, setItems } = useGenericSearch();
 
     const handleItem = (item) => {
         props.navigation.navigate('_questions', { questionnary_id: item.id });
@@ -22,7 +23,7 @@ export default function QuestionnariesScreen(props) {
         async function fetchLevels() {
             setIsLoading(true);
             const localQuestionnaries = await getAll(props.route.params.group_id);
-            setQuestionnaries(localQuestionnaries);
+            setItems(localQuestionnaries);
             setIsLoading(false);
         }
         fetchLevels();
@@ -31,10 +32,10 @@ export default function QuestionnariesScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} title={'Cuestionarios'} onSearch={() => console.log('Searching quesrionnarie ...')}/>
+            <NavBar navigation={props.navigation} title={'Cuestionarios'} handleSearch={(text) => search(text)}/>
             <ScrollView style={styles.scrollView}>
                 {
-                    questionnaries.map((item, i) =>
+                    results.map((item, i) =>
                         <TouchableOpacity key={i} style={styles.item} onPress={() => handleItem(item)}>
                             <Text style={styles.itemTitle}>{item.name}</Text>
                             <Text style={styles.itemText}>{item.description}</Text>

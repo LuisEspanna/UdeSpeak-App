@@ -6,13 +6,13 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
 import GroupItem from './helper/GroupItem';
-//import { getDisplayName } from '../../functions'
+import useGenericSearch from '../../hooks/useGenericSearch';
 
 export default function GroupsScreen(props) {
-    const [levels, setLevels] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const { getAll } = useGroups();
     const user = useSelector((state) => state.user);
+    const {results, search, setItems} = useGenericSearch();
 
     const handleItem = (item) => {
         props.navigation.navigate('_questionnaries', { group_id: item.id });
@@ -25,7 +25,7 @@ export default function GroupsScreen(props) {
             setIsLoading(true);
             const localLevels = await getAll(props.route.params.id_level);
             localLevels.forEach((item) => { item.collapsed = true });
-            setLevels(localLevels);
+            setItems(localLevels);
             setIsLoading(false);
         }
         fetchLevels();
@@ -34,10 +34,10 @@ export default function GroupsScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} title={'Grupos'} onSearch={() => console.log('Searching questionnarie...')}/>
+            <NavBar navigation={props.navigation} title={'Grupos'} handleSearch={(text) => search(text)}/>
             <ScrollView style={styles.scrollView}>
                 {
-                    levels.map((item, i) =>
+                    results.map((item, i) =>
                         <GroupItem item={item} key={i} handleItem={()=>handleItem(item)}/>                   
                     )
                 }                

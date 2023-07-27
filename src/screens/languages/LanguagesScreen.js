@@ -5,16 +5,16 @@ import useLanguages from '../../hooks/useLanguages';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
+import useGenericSearch from '../../hooks/useGenericSearch';
 
 export default function LanguageScreen(props) {
-    const [languages, setLevels] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const { getAll } = useLanguages();
     const user = useSelector((state) => state.user);
+    const { results, search, setItems } = useGenericSearch();
 
     const handleLanguage = (item) => {
         props.navigation.navigate('_levels', { id_language: item.id });
-        //console.log(item)
     }
 
     useEffect(() => {
@@ -22,7 +22,7 @@ export default function LanguageScreen(props) {
         async function fetchLevels() {
             setIsLoading(true);
             const localLanguages = await getAll();
-            setLevels(localLanguages);
+            setItems(localLanguages);
             setIsLoading(false);
         }
         fetchLevels();
@@ -31,10 +31,10 @@ export default function LanguageScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} title={'Idiomas'} onSearch={() => console.log('Searching languages ...')}/>
+            <NavBar navigation={props.navigation} title={'Idiomas'} handleSearch={(text) => search(text)}/>
             <ScrollView style={styles.scrollView}>
                 {
-                    languages.map((item, i) =>
+                    results.map((item, i) =>
                     <TouchableOpacity key={i} style={styles.languageItem} onPress={() => handleLanguage(item)}>
                       <Image source={{ uri: item.image }} style={styles.languageImage} />
                       <Text style={styles.languageText}>{item.name}</Text>
