@@ -1,10 +1,11 @@
-import { StyleSheet, Text, ScrollView, SafeAreaView, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, ScrollView, SafeAreaView, TouchableOpacity, Image, View } from 'react-native';
 import React from 'react';
 import { useEffect } from 'react';
 import useLanguages from '../../hooks/useLanguages';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
+import LoadingOverlay from '../../components/LoadingOverlay';
 import useGenericSearch from '../../hooks/useGenericSearch';
 
 export default function LanguageScreen(props) {
@@ -29,6 +30,15 @@ export default function LanguageScreen(props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const evalCoursed = (curItem) => {
+        let found = false;
+        user?.coursed?.languages?.forEach(item => {
+            if(item === curItem.id)
+                found = true;
+        });
+        return found;
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <NavBar navigation={props.navigation} title={'Idiomas'} handleSearch={(text) => search(text)}/>
@@ -38,10 +48,14 @@ export default function LanguageScreen(props) {
                     <TouchableOpacity key={i} style={styles.languageItem} onPress={() => handleLanguage(item)}>
                       <Image source={{ uri: item.image }} style={styles.languageImage} />
                       <Text style={styles.languageText}>{item.name}</Text>
+                      {
+                        evalCoursed(item) && <View style={styles.coursedIndicator}/>
+                      }
                     </TouchableOpacity>
                     )
                 }                
             </ScrollView>
+            <LoadingOverlay isLoading={isLoading}/>
         </SafeAreaView>
     )
 }
@@ -85,8 +99,9 @@ const styles = StyleSheet.create({
         height: 100,
         padding: 20,
         flexDirection: 'row',
-        alignItems: 'center'
-    
+        alignItems: 'center',
+        marginLeft: 2,
+        marginRight: 2
       },
       languageImage: {
         height: 63,
@@ -101,6 +116,15 @@ const styles = StyleSheet.create({
       },
       scrollView: {
           marginTop: 50
+      },
+      coursedIndicator: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: '#0FB4B9',
+        height: 5,
+        borderBottomLeftRadius: 4,
+        borderBottomRightRadius: 4
       }
-
 })

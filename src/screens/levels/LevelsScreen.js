@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
 import useGenericSearch from '../../hooks/useGenericSearch';
+import LoadingOverlay from '../../components/LoadingOverlay';
 
 export default function LevelsScreen(props) {
     //const [levels, setLevels] = useState([]);
@@ -23,13 +24,21 @@ export default function LevelsScreen(props) {
         async function fetchLevels() {
             setIsLoading(true);
             const localLevels = await getAll(props.route.params.id_language);
-            //setLevels(localLevels);
             setItems(localLevels);
             setIsLoading(false);
         }
         fetchLevels();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const evalCoursed = (curItem) => {
+        let found = false;
+        user?.coursed?.levels?.forEach(item => {
+            if(item === curItem.id)
+                found = true;
+        });
+        return found;
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -40,10 +49,14 @@ export default function LevelsScreen(props) {
                         <TouchableOpacity key={i} style={styles.levelItem} onPress={() => handleLanguage(item)}>
                             <Text style={styles.levelTitle}>{item.title}</Text>
                             <Text style={styles.levelText}>{item.description}</Text>
+                            {
+                                evalCoursed(item) && <View style={styles.coursedIndicator}/>
+                            }
                         </TouchableOpacity>
                     )
                 }                
             </ScrollView>
+            <LoadingOverlay isLoading={isLoading}/>
         </SafeAreaView>
     )
 }
@@ -104,5 +117,15 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         marginTop: 50
+    },
+    coursedIndicator: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      backgroundColor: '#0FB4B9',
+      height: 5,
+      borderBottomLeftRadius: 4,
+      borderBottomRightRadius: 4
     }
 })

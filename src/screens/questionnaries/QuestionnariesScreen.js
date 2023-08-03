@@ -30,6 +30,15 @@ export default function QuestionnariesScreen(props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const evalCoursed = (curItem) => {
+        let found = false;
+        user?.coursed?.qestionnaries?.forEach(item => {
+            if(item === curItem.id)
+                found = true;
+        });
+        return found;
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <NavBar navigation={props.navigation} title={'Cuestionarios'} handleSearch={(text) => search(text)}/>
@@ -39,6 +48,9 @@ export default function QuestionnariesScreen(props) {
                         <TouchableOpacity key={i} style={styles.item} onPress={() => handleItem(item)}>
                             <Text style={styles.itemTitle}>{item.name}</Text>
                             <Text style={styles.itemText}>{item.description}</Text>
+                            {
+                                evalCoursed(item) && <View style={styles.coursedIndicator}/>
+                            }
                         </TouchableOpacity>
                     )
                 }                
@@ -98,5 +110,15 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         marginTop: 50
+    },
+    coursedIndicator: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: '#0FB4B9',
+        height: 5,
+        borderBottomLeftRadius: 4,
+        borderBottomRightRadius: 4
     }
 })
