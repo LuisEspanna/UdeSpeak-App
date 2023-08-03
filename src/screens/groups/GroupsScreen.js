@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
 import GroupItem from './helper/GroupItem';
 import useGenericSearch from '../../hooks/useGenericSearch';
+import LoadingOverlay from '../../components/LoadingOverlay';
 
 export default function GroupsScreen(props) {
     const [isLoading, setIsLoading] = useState(false);
@@ -15,7 +16,7 @@ export default function GroupsScreen(props) {
     const {results, search, setItems} = useGenericSearch();
 
     const handleItem = (item) => {
-        props.navigation.navigate('_questionnaries', { group_id: item.id });
+        props.navigation.navigate('_questionnaries', { group_id: item.id, ids: {...props.route.params.ids, group: item.id} });
         //console.log(item)
     }
 
@@ -38,10 +39,11 @@ export default function GroupsScreen(props) {
             <ScrollView style={styles.scrollView}>
                 {
                     results.map((item, i) =>
-                        <GroupItem item={item} key={i} handleItem={()=>handleItem(item)}/>                   
+                        <GroupItem item={item} key={i} handleItem={()=>handleItem(item)} user={user}/>                   
                     )
                 }                
             </ScrollView>
+            <LoadingOverlay isLoading={isLoading}/>
         </SafeAreaView>
     )
 }

@@ -5,11 +5,20 @@ import ArrowDown from "../../../components/icons/ArrowDown";
 import ArrowUp from "../../../components/icons/ArrowUp";
 import { toDateFormatShort } from '../../../functions';
 
-export default function GroupItem({ item, handleItem }) {
+export default function GroupItem({ item, handleItem, user }) {
     const [collapsed, setCollapsed] = useState(true);
 
     const handleCollapsed = () => {
         setCollapsed(!collapsed);
+    }
+
+    const evalCoursed = (curItem) => {
+        let found = false;
+        user?.coursed?.groups?.forEach(item => {
+            if(item === curItem.id)
+                found = true;
+        });
+        return found;
     }
 
     return (
@@ -17,10 +26,10 @@ export default function GroupItem({ item, handleItem }) {
             <View style={styles.header}>
                 <Text style={styles.title}>{item.name}</Text>
                 <TouchableOpacity onPress={handleCollapsed} style={styles.arrowIcon}>
-                    {!collapsed ? <ArrowUp/> : <ArrowDown/>} 
+                    {!collapsed ? <ArrowUp /> : <ArrowDown />}
                 </TouchableOpacity>
             </View>
-            
+
             <Text style={styles.descriptionText}>{item.description}</Text>
             {!collapsed &&
                 <View style={styles.dateContainer}>
@@ -30,7 +39,9 @@ export default function GroupItem({ item, handleItem }) {
                 </View>
             }
             <Text style={styles.creatorText}>{item.displayName}</Text>
-
+            {
+                evalCoursed(item) && <View style={styles.coursedIndicator} />
+            }
         </TouchableOpacity>
     )
 }
@@ -52,6 +63,7 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         height: 'auto',
         padding: 20,
+        position: 'relative'
     },
     title: {
         fontSize: 15,
@@ -76,12 +88,22 @@ const styles = StyleSheet.create({
         color: '#0FB4B9',
         fontSize: 10,
     },
-    dateContainer:{
+    dateContainer: {
         marginTop: 15,
     },
-    arrowIcon:{
+    arrowIcon: {
     },
     header: {
         flexDirection: 'row'
+    },
+    coursedIndicator: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: '#0FB4B9',
+        height: 5,
+        borderBottomLeftRadius: 4,
+        borderBottomRightRadius: 4
     }
 })
