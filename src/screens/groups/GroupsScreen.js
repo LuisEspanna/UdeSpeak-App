@@ -15,7 +15,7 @@ export default function GroupsScreen(props) {
     const {results, search, setItems} = useGenericSearch();
 
     const handleItem = (item) => {
-        props.navigation.navigate('_questionnaries', { group_id: item.id });
+        props.navigation.navigate('_questionnaries', { group_id: item.id, ids: {...props.route.params.ids, group: item.id} });
         //console.log(item)
     }
 

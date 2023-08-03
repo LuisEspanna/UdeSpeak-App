@@ -14,7 +14,7 @@ export default function QuestionnariesScreen(props) {
     const { results, search, setItems } = useGenericSearch();
 
     const handleItem = (item) => {
-        props.navigation.navigate('_questions', { questionnary_id: item.id });
+        props.navigation.navigate('_questions', { questionnary_id: item.id, ids: {...props.route.params.ids, questionnary: item.id} });
         //console.log('go to questions list...');
     }
 

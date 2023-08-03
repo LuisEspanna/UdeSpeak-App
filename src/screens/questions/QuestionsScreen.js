@@ -13,9 +13,12 @@ export default function QuestionsScreen(props) {
     const user = useSelector((state) => state.user);
     const { results, search, setItems } = useGenericSearch();
 
+
+    console.log(props.route.params);
+
     const handleItem = (item) => {
         // TODO: IFs cons tipos de questions
-        //props.navigation.navigate('_questionnaries', { id_level: item.id });
+        //props.navigation.navigate('_question', { id_level: item.id });
         console.log('go to questions list...');
     }
 

@@ -15,7 +15,7 @@ export default function LevelsScreen(props) {
     const {results, search, setItems} = useGenericSearch();
 
     const handleLanguage = (item) => {
-        props.navigation.navigate('_groups', { id_level: item.id });
+        props.navigation.navigate('_groups', { id_level: item.id, ids: {...props.route.params.ids, level: item.id} });
     }
 
     useEffect(() => {

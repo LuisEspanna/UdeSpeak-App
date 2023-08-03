@@ -14,7 +14,7 @@ export default function LanguageScreen(props) {
     const { results, search, setItems } = useGenericSearch();
 
     const handleLanguage = (item) => {
-        props.navigation.navigate('_levels', { id_language: item.id });
+        props.navigation.navigate('_levels', { id_language: item.id, ids: {language: item.id} });
     }
 
     useEffect(() => {
