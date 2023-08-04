@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
 import useGenericSearch from '../../hooks/useGenericSearch';
+import LoadingOverlay from '../../components/LoadingOverlay';
+import { QUESTIONS_TYPE } from '../../constants'
 
 export default function QuestionsScreen(props) {
     const [isLoading, setIsLoading] = useState(false);
@@ -13,10 +15,15 @@ export default function QuestionsScreen(props) {
     const user = useSelector((state) => state.user);
     const { results, search, setItems } = useGenericSearch();
 
-
-    console.log(props.route.params);
-
     const handleItem = (item) => {
+        switch (item.type) {
+            case QUESTIONS_TYPE.READING:
+                    props.navigation.navigate('_reading', { item: item });
+                break;
+        
+            default:
+                break;
+        }
         // TODO: IFs cons tipos de questions
         //props.navigation.navigate('_question', { id_level: item.id });
         console.log('go to questions list...');
@@ -34,6 +41,15 @@ export default function QuestionsScreen(props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const evalCoursed = (curItem) => {
+        let found = false;
+        user?.coursed?.groups?.forEach(item => {
+            if(item === curItem.id)
+                found = true;
+        });
+        return found;
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <NavBar navigation={props.navigation} title={'Preguntas/Ejercicios'} handleSearch={(text) => search(text)}/>
@@ -43,10 +59,14 @@ export default function QuestionsScreen(props) {
                         <TouchableOpacity key={i} style={styles.item} onPress={() => handleItem(item)}>
                             <Text style={styles.itemTitle}>{item.title}</Text>
                             <Text style={styles.itemText}>{item.type}</Text>
+                            {
+                                evalCoursed(item) && <View style={styles.coursedIndicator} />
+                            }
                         </TouchableOpacity>
                     )
                 }                
             </ScrollView>
+            <LoadingOverlay isLoading={isLoading}/>
         </SafeAreaView>
     )
 }
@@ -103,5 +123,15 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         marginTop: 50
+    },
+    coursedIndicator: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: '#0FB4B9',
+        height: 5,
+        borderBottomLeftRadius: 4,
+        borderBottomRightRadius: 4
     }
 })

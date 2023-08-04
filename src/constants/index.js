@@ -16,8 +16,13 @@ const PERMISSIONS = {
     STUDENT: 'Estudiante'
 }
 
+const QUESTIONS_TYPE = {
+    LISTENING: 'listening',
+    READING: 'reading'
+}
 
 module.exports = {
     COLLECTIONS,
-    PERMISSIONS
+    PERMISSIONS,
+    QUESTIONS_TYPE
 }

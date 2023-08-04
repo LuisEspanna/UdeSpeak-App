@@ -9,6 +9,7 @@ import LevelsScreen from '../screens/levels/LevelsScreen';
 import GroupsScreen from '../screens/groups/GroupsScreen';
 import QuestionnariesScreen from '../screens/questionnaries/QuestionnariesScreen';
 import QuestionsScreen from '../screens/questions/QuestionsScreen';
+import ReadingScreen from '../screens/reading/ReadingScreen';
 
 //Drawers
 import CustomDrawer from '../components/CustomDrawer';
@@ -32,6 +33,7 @@ export default function NavigationDrawer({isAuth, isLoading}) {
             <Drawer.Screen name="_groups" component={GroupsScreen} />
             <Drawer.Screen name="_questionnaries" component={QuestionnariesScreen} />
             <Drawer.Screen name="_questions" component={QuestionsScreen} />
+            <Drawer.Screen name="_reading" component={ReadingScreen} />
         </Drawer.Navigator> : null
   )
 }

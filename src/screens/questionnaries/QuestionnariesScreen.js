@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
 import useGenericSearch from '../../hooks/useGenericSearch';
+import LoadingOverlay from '../../components/LoadingOverlay';
 
 export default function QuestionnariesScreen(props) {
     const [isLoading, setIsLoading] = useState(false);
@@ -55,6 +56,7 @@ export default function QuestionnariesScreen(props) {
                     )
                 }                
             </ScrollView>
+            <LoadingOverlay isLoading={isLoading}/>
         </SafeAreaView>
     )
 }
