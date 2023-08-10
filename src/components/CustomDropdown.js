@@ -4,14 +4,13 @@ import SelectDropdown from 'react-native-select-dropdown';
 
 export default function CustomDropdown({ data, onSelect, buttonTextAfterSelection, rowTextForSelection }) {
     const getSizeDropdown = (list) => {
-        let size = 0
+        let size = 0;
 
         list.forEach(item => {
-            if (item.length > size) {
-                size = item.length;
+            if (item.description.length > size) {
+                size = item.description.length;
             }
-        });
-        
+        });        
         return size * 15;
     }
 

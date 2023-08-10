@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
 import LoadingOverlay from '../../components/LoadingOverlay';
 import CustomDropdown from '../../components/CustomDropdown';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import ButtonOptionCheck from '../../components/ButtonOptionCheck';
 
 
 export default function ReadingScreen(props) {
@@ -14,6 +14,7 @@ export default function ReadingScreen(props) {
     const { getAll } = useQuestions();
     const user = useSelector((state) => state.user);
     const { item } = props.route.params;
+    const [userAnswers, setUserAnswers] = useState({});
 
     //console.log(item);
 
@@ -23,10 +24,17 @@ export default function ReadingScreen(props) {
             item?.questions?.forEach((q) => {
                 if (q.title === word.replace('@', '')) {
                     options = q.options;
+                    options = options.map(op => {return {...op, parent: q.id}});
                 }
             });
         }
         return options;
+    }
+
+    const handleAnswer = (option) => {
+        // TODO: implementar para preguntas tambien (actualmente funciona para dropdowns)
+        console.log({...userAnswers, [option.parent]: option.id});
+        setUserAnswers({...userAnswers, [option.parent]: option.id})
     }
 
     return (
@@ -37,7 +45,7 @@ export default function ReadingScreen(props) {
                 {
                     item.image && <Image source={{ uri: item.image }} />
                 }
-                
+
                 <View style={styles.description}>
                     {
                         item?.description && item?.description?.split(' ').map((word, i) => {
@@ -45,9 +53,15 @@ export default function ReadingScreen(props) {
                                 return (
                                     <CustomDropdown
                                         key={i}
-                                        data={getOptions(word).map((opt, j) => opt?.description)}
-                                        onSelect={(selectedItem, index) => {
-                                            console.log(selectedItem, index)
+                                        data={getOptions(word)}
+                                        onSelect={(selectedItem) => {
+                                            handleAnswer(selectedItem);
+                                        }}
+                                        buttonTextAfterSelection={(selectedItem) => {
+                                            return selectedItem.description;
+                                        }}
+                                        rowTextForSelection={(item) => {
+                                            return item.description;
                                         }}
                                     />
                                 );
@@ -57,30 +71,23 @@ export default function ReadingScreen(props) {
                         })
                     }
                 </View>
-                
-                {
-                    /*
-                    <View style={styles.questions}>
+
+                <View style={styles.questions}>
                     {
                         item?.questions && item.questions.filter(q => q.type === 'question').map((q, i) =>
                             <View key={i}>
-                                <Text>{q.title}</Text>
+                                <Text style={styles.questionsTitle}>{q.title}</Text>
 
                                 <View className='my-2'>
                                     {
                                         q?.options && q.options.map((o, j) =>
-                                            <TouchableOpacity className='option' key={j}>
-                                                <Text className='option-letter'>{o.letter}</Text>
-                                                <Text>{o.description}</Text>
-                                            </TouchableOpacity>
+                                            <ButtonOptionCheck key={j} letter={o.letter} description={o.description}/>
                                         )
                                     }
-                                </View>
+                                </View>                                
                             </View>)
                     }
-                    </View>
-                    */
-                }
+                </View>
             </ScrollView>
             <LoadingOverlay isLoading={isLoading} />
         </SafeAreaView>
@@ -99,7 +106,8 @@ const styles = StyleSheet.create({
     },
     description: {
         flexDirection: 'row',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        marginBottom: 10
     },
     word: {
         marginEnd: 4,
@@ -111,7 +119,8 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         fontWeight: 'bold'
     },
-    questions: {
-
+    questionsTitle: {
+        marginTop: 20,
+        marginBottom: 5
     }
 })
