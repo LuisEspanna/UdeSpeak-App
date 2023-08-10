@@ -7,13 +7,15 @@ import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
 import useGenericSearch from '../../hooks/useGenericSearch';
 import LoadingOverlay from '../../components/LoadingOverlay';
-import { QUESTIONS_TYPE } from '../../constants'
+import { QUESTIONS_TYPE } from '../../constants';
+import { useIsFocused } from "@react-navigation/native";
 
 export default function QuestionsScreen(props) {
     const [isLoading, setIsLoading] = useState(false);
     const { getAll } = useQuestions();
     const user = useSelector((state) => state.user);
     const { results, search, setItems } = useGenericSearch();
+    const isFocused = useIsFocused();
 
     const handleItem = (item) => {
         switch (item.type) {
@@ -24,25 +26,24 @@ export default function QuestionsScreen(props) {
             default:
                 break;
         }
-        // TODO: IFs cons tipos de questions
-        //props.navigation.navigate('_question', { id_level: item.id });
     }
 
     useEffect(() => {
-
-        async function fetchLevels() {
-            setIsLoading(true);
-            const local = await getAll(props.route.params.questionnary_id);
-            setItems(local);
-            setIsLoading(false);
+        if(isFocused){
+            fetchData();
         }
-        fetchLevels();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [isFocused]);
+
+    const fetchData = async() => {
+        setIsLoading(true);
+        const local = await getAll(props.route.params.questionnary_id);
+        setItems(local);
+        setIsLoading(false);
+    }
 
     const evalCoursed = (curItem) => {
         let found = false;
-        user?.coursed?.groups?.forEach(item => {
+        user?.coursed?.questions?.forEach(item => {
             if(item === curItem.id)
                 found = true;
         });

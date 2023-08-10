@@ -7,34 +7,36 @@ import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
 import useGenericSearch from '../../hooks/useGenericSearch';
 import LoadingOverlay from '../../components/LoadingOverlay';
+import { useIsFocused } from "@react-navigation/native";
 
 export default function QuestionnariesScreen(props) {
     const [isLoading, setIsLoading] = useState(false);
     const { getAll } = useQuestionnaries();
     const user = useSelector((state) => state.user);
     const { results, search, setItems } = useGenericSearch();
+    const isFocused = useIsFocused();
 
     const handleItem = (item) => {
-        props.navigation.navigate('_questions', { questionnary_id: item.id, ids: {...props.route.params.ids, questionnary: item.id} });
-        //console.log('go to questions list...');
+        props.navigation.navigate('_questions', { questionnary_id: item.id, ids: { ...props.route.params.ids, questionnary: item.id } });
     }
 
     useEffect(() => {
-
-        async function fetchLevels() {
-            setIsLoading(true);
-            const localQuestionnaries = await getAll(props.route.params.group_id);
-            setItems(localQuestionnaries);
-            setIsLoading(false);
+        if (isFocused) {
+            fetchData();
         }
-        fetchLevels();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [isFocused]);
+
+    const fetchData = async () => {
+        setIsLoading(true);
+        const localQuestionnaries = await getAll(props.route.params.group_id);
+        setItems(localQuestionnaries);
+        setIsLoading(false);
+    }
 
     const evalCoursed = (curItem) => {
         let found = false;
         user?.coursed?.qestionnaries?.forEach(item => {
-            if(item === curItem.id)
+            if (item === curItem.id)
                 found = true;
         });
         return found;
@@ -42,7 +44,7 @@ export default function QuestionnariesScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} title={'Cuestionarios'} handleSearch={(text) => search(text)}/>
+            <NavBar navigation={props.navigation} title={'Cuestionarios'} handleSearch={(text) => search(text)} />
             <ScrollView style={styles.scrollView}>
                 {
                     results.map((item, i) =>
@@ -50,13 +52,13 @@ export default function QuestionnariesScreen(props) {
                             <Text style={styles.itemTitle}>{item.name}</Text>
                             <Text style={styles.itemText}>{item.description}</Text>
                             {
-                                evalCoursed(item) && <View style={styles.coursedIndicator}/>
+                                evalCoursed(item) && <View style={styles.coursedIndicator} />
                             }
                         </TouchableOpacity>
                     )
-                }                
+                }
             </ScrollView>
-            <LoadingOverlay isLoading={isLoading}/>
+            <LoadingOverlay isLoading={isLoading} />
         </SafeAreaView>
     )
 }

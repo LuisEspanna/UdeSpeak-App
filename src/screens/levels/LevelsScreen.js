@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
 import useGenericSearch from '../../hooks/useGenericSearch';
 import LoadingOverlay from '../../components/LoadingOverlay';
+import { useIsFocused } from "@react-navigation/native";
 
 export default function LevelsScreen(props) {
     //const [levels, setLevels] = useState([]);
@@ -14,22 +15,24 @@ export default function LevelsScreen(props) {
     const { getAll } = useLevels();
     const user = useSelector((state) => state.user);
     const {results, search, setItems} = useGenericSearch();
+    const isFocused = useIsFocused();
 
     const handleLanguage = (item) => {
         props.navigation.navigate('_groups', { id_level: item.id, ids: {...props.route.params.ids, level: item.id} });
     }
 
     useEffect(() => {
+        if(isFocused){ 
+            fetchLevels();
+        }        
+    }, [isFocused]);
 
-        async function fetchLevels() {
-            setIsLoading(true);
-            const localLevels = await getAll(props.route.params.id_language);
-            setItems(localLevels);
-            setIsLoading(false);
-        }
-        fetchLevels();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    const fetchLevels = async() => {
+        setIsLoading(true);
+        const localLevels = await getAll(props.route.params.id_language);
+        setItems(localLevels);
+        setIsLoading(false);
+    }
 
     const evalCoursed = (curItem) => {
         let found = false;
