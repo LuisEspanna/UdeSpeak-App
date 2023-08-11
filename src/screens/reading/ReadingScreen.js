@@ -1,6 +1,5 @@
 import { StyleSheet, Text, ScrollView, SafeAreaView, Image, View } from 'react-native';
 import React from 'react';
-import useQuestions from '../../hooks/useQuestions';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
@@ -11,12 +10,11 @@ import ButtonOptionCheck from '../../components/ButtonOptionCheck';
 
 export default function ReadingScreen(props) {
     const [isLoading, setIsLoading] = useState(false);
-    const { getAll } = useQuestions();
     const user = useSelector((state) => state.user);
     const { item } = props.route.params;
     const [userAnswers, setUserAnswers] = useState({});
 
-    //console.log(item);
+    // TODO: UseEffect to clean previus state.
 
     const getOptions = (word) => {
         let options = [];
@@ -32,7 +30,6 @@ export default function ReadingScreen(props) {
     }
 
     const handleAnswer = (option) => {
-        // TODO: implementar para preguntas tambien (actualmente funciona para dropdowns)
         console.log({...userAnswers, [option.parent]: option.id});
         setUserAnswers({...userAnswers, [option.parent]: option.id})
     }
@@ -81,7 +78,13 @@ export default function ReadingScreen(props) {
                                 <View className='my-2'>
                                     {
                                         q?.options && q.options.map((o, j) =>
-                                            <ButtonOptionCheck key={j} letter={o.letter} description={o.description}/>
+                                            <ButtonOptionCheck
+                                                key={j}
+                                                letter={o.letter}
+                                                description={o.description}
+                                                onPress={() => handleAnswer({...o, parent: q.id})}
+                                                active={userAnswers[q.id] === o.id}
+                                            />
                                         )
                                     }
                                 </View>                                
