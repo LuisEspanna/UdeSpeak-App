@@ -1,20 +1,28 @@
 import { StyleSheet, Text, ScrollView, SafeAreaView, Image, View } from 'react-native';
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
 import LoadingOverlay from '../../components/LoadingOverlay';
 import CustomDropdown from '../../components/CustomDropdown';
 import ButtonOptionCheck from '../../components/ButtonOptionCheck';
+import { useIsFocused } from "@react-navigation/native";
 
 
 export default function ReadingScreen(props) {
     const [isLoading, setIsLoading] = useState(false);
-    const user = useSelector((state) => state.user);
-    const { item } = props.route.params;
+    const user = useSelector((state) => state.user);    
     const [userAnswers, setUserAnswers] = useState({});
+    const [item, setItem] = useState(props.route.params.item)
+    const isFocused = useIsFocused();
 
     // TODO: UseEffect to clean previus state.
+    useEffect(() => {
+        if(isFocused){ 
+            setUserAnswers({});
+            setItem(props.route.params.item);
+        }        
+    }, [isFocused]);
 
     const getOptions = (word) => {
         let options = [];
@@ -87,7 +95,7 @@ export default function ReadingScreen(props) {
                                             />
                                         )
                                     }
-                                </View>                                
+                                </View>
                             </View>)
                     }
                 </View>
@@ -102,10 +110,11 @@ const styles = StyleSheet.create({
         padding: 30,
         backgroundColor: '#F6FBFF',
         flex: 1,
-        height: 1500,
+        height: '100%',
     },
     scrollView: {
         marginTop: 50,
+        marginBottom: 50
     },
     description: {
         flexDirection: 'row',
