@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     description: {
-        fontSize: 16
+        fontSize: 16,
+        textTransform: 'capitalize'
     },
     container: {
         width: '100%',

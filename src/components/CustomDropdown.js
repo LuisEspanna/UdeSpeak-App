@@ -26,6 +26,8 @@ export default function CustomDropdown({ data, onSelect, buttonTextAfterSelectio
                 }]
             }
             buttonTextStyle={styles.btnDropDownText}
+            dropdownStyle = {{borderRadius: 8}}
+            rowStyle={{height: 40}}
         />
     )
 }

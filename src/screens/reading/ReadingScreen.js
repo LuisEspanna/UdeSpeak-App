@@ -7,6 +7,7 @@ import LoadingOverlay from '../../components/LoadingOverlay';
 import CustomDropdown from '../../components/CustomDropdown';
 import ButtonOptionCheck from '../../components/ButtonOptionCheck';
 import { useIsFocused } from "@react-navigation/native";
+import ButtonVerify from '../../components/ButtonVerify';
 
 
 export default function ReadingScreen(props) {
@@ -15,11 +16,19 @@ export default function ReadingScreen(props) {
     const [userAnswers, setUserAnswers] = useState({});
     const [item, setItem] = useState(props.route.params.item)
     const isFocused = useIsFocused();
+    const [isCorrect, setisCorrect] = useState(false);
+
+    const handleNext = () => {
+        setisCorrect(true);
+        console.log('click', true)
+    }
 
     // TODO: UseEffect to clean previus state.
     useEffect(() => {
         if(isFocused){ 
             setUserAnswers({});
+            // TODO: check if it was answered
+            setisCorrect(false);
             setItem(props.route.params.item);
         }        
     }, [isFocused]);
@@ -44,7 +53,7 @@ export default function ReadingScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} title={'Reading view in progress'} />
+            <NavBar navigation={props.navigation} />
             <ScrollView style={styles.scrollView}>
                 <Text style={styles.title}>{item.title}</Text>
                 {
@@ -99,7 +108,14 @@ export default function ReadingScreen(props) {
                             </View>)
                     }
                 </View>
+                <View style={{height: 40}}/>
             </ScrollView>
+            <ButtonVerify 
+                text={'verify'} 
+                onPress={handleNext}
+                onNext={()=> console.log('Next...')}
+                showNextBtn={isCorrect}
+            />
             <LoadingOverlay isLoading={isLoading} />
         </SafeAreaView>
     )
@@ -107,19 +123,24 @@ export default function ReadingScreen(props) {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 30,
+        padding: 20,
         backgroundColor: '#F6FBFF',
         flex: 1,
         height: '100%',
     },
     scrollView: {
-        marginTop: 50,
-        marginBottom: 50
+        marginTop: 40,
+        marginBottom: 20,
+        borderRadius: 8,
+        borderWidth:2,
+        borderColor: '#e3e1e1',
+        padding: 9,
     },
     description: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        marginBottom: 10
+        marginBottom: 10,
+        textTransform: 'capitalize'
     },
     word: {
         marginEnd: 4,
@@ -133,6 +154,7 @@ const styles = StyleSheet.create({
     },
     questionsTitle: {
         marginTop: 20,
-        marginBottom: 5
+        marginBottom: 5,
+        textTransform: 'capitalize'
     }
 })
