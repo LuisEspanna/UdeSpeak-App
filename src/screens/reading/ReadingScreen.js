@@ -8,19 +8,26 @@ import CustomDropdown from '../../components/CustomDropdown';
 import ButtonOptionCheck from '../../components/ButtonOptionCheck';
 import { useIsFocused } from "@react-navigation/native";
 import ButtonVerify from '../../components/ButtonVerify';
+import useUserAnswers from '../../hooks/useUserAnswers';
 
 
 export default function ReadingScreen(props) {
     const [isLoading, setIsLoading] = useState(false);
-    const user = useSelector((state) => state.user);    
     const [userAnswers, setUserAnswers] = useState({});
     const [item, setItem] = useState(props.route.params.item)
     const isFocused = useIsFocused();
-    const [isCorrect, setisCorrect] = useState(false);
+
+    const user = useSelector((state) => state.user);    
+    const { validateReading, reset, isCorrect, correctAnswers } = useUserAnswers();
+
+    const handleValidate = () => {
+        validateReading(item.questions, userAnswers);
+    }
 
     const handleNext = () => {
-        setisCorrect(true);
-        console.log('click', true)
+        // TODO:
+        console.log('click', true);
+        console.log(userAnswers);
     }
 
     // TODO: UseEffect to clean previus state.
@@ -28,7 +35,7 @@ export default function ReadingScreen(props) {
         if(isFocused){ 
             setUserAnswers({});
             // TODO: check if it was answered
-            setisCorrect(false);
+            reset();
             setItem(props.route.params.item);
         }        
     }, [isFocused]);
@@ -47,7 +54,7 @@ export default function ReadingScreen(props) {
     }
 
     const handleAnswer = (option) => {
-        console.log({...userAnswers, [option.parent]: option.id});
+        //console.log({...userAnswers, [option.parent]: option.id});
         setUserAnswers({...userAnswers, [option.parent]: option.id})
     }
 
@@ -77,6 +84,7 @@ export default function ReadingScreen(props) {
                                         rowTextForSelection={(item) => {
                                             return item.description;
                                         }}
+                                        correctAnswers = {correctAnswers}
                                     />
                                 );
                             } else {
@@ -101,6 +109,8 @@ export default function ReadingScreen(props) {
                                                 description={o.description}
                                                 onPress={() => handleAnswer({...o, parent: q.id})}
                                                 active={userAnswers[q.id] === o.id}
+                                                correctAnswers = {correctAnswers}
+                                                parent = {q.id}
                                             />
                                         )
                                     }
@@ -112,8 +122,8 @@ export default function ReadingScreen(props) {
             </ScrollView>
             <ButtonVerify 
                 text={'verify'} 
-                onPress={handleNext}
-                onNext={()=> console.log('Next...')}
+                onPress={handleValidate}
+                onNext={handleNext}
                 showNextBtn={isCorrect}
             />
             <LoadingOverlay isLoading={isLoading} />
