@@ -20,7 +20,7 @@ export default function QuestionsScreen(props) {
     const handleItem = (item) => {
         switch (item.type) {
             case QUESTIONS_TYPE.READING:
-                    props.navigation.navigate('_reading', { item: item });
+                    props.navigation.navigate('_reading', {...props.route.params, item: item });
                 break;
         
             default:
@@ -30,7 +30,9 @@ export default function QuestionsScreen(props) {
 
     useEffect(() => {
         if(isFocused){
-            fetchData();
+            if(!props?.route?.params?.fromBack){  
+                fetchData();              
+            }
         }
     }, [isFocused]);
 

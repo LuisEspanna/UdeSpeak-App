@@ -3,10 +3,20 @@ import React from 'react';
 import HamburgerIcon from './icons/HamburgerIcon';
 import SearchIcon from './icons/SearchIcon';
 import CloseIcon from './icons/CloseIcon';
+import BackIcon from './icons/BackIcon';
 import { useState } from 'react';
 import { TextInput } from 'react-native-gesture-handler';
 
-export default function NavBar({ navigation, title, handleSearch }) {
+
+/**
+ * 
+ * @param {object} props 
+ * @param {object} props.navigation
+ * @param {string} props.toPrevScreen
+ * @param {object} props.routeParams
+ * @returns 
+ */
+export default function NavBar({ navigation, title, handleSearch, toPrevScreen, routeParams }) {
 
   const [isSearching, setIsSearching] = useState(false);
 
@@ -25,6 +35,10 @@ export default function NavBar({ navigation, title, handleSearch }) {
 
   const handleChange = (text) => {
     handleSearch(text);
+  }
+
+  const handleBack = () => {
+    navigation.navigate(toPrevScreen, {...routeParams, fromBack: true });
   }
 
   if (isSearching) {
@@ -48,6 +62,12 @@ export default function NavBar({ navigation, title, handleSearch }) {
             <TouchableOpacity onPress={onSearchBtn} style={styles.searchBtn}>
               <SearchIcon />
             </TouchableOpacity> : <View style={styles.searchBtn}></View>
+        }
+        {
+          toPrevScreen &&
+            <TouchableOpacity onPress={handleBack} style={styles.searchBtn}>
+              <BackIcon style={styles.backBtn}/>
+            </TouchableOpacity>
         }
       </View>
     )
@@ -108,5 +128,9 @@ const styles = StyleSheet.create({
   closeIcon: {
     fill: '#D9491D', 
     stroke: '#D9491D'
+  },
+  backBtn: {
+    width: 37,
+    height: 37,
   }
 })

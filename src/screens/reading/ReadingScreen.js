@@ -1,4 +1,4 @@
-import { StyleSheet, Text, ScrollView, SafeAreaView, Image, View } from 'react-native';
+import { StyleSheet, Text, ScrollView, SafeAreaView, Image, View, BackHandler } from 'react-native';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -37,7 +37,7 @@ export default function ReadingScreen(props) {
             // TODO: check if it was answered
             reset();
             setItem(props.route.params.item);
-        }        
+        }
     }, [isFocused]);
 
     const getOptions = (word) => {
@@ -60,7 +60,7 @@ export default function ReadingScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} />
+            <NavBar navigation={props.navigation} toPrevScreen='_questions' routeParams={{...props.route.params, item: null}}/>
             <ScrollView style={styles.scrollView}>
                 <Text style={styles.title}>{item.title}</Text>
                 {
