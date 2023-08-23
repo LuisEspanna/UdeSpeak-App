@@ -22,7 +22,7 @@ export default function LanguageScreen(props) {
 
     useEffect(() => {
         if(isFocused){ 
-            if(!props?.route?.params?.fromBack){
+            if(!props?.route?.params?.fromBack || results.length === 0){
                 fetchLanguages();
             }
         }
