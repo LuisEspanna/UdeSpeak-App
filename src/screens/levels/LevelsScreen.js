@@ -23,8 +23,10 @@ export default function LevelsScreen(props) {
 
     useEffect(() => {
         if(isFocused){ 
-            fetchLevels();
-        }        
+            if(!props?.route?.params?.fromBack){
+                fetchLevels();
+            }
+        }
     }, [isFocused]);
 
     const fetchLevels = async() => {
@@ -45,7 +47,12 @@ export default function LevelsScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} title={'Niveles'} handleSearch={(text) => search(text)}/>
+            <NavBar
+                navigation={props.navigation} 
+                title={'Niveles'} handleSearch={(text) => search(text)}
+                toPrevScreen='Explorar cursos'
+                routeParams={{...props.route.params, id_level: null}}
+            />
             <ScrollView style={styles.scrollView}>
                 {
                     results.map((item, i) =>

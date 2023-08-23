@@ -60,7 +60,11 @@ export default function ReadingScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} toPrevScreen='_questions' routeParams={{...props.route.params, item: null}}/>
+            <NavBar 
+                navigation={props.navigation} 
+                toPrevScreen='_questions' 
+                routeParams={{...props.route.params, item: null}}
+            />
             <ScrollView style={styles.scrollView}>
                 <Text style={styles.title}>{item.title}</Text>
                 {

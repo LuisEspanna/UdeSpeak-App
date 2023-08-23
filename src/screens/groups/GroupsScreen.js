@@ -22,9 +22,11 @@ export default function GroupsScreen(props) {
     }
 
     useEffect(() => {
-        if(isFocused){ 
-            fetchGroups();
-        }        
+        if(isFocused){
+            if(!props?.route?.params?.fromBack){
+                fetchGroups();
+            }
+        }
     }, [isFocused]);
 
     const fetchGroups = async() => {
@@ -37,7 +39,13 @@ export default function GroupsScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} title={'Grupos'} handleSearch={(text) => search(text)}/>
+            <NavBar
+                navigation={props.navigation} 
+                title={'Grupos'} 
+                handleSearch={(text) => search(text)}
+                toPrevScreen='_levels'
+                routeParams={{...props.route.params, id_level: null}}
+            />
             <ScrollView style={styles.scrollView}>
                 {
                     results.map((item, i) =>

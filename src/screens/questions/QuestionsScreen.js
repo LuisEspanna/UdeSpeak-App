@@ -54,7 +54,13 @@ export default function QuestionsScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} title={'Preguntas/Ejercicios'} handleSearch={(text) => search(text)}/>
+            <NavBar 
+                navigation={props.navigation} 
+                title={'Preguntas/Ejercicios'} 
+                handleSearch={(text) => search(text)}
+                toPrevScreen='_questionnaries' 
+                routeParams={{...props.route.params, questionnary_id: null}}
+            />
             <ScrollView style={styles.scrollView}>
                 {
                     results.map((item, i) =>

@@ -53,21 +53,21 @@ export default function NavBar({ navigation, title, handleSearch, toPrevScreen, 
   } else {
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={onAction} style={styles.hamburguerBtn}>
-          <HamburgerIcon />
-        </TouchableOpacity>
+        {
+          toPrevScreen ?
+          <TouchableOpacity onPress={handleBack} style={styles.backBtn}>
+            <BackIcon/>
+          </TouchableOpacity> : 
+          <TouchableOpacity onPress={onAction} style={styles.hamburguerBtn}>
+            <HamburgerIcon />
+          </TouchableOpacity>
+        }
         <Text style={styles.title}>{title}</Text>
         {
           handleSearch ?
             <TouchableOpacity onPress={onSearchBtn} style={styles.searchBtn}>
               <SearchIcon />
             </TouchableOpacity> : <View style={styles.searchBtn}></View>
-        }
-        {
-          toPrevScreen &&
-            <TouchableOpacity onPress={handleBack} style={styles.searchBtn}>
-              <BackIcon style={styles.backBtn}/>
-            </TouchableOpacity>
         }
       </View>
     )
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     stroke: '#D9491D'
   },
   backBtn: {
-    width: 37,
-    height: 37,
+    width: 33,
+    height: 33,
   }
 })

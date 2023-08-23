@@ -22,7 +22,9 @@ export default function QuestionnariesScreen(props) {
 
     useEffect(() => {
         if (isFocused) {
-            fetchData();
+            if(!props?.route?.params?.fromBack){  
+                fetchData();              
+            }
         }
     }, [isFocused]);
 
@@ -44,7 +46,13 @@ export default function QuestionnariesScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} title={'Cuestionarios'} handleSearch={(text) => search(text)} />
+            <NavBar 
+                navigation={props.navigation} 
+                title={'Cuestionarios'} 
+                handleSearch={(text) => search(text)}
+                toPrevScreen='_groups' 
+                routeParams={{...props.route.params, group_id: null}}
+            />
             <ScrollView style={styles.scrollView}>
                 {
                     results.map((item, i) =>
