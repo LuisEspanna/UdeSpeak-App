@@ -11,10 +11,13 @@ export const userSlice = createSlice({
     },
     setPermission: (state, action) => {
       state.permission = action.payload;
+    },
+    addCoursed : (state, action) => {
+      state.coursed = action.payload;
     }
   },
 })
 
-export const { setUser, setPermission } = userSlice.actions
+export const { setUser, setPermission, addCoursed } = userSlice.actions
 
 export default userSlice.reducer

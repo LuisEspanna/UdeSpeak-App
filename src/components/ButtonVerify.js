@@ -53,7 +53,7 @@ export default function ButtonVerify({onPress, text, onNext, showNextBtn}) {
 
   return (
     <Animated.View style={animatedStyles}>
-          <TouchableOpacity onPress={handlePress} style={styles.children}>
+          <TouchableOpacity onPress={showNextBtn ? onNext : handlePress} style={styles.children}>
             {
               showNextBtn ? <ArrowRight/>
               : <Text style={styles.text}>{text}</Text>

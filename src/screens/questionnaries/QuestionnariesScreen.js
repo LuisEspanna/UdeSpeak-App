@@ -37,7 +37,7 @@ export default function QuestionnariesScreen(props) {
 
     const evalCoursed = (curItem) => {
         let found = false;
-        user?.coursed?.qestionnaries?.forEach(item => {
+        user?.coursed?.questionnaries?.forEach(item => {
             if (item === curItem.id)
                 found = true;
         });

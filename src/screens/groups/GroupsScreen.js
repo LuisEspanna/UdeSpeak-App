@@ -37,6 +37,8 @@ export default function GroupsScreen(props) {
         setIsLoading(false);
     }
 
+    // TODO: Show coursed
+
     return (
         <SafeAreaView style={styles.container}>
             <NavBar

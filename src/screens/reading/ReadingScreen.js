@@ -1,4 +1,4 @@
-import { StyleSheet, Text, ScrollView, SafeAreaView, Image, View, BackHandler } from 'react-native';
+import { StyleSheet, Text, ScrollView, SafeAreaView, Image, View } from 'react-native';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -9,6 +9,8 @@ import ButtonOptionCheck from '../../components/ButtonOptionCheck';
 import { useIsFocused } from "@react-navigation/native";
 import ButtonVerify from '../../components/ButtonVerify';
 import useUserAnswers from '../../hooks/useUserAnswers';
+import useQuestionsHandler from '../../hooks/useQuestionsHandler';
+
 
 
 export default function ReadingScreen(props) {
@@ -16,6 +18,7 @@ export default function ReadingScreen(props) {
     const [userAnswers, setUserAnswers] = useState({});
     const [item, setItem] = useState(props.route.params.item)
     const isFocused = useIsFocused();
+    const { questions, setQuestions, setCoursedQuestion } = useQuestionsHandler();
 
     const user = useSelector((state) => state.user);    
     const { validateReading, reset, isCorrect, correctAnswers } = useUserAnswers();
@@ -24,19 +27,21 @@ export default function ReadingScreen(props) {
         validateReading(item.questions, userAnswers);
     }
 
+    //console.log(props.route.params.questions)
+
     const handleNext = () => {
-        // TODO:
-        console.log('click', true);
-        console.log(userAnswers);
+        setCoursedQuestion(item, props.route.params.ids);
+
+        // IFS de tipo de pregunta siguiente
     }
 
-    // TODO: UseEffect to clean previus state.
     useEffect(() => {
         if(isFocused){ 
             setUserAnswers({});
             // TODO: check if it was answered
             reset();
             setItem(props.route.params.item);
+            setQuestions(props.route.params.questions);
         }
     }, [isFocused]);
 

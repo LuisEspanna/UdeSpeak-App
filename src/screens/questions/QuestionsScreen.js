@@ -9,6 +9,7 @@ import useGenericSearch from '../../hooks/useGenericSearch';
 import LoadingOverlay from '../../components/LoadingOverlay';
 import { QUESTIONS_TYPE } from '../../constants';
 import { useIsFocused } from "@react-navigation/native";
+import useQuestionsHandler from '../../hooks/useQuestionsHandler';
 
 export default function QuestionsScreen(props) {
     const [isLoading, setIsLoading] = useState(false);
@@ -16,11 +17,13 @@ export default function QuestionsScreen(props) {
     const user = useSelector((state) => state.user);
     const { results, search, setItems } = useGenericSearch();
     const isFocused = useIsFocused();
+    const { questions, setQuestions, isQuestionCoursed } = useQuestionsHandler();
 
     const handleItem = (item) => {
         switch (item.type) {
             case QUESTIONS_TYPE.READING:
-                    props.navigation.navigate('_reading', {...props.route.params, item: item });
+                    // TODO: Send all questions
+                    props.navigation.navigate('_reading', {...props.route.params, item: item,  questions});
                 break;
         
             default:
@@ -40,16 +43,8 @@ export default function QuestionsScreen(props) {
         setIsLoading(true);
         const local = await getAll(props.route.params.questionnary_id);
         setItems(local);
+        setQuestions(local.filter(q => !isQuestionCoursed(q)));
         setIsLoading(false);
-    }
-
-    const evalCoursed = (curItem) => {
-        let found = false;
-        user?.coursed?.questions?.forEach(item => {
-            if(item === curItem.id)
-                found = true;
-        });
-        return found;
     }
 
     return (
@@ -68,7 +63,7 @@ export default function QuestionsScreen(props) {
                             <Text style={styles.itemTitle}>{item.title}</Text>
                             <Text style={styles.itemText}>{item.type}</Text>
                             {
-                                evalCoursed(item) && <View style={styles.coursedIndicator} />
+                                isQuestionCoursed(item) && <View style={styles.coursedIndicator} />
                             }
                         </TouchableOpacity>
                     )

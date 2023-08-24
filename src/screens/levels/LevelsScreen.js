@@ -1,4 +1,4 @@
-import { StyleSheet, Text, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, ScrollView, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import { useEffect } from 'react';
 import useLevels from '../../hooks/useLevels';
