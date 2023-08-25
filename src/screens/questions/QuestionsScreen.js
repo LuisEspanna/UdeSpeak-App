@@ -22,7 +22,6 @@ export default function QuestionsScreen(props) {
     const handleItem = (item) => {
         switch (item.type) {
             case QUESTIONS_TYPE.READING:
-                    // TODO: Send all questions
                     props.navigation.navigate('_reading', {...props.route.params, item: item,  questions});
                 break;
         

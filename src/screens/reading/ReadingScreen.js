@@ -10,7 +10,7 @@ import { useIsFocused } from "@react-navigation/native";
 import ButtonVerify from '../../components/ButtonVerify';
 import useUserAnswers from '../../hooks/useUserAnswers';
 import useQuestionsHandler from '../../hooks/useQuestionsHandler';
-
+import { QUESTIONS_TYPE } from '../../constants';
 
 
 export default function ReadingScreen(props) {
@@ -18,7 +18,7 @@ export default function ReadingScreen(props) {
     const [userAnswers, setUserAnswers] = useState({});
     const [item, setItem] = useState(props.route.params.item)
     const isFocused = useIsFocused();
-    const { questions, setQuestions, setCoursedQuestion } = useQuestionsHandler();
+    const { questions, setQuestions, setCoursedQuestion, isQuestionCoursed, navigate } = useQuestionsHandler();
 
     const user = useSelector((state) => state.user);    
     const { validateReading, reset, isCorrect, correctAnswers } = useUserAnswers();
@@ -32,7 +32,12 @@ export default function ReadingScreen(props) {
     const handleNext = () => {
         setCoursedQuestion(item, props.route.params.ids);
 
-        // IFS de tipo de pregunta siguiente
+        navigate(props.navigation, item, (next) => {
+            if(next.type === QUESTIONS_TYPE.READING){
+                reset();
+                setItem(next);
+            }
+        });
     }
 
     useEffect(() => {

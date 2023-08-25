@@ -18,7 +18,9 @@ const PERMISSIONS = {
 
 const QUESTIONS_TYPE = {
     LISTENING: 'listening',
-    READING: 'reading'
+    READING: 'reading',
+    SPEAKING: 'speaking',
+    WRITING: 'writing'
 }
 
 module.exports = {
