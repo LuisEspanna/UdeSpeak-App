@@ -1,20 +1,24 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { addCoursed } from '../state/reducers/userSlice';
-import { QUESTIONS_TYPE } from '../constants';
+import { QUESTIONS_TYPE, TOASTS_TYPE } from '../constants';
+import useUsers from "./useUsers";
 
-export default function useQuestionsHandler() {
+export default function useQuestionsHandler(toastProps) {
   const [questions, setQuestions] = useState([]);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
+  const { editUserCoursed } = useUsers();
 
   const setCoursedQuestion = (question, route) => {
-    // TODO: save on state and DB
-    dispatch(addCoursed(toDbCoursedFormat(question.id, route)));
+    let coursed = toDbCoursedFormat(question.id, route);
+    
+    editUserCoursed(coursed, user.uid).finally(()=>{
+      dispatch(addCoursed(coursed));
 
-    let localQuestions = questions.filter((q) => q.id !== question.id);
-    setQuestions(localQuestions.filter(q => !isQuestionCoursed(q)));
+      let localQuestions = questions.filter((q) => q.id !== question.id);
+      setQuestions(localQuestions.filter(q => !isQuestionCoursed(q)));
+    });
   }
 
   const isQuestionCoursed = (question) => {
@@ -55,7 +59,7 @@ export default function useQuestionsHandler() {
     return coursed;
   }
 
-  const navigate = (navigation, currentQuestion, callback) => {
+  const nextNavigate = (navigation, params, currentQuestion, callback) => {
     let nextQuestion = null;
     let newQuestions = questions.filter(q => q.id !== currentQuestion.id);
 
@@ -66,7 +70,7 @@ export default function useQuestionsHandler() {
     });
 
     if (nextQuestion === null)
-      navigation.navigate('_questions', { ...props.route.params, item: nextQuestion });
+      navigation.navigate('_questions', { params: {...params}, item: nextQuestion });
 
     setQuestions(newQuestions);
     
@@ -74,7 +78,7 @@ export default function useQuestionsHandler() {
     switch (nextQuestion.type) {
       case QUESTIONS_TYPE.READING:
         if(callback) callback(nextQuestion);
-        else props.navigation.navigate('_reading', {...props.route.params, item: nextQuestion,  newQuestions});
+        else navigation.navigate('_reading', {params: {...params}, item: nextQuestion,  questions: newQuestions});
         break;
       case QUESTIONS_TYPE.LISTENING:
         console.log('LISTENING')
@@ -86,7 +90,33 @@ export default function useQuestionsHandler() {
         console.log('WRITING')
         break;
       default:
+        navigation.navigate('_questions', { params: {...params}, item: null });
         break;
+    }
+  }
+
+  const navigate = (navigation, params, currentQuestion, callback) => {    
+    if(!isQuestionCoursed(currentQuestion)){
+      switch (currentQuestion.type) {
+        case QUESTIONS_TYPE.READING:
+          if(callback) callback(currentQuestion);
+          else navigation.navigate('_reading', {params: {...params}, item: currentQuestion,  questions});
+          break;
+        case QUESTIONS_TYPE.LISTENING:
+          console.log('LISTENING')
+          break;
+        case QUESTIONS_TYPE.SPEAKING:
+          console.log('SPEAKING')
+          break;
+        case QUESTIONS_TYPE.WRITING:
+          console.log('WRITING')
+          break;
+        default:
+          navigation.navigate('_questions', { params: {...params}, item: null });
+          break;
+      }
+    } else {
+      toastProps.showAlert('Ejercicio resuelto', TOASTS_TYPE.INFO, true);
     }
   }
 
@@ -95,6 +125,7 @@ export default function useQuestionsHandler() {
     isQuestionCoursed,
     setQuestions,
     setCoursedQuestion,
-    navigate
+    navigate,
+    nextNavigate
   }
 }

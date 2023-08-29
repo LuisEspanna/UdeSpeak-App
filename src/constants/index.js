@@ -23,8 +23,16 @@ const QUESTIONS_TYPE = {
     WRITING: 'writing'
 }
 
+const TOASTS_TYPE = {
+    ERROR: 'Error',
+    SUCCESS: 'Success',
+    WARNING: 'Warning',
+    INFO: 'Info'
+}
+
 module.exports = {
     COLLECTIONS,
     PERMISSIONS,
-    QUESTIONS_TYPE
+    QUESTIONS_TYPE,
+    TOASTS_TYPE
 }

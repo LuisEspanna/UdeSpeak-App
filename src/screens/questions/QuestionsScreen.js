@@ -10,6 +10,8 @@ import LoadingOverlay from '../../components/LoadingOverlay';
 import { QUESTIONS_TYPE } from '../../constants';
 import { useIsFocused } from "@react-navigation/native";
 import useQuestionsHandler from '../../hooks/useQuestionsHandler';
+import useToast from '../../hooks/useToast';
+import Toast from '../../components/Toast';
 
 export default function QuestionsScreen(props) {
     const [isLoading, setIsLoading] = useState(false);
@@ -17,28 +19,22 @@ export default function QuestionsScreen(props) {
     const user = useSelector((state) => state.user);
     const { results, search, setItems } = useGenericSearch();
     const isFocused = useIsFocused();
-    const { questions, setQuestions, isQuestionCoursed } = useQuestionsHandler();
+    const toastProps = useToast();
+    const { setQuestions, isQuestionCoursed, navigate } = useQuestionsHandler(toastProps);
 
     const handleItem = (item) => {
-        switch (item.type) {
-            case QUESTIONS_TYPE.READING:
-                    props.navigation.navigate('_reading', {...props.route.params, item: item,  questions});
-                break;
-        
-            default:
-                break;
-        }
+        navigate(props.navigation, props.route.params, item);
     }
 
     useEffect(() => {
-        if(isFocused){
-            if(!props?.route?.params?.fromBack){  
-                fetchData();              
+        if (isFocused) {
+            if (!props?.route?.params?.fromBack) {
+                fetchData();
             }
         }
     }, [isFocused]);
 
-    const fetchData = async() => {
+    const fetchData = async () => {
         setIsLoading(true);
         const local = await getAll(props.route.params.questionnary_id);
         setItems(local);
@@ -48,27 +44,45 @@ export default function QuestionsScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar 
-                navigation={props.navigation} 
-                title={'Preguntas/Ejercicios'} 
+            <NavBar
+                navigation={props.navigation}
+                title={'Preguntas/Ejercicios'}
                 handleSearch={(text) => search(text)}
-                toPrevScreen='_questionnaries' 
-                routeParams={{...props.route.params, questionnary_id: null}}
+                toPrevScreen='_questionnaries'
+                routeParams={{ ...props.route.params, questionnary_id: null }}
             />
             <ScrollView style={styles.scrollView}>
                 {
-                    results.map((item, i) =>
+                    results.filter(p => !isQuestionCoursed(p)).map((item, i) =>
                         <TouchableOpacity key={i} style={styles.item} onPress={() => handleItem(item)}>
                             <Text style={styles.itemTitle}>{item.title}</Text>
                             <Text style={styles.itemText}>{item.type}</Text>
-                            {
-                                isQuestionCoursed(item) && <View style={styles.coursedIndicator} />
-                            }
                         </TouchableOpacity>
                     )
-                }                
+                }
+
+                {
+                    results.filter(p => isQuestionCoursed(p)).map((item, i) =>
+                        <View key={i}>
+                            {
+                                i === 0 &&
+                                <View>
+                                    < View style={styles.separator} />
+                                    <Text>Ejercicios realizados</Text>
+                                    <View style={styles.separator} />
+                                </View>
+                            }
+                            <TouchableOpacity  style={styles.item} onPress={() => handleItem(item)}>
+                                <Text style={styles.itemTitle}>{item.title}</Text>
+                                <Text style={styles.itemText}>{item.type}</Text>
+                                <View style={styles.coursedIndicator} />
+                            </TouchableOpacity>
+                        </View>
+                    )
+                }
             </ScrollView>
-            <LoadingOverlay isLoading={isLoading}/>
+            <Toast {...toastProps} />
+            <LoadingOverlay isLoading={isLoading} />
         </SafeAreaView>
     )
 }
@@ -135,5 +149,12 @@ const styles = StyleSheet.create({
         height: 5,
         borderBottomLeftRadius: 4,
         borderBottomRightRadius: 4
+    },
+    separator: {
+        width: '100%',
+        height: 1,
+        backgroundColor: '#c4c4c4',
+        marginTop: 20,
+        marginBottom: 20
     }
 })

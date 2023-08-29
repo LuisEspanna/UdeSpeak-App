@@ -1,7 +1,6 @@
 import { StyleSheet, Text, ScrollView, SafeAreaView, Image, View } from 'react-native';
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
 import LoadingOverlay from '../../components/LoadingOverlay';
 import CustomDropdown from '../../components/CustomDropdown';
@@ -18,21 +17,17 @@ export default function ReadingScreen(props) {
     const [userAnswers, setUserAnswers] = useState({});
     const [item, setItem] = useState(props.route.params.item)
     const isFocused = useIsFocused();
-    const { questions, setQuestions, setCoursedQuestion, isQuestionCoursed, navigate } = useQuestionsHandler();
-
-    const user = useSelector((state) => state.user);    
+    const { setQuestions, setCoursedQuestion, nextNavigate } = useQuestionsHandler();
     const { validateReading, reset, isCorrect, correctAnswers } = useUserAnswers();
 
     const handleValidate = () => {
         validateReading(item.questions, userAnswers);
     }
 
-    //console.log(props.route.params.questions)
-
     const handleNext = () => {
         setCoursedQuestion(item, props.route.params.ids);
 
-        navigate(props.navigation, item, (next) => {
+        nextNavigate(props.navigation, props.route.params, item, (next) => {
             if(next.type === QUESTIONS_TYPE.READING){
                 reset();
                 setItem(next);
@@ -43,7 +38,6 @@ export default function ReadingScreen(props) {
     useEffect(() => {
         if(isFocused){ 
             setUserAnswers({});
-            // TODO: check if it was answered
             reset();
             setItem(props.route.params.item);
             setQuestions(props.route.params.questions);
@@ -64,7 +58,6 @@ export default function ReadingScreen(props) {
     }
 
     const handleAnswer = (option) => {
-        //console.log({...userAnswers, [option.parent]: option.id});
         setUserAnswers({...userAnswers, [option.parent]: option.id})
     }
 
