@@ -12,7 +12,7 @@ export default function useQuestionsHandler(toastProps) {
 
   const setCoursedQuestion = (question, route) => {
     let coursed = toDbCoursedFormat(question.id, route);
-    
+
     editUserCoursed(coursed, user.uid).finally(()=>{
       dispatch(addCoursed(coursed));
 
@@ -70,7 +70,7 @@ export default function useQuestionsHandler(toastProps) {
     });
 
     if (nextQuestion === null)
-      navigation.navigate('_questions', { params: {...params}, item: nextQuestion });
+      navigation.navigate('_questions', { ...params, item: nextQuestion });
 
     setQuestions(newQuestions);
     
@@ -78,7 +78,7 @@ export default function useQuestionsHandler(toastProps) {
     switch (nextQuestion.type) {
       case QUESTIONS_TYPE.READING:
         if(callback) callback(nextQuestion);
-        else navigation.navigate('_reading', {params: {...params}, item: nextQuestion,  questions: newQuestions});
+        else navigation.navigate('_reading', {...params, item: nextQuestion,  questions: newQuestions});
         break;
       case QUESTIONS_TYPE.LISTENING:
         console.log('LISTENING')
@@ -90,7 +90,7 @@ export default function useQuestionsHandler(toastProps) {
         console.log('WRITING')
         break;
       default:
-        navigation.navigate('_questions', { params: {...params}, item: null });
+        navigation.navigate('_questions', { ...params, item: null });
         break;
     }
   }
@@ -100,7 +100,7 @@ export default function useQuestionsHandler(toastProps) {
       switch (currentQuestion.type) {
         case QUESTIONS_TYPE.READING:
           if(callback) callback(currentQuestion);
-          else navigation.navigate('_reading', {params: {...params}, item: currentQuestion,  questions});
+          else navigation.navigate('_reading', {...params, item: currentQuestion,  questions});
           break;
         case QUESTIONS_TYPE.LISTENING:
           console.log('LISTENING')
@@ -112,7 +112,7 @@ export default function useQuestionsHandler(toastProps) {
           console.log('WRITING')
           break;
         default:
-          navigation.navigate('_questions', { params: {...params}, item: null });
+          navigation.navigate('_questions', { ...params, item: null });
           break;
       }
     } else {

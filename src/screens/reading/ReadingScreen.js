@@ -25,6 +25,7 @@ export default function ReadingScreen(props) {
     }
 
     const handleNext = () => {
+        
         setCoursedQuestion(item, props.route.params.ids);
 
         nextNavigate(props.navigation, props.route.params, item, (next) => {
@@ -66,7 +67,7 @@ export default function ReadingScreen(props) {
             <NavBar 
                 navigation={props.navigation} 
                 toPrevScreen='_questions' 
-                routeParams={{...props.route.params, item: null}}
+                routeParams={{...props.route.params, item: null, questions: null}}
             />
             <ScrollView style={styles.scrollView}>
                 <Text style={styles.title}>{item.title}</Text>
