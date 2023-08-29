@@ -8,34 +8,46 @@ import NavBar from '../../components/NavBar';
 import GroupItem from './helper/GroupItem';
 import useGenericSearch from '../../hooks/useGenericSearch';
 import LoadingOverlay from '../../components/LoadingOverlay';
+import { useIsFocused } from "@react-navigation/native";
 
 export default function GroupsScreen(props) {
     const [isLoading, setIsLoading] = useState(false);
     const { getAll } = useGroups();
     const user = useSelector((state) => state.user);
     const {results, search, setItems} = useGenericSearch();
+    const isFocused = useIsFocused();
 
     const handleItem = (item) => {
         props.navigation.navigate('_questionnaries', { group_id: item.id, ids: {...props.route.params.ids, group: item.id} });
-        //console.log(item)
     }
 
     useEffect(() => {
-
-        async function fetchLevels() {
-            setIsLoading(true);
-            const localLevels = await getAll(props.route.params.id_level);
-            localLevels.forEach((item) => { item.collapsed = true });
-            setItems(localLevels);
-            setIsLoading(false);
+        if(isFocused){
+            if(!props?.route?.params?.fromBack){
+                fetchGroups();
+            }
         }
-        fetchLevels();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [isFocused]);
+
+    const fetchGroups = async() => {
+        setIsLoading(true);
+        const localLevels = await getAll(props.route.params.id_level);
+        localLevels.forEach((item) => { item.collapsed = true });
+        setItems(localLevels);
+        setIsLoading(false);
+    }
+
+    // TODO: Show coursed
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} title={'Grupos'} handleSearch={(text) => search(text)}/>
+            <NavBar
+                navigation={props.navigation} 
+                title={'Grupos'} 
+                handleSearch={(text) => search(text)}
+                toPrevScreen='_levels'
+                routeParams={{...props.route.params, id_level: null}}
+            />
             <ScrollView style={styles.scrollView}>
                 {
                     results.map((item, i) =>

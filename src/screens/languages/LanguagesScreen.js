@@ -7,28 +7,33 @@ import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
 import LoadingOverlay from '../../components/LoadingOverlay';
 import useGenericSearch from '../../hooks/useGenericSearch';
+import { useIsFocused } from '@react-navigation/native';
 
 export default function LanguageScreen(props) {
     const [isLoading, setIsLoading] = useState(false);
     const { getAll } = useLanguages();
     const user = useSelector((state) => state.user);
     const { results, search, setItems } = useGenericSearch();
+    const isFocused = useIsFocused();
 
     const handleLanguage = (item) => {
         props.navigation.navigate('_levels', { id_language: item.id, ids: {language: item.id} });
     }
 
     useEffect(() => {
-
-        async function fetchLevels() {
-            setIsLoading(true);
-            const localLanguages = await getAll();
-            setItems(localLanguages);
-            setIsLoading(false);
+        if(isFocused){ 
+            if(!props?.route?.params?.fromBack || results.length === 0){
+                fetchLanguages();
+            }
         }
-        fetchLevels();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [isFocused]);
+
+    const fetchLanguages = async() => {
+        setIsLoading(true);
+        const localLanguages = await getAll();
+        setItems(localLanguages);
+        setIsLoading(false);
+    }
 
     const evalCoursed = (curItem) => {
         let found = false;
@@ -41,7 +46,12 @@ export default function LanguageScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={props.navigation} title={'Idiomas'} handleSearch={(text) => search(text)}/>
+            <NavBar
+                navigation={props.navigation} 
+                title={'Idiomas'} handleSearch={(text) => search(text)}
+                toPrevScreen='Mis cursos'
+                routeParams={{...props.route.params}}
+            />
             <ScrollView style={styles.scrollView}>
                 {
                     results.map((item, i) =>

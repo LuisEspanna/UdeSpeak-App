@@ -3,10 +3,20 @@ import React from 'react';
 import HamburgerIcon from './icons/HamburgerIcon';
 import SearchIcon from './icons/SearchIcon';
 import CloseIcon from './icons/CloseIcon';
+import BackIcon from './icons/BackIcon';
 import { useState } from 'react';
 import { TextInput } from 'react-native-gesture-handler';
 
-export default function NavBar({ navigation, title, handleSearch }) {
+
+/**
+ * 
+ * @param {object} props 
+ * @param {object} props.navigation
+ * @param {string} props.toPrevScreen
+ * @param {object} props.routeParams
+ * @returns 
+ */
+export default function NavBar({ navigation, title, handleSearch, toPrevScreen, routeParams }) {
 
   const [isSearching, setIsSearching] = useState(false);
 
@@ -27,6 +37,10 @@ export default function NavBar({ navigation, title, handleSearch }) {
     handleSearch(text);
   }
 
+  const handleBack = () => {
+    navigation.navigate(toPrevScreen, {...routeParams, fromBack: true });
+  }
+
   if (isSearching) {
     return (
       <View style={styles.searchContainer}>
@@ -39,9 +53,15 @@ export default function NavBar({ navigation, title, handleSearch }) {
   } else {
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={onAction} style={styles.hamburguerBtn}>
-          <HamburgerIcon />
-        </TouchableOpacity>
+        {
+          toPrevScreen ?
+          <TouchableOpacity onPress={handleBack} style={styles.backBtn}>
+            <BackIcon/>
+          </TouchableOpacity> : 
+          <TouchableOpacity onPress={onAction} style={styles.hamburguerBtn}>
+            <HamburgerIcon />
+          </TouchableOpacity>
+        }
         <Text style={styles.title}>{title}</Text>
         {
           handleSearch ?
@@ -108,5 +128,9 @@ const styles = StyleSheet.create({
   closeIcon: {
     fill: '#D9491D', 
     stroke: '#D9491D'
+  },
+  backBtn: {
+    width: 33,
+    height: 33,
   }
 })

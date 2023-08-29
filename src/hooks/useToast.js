@@ -17,12 +17,13 @@ export default function useToast() {
     /**
      * 
      * @param {String} text
-     * @param {String: ['Error', 'Success', 'Warning', 'Info']} typeMessage
+     * @param {messageTypes} typeMessage
      * @param {Boolean} autoClose
      * @returns
      */
 
     const showAlert = async(text, typeMessage, autoClose) => {
+        if(value !== 100) return;
         setType(typeMessage)
         setMessage(text)
         setIsVisible(true)
@@ -31,7 +32,7 @@ export default function useToast() {
             const timer = setTimeout(async() => {
                 for (let i = 0; i < 100; i++) {
                     setValue(100-i)
-                    await sleep(35)
+                    await sleep(30)
                 }
                 onClose()
             }, 1000)

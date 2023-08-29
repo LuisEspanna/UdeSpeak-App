@@ -1,5 +1,5 @@
 import { COLLECTIONS } from '../constants'
-import { readFromFirestore, saveOnFirestore,  } from '../services/firebase'
+import { readFromFirestore, saveOnFirestore, updateFirestoreDoc } from '../services/firebase'
 
 export default function useUsers() {
 
@@ -12,18 +12,24 @@ export default function useUsers() {
         return await saveOnFirestore(COLLECTIONS.USERS, user.uid, user);
     }
 
-    const editUser = (user, data) => {
-        return;
+    /**
+     * 
+     * @param {object} coursed 
+     * @param {string} uid 
+     * @returns 
+     */
+    const editUserCoursed = async(coursed, uid) => {
+        return await updateFirestoreDoc(COLLECTIONS.USERS, uid, {coursed: {...coursed}});
     }
 
     const deleteUser = (uid) => {
         console.log('Editing user' , uid);
-    }    
+    }
 
     return {
         getUser,
         createUser,
-        editUser,
+        editUserCoursed,
         deleteUser
     };
 }

@@ -21,7 +21,7 @@ export default function Language(props) {
   }, []);
 
   const handleLanguage = (item) => {
-    props.navigation.navigate('_levels', { id_language: item.id });
+    props.navigation.navigate('_levels', { id_language: item.id, ids: {language: item.id} });
   }
 
   return (
