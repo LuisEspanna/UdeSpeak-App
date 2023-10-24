@@ -10,6 +10,7 @@ import ButtonVerify from '../../components/ButtonVerify';
 import useUserAnswers from '../../hooks/useUserAnswers';
 import useQuestionsHandler from '../../hooks/useQuestionsHandler';
 import { QUESTIONS_TYPE } from '../../constants';
+import { getLetter } from '../../functions';
 
 
 export default function ReadingScreen(props) {
@@ -59,7 +60,10 @@ export default function ReadingScreen(props) {
     }
 
     const handleAnswer = (option) => {
-        setUserAnswers({...userAnswers, [option.parent]: option.id})
+        setUserAnswers({...userAnswers, [option.parent]: option.id});
+        if(!isCorrect){
+            reset();
+        }
     }
 
     return (
@@ -72,7 +76,7 @@ export default function ReadingScreen(props) {
             <ScrollView style={styles.scrollView}>
                 <Text style={styles.title}>{item.title}</Text>
                 {
-                    item.image && <Image source={{ uri: item.image }} />
+                    item?.image && <Image source={{ uri: item.image }} style={styles.image}/>
                 }
 
                 <View style={styles.description}>
@@ -113,7 +117,7 @@ export default function ReadingScreen(props) {
                                         q?.options && q.options.map((o, j) =>
                                             <ButtonOptionCheck
                                                 key={j}
-                                                letter={o.letter}
+                                                letter={getLetter(j)}
                                                 description={o.description}
                                                 onPress={() => handleAnswer({...o, parent: q.id})}
                                                 active={userAnswers[q.id] === o.id}
@@ -142,7 +146,7 @@ export default function ReadingScreen(props) {
 const styles = StyleSheet.create({
     container: {
         padding: 20,
-        backgroundColor: '#F6FBFF',
+        backgroundColor: '#FFFFFF',
         flex: 1,
         height: '100%',
     },
@@ -150,9 +154,8 @@ const styles = StyleSheet.create({
         marginTop: 40,
         marginBottom: 20,
         borderRadius: 8,
-        borderWidth:2,
-        borderColor: '#e3e1e1',
         padding: 9,
+        overflow: 'scroll'
     },
     description: {
         flexDirection: 'row',
@@ -163,7 +166,7 @@ const styles = StyleSheet.create({
     word: {
         marginEnd: 4,
         marginBottom: 6,
-        fontSize: 16
+        fontSize: 17
     },
     title: {
         fontSize: 23,
@@ -173,6 +176,16 @@ const styles = StyleSheet.create({
     questionsTitle: {
         marginTop: 20,
         marginBottom: 5,
-        textTransform: 'capitalize'
+        textTransform: 'capitalize',
+        fontWeight: 'bold',
+        fontSize: 16,
+        textAlign: 'justify'
+    },
+    image: {
+        height: 180,
+        width: '100%',
+        borderRadius: 10,
+        resizeMode: 'contain',
+        marginBottom: 25
     }
 })

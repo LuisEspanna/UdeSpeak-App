@@ -1,11 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import React from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useRef } from 'react';
 
 export default function CustomDropdown({ data, onSelect, buttonTextAfterSelection, rowTextForSelection, correctAnswers }) {
     const [isCorrect, setIsCorrect] = useState(true);
+    const dropdownRef = useRef({});  
 
     useEffect(() => {
         if(correctAnswers !== null &&!correctAnswers[data[0].parent]){
@@ -14,7 +16,6 @@ export default function CustomDropdown({ data, onSelect, buttonTextAfterSelectio
             setIsCorrect(true);
         }
     }, [correctAnswers]);
-    
 
     const getSizeDropdown = (list) => {
         let size = 0;
@@ -29,6 +30,7 @@ export default function CustomDropdown({ data, onSelect, buttonTextAfterSelectio
 
     return (
         <SelectDropdown
+            ref={dropdownRef}
             data={data}
             onSelect={onSelect}
             buttonTextAfterSelection={buttonTextAfterSelection}

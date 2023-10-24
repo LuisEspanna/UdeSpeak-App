@@ -72,7 +72,12 @@ const getHour = () => {
 const toISOFormat = (date) => {
     return moment(date).format().toString();
 }
-  
+
+const getLetter = (index) => {
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    return letters.charAt(index);
+}
+
 module.exports = {
     getUserDataFromResult,
     sleep,
@@ -84,5 +89,6 @@ module.exports = {
     toDateFormat,
     getHour,
     toISOFormat,
-    toDateFormatShort
+    toDateFormatShort,
+    getLetter
 }
