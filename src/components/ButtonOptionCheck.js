@@ -32,18 +32,22 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     description: {
-        fontSize: 16,
-        textTransform: 'capitalize'
+        fontSize: 15,
+        textTransform: 'capitalize',
+        padding: 15,
+        width: '90%',
+        textAlign: 'justify'
     },
     container: {
         width: '100%',
         flexDirection:'row', 
         flexWrap:'nowrap',
-        height: 45,
+        height: 'auto',
+        minHeight: 45,
         marginTop: 4,
         flex: 1,
         alignItems: 'center',
-        paddingLeft: 20
+        paddingLeft: 20,
     },
     active: {
         backgroundColor: '#D8F3F4',        
@@ -64,7 +68,8 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection:'row', 
         flexWrap:'nowrap',
-        height: 45,
+        height: 'auto',
+        minHeight: 45,
         marginTop: 4,
         flex: 1,
         alignItems: 'center',
