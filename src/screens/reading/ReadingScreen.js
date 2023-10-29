@@ -1,10 +1,8 @@
-import { StyleSheet, Text, ScrollView, SafeAreaView, Image, View, Dimensions } from 'react-native';
-import React from 'react';
-import { useState, useEffect } from 'react';
-import LoadingOverlay from '../../components/LoadingOverlay';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, ScrollView, SafeAreaView, Image, View } from 'react-native';
+import { useIsFocused } from "@react-navigation/native";
 import CustomDropdown from '../../components/CustomDropdown';
 import ButtonOptionCheck from '../../components/ButtonOptionCheck';
-import { useIsFocused } from "@react-navigation/native";
 import ButtonVerify from '../../components/ButtonVerify';
 import useUserAnswers from '../../hooks/useUserAnswers';
 import useQuestionsHandler from '../../hooks/useQuestionsHandler';
@@ -12,23 +10,18 @@ import { QUESTIONS_TYPE } from '../../constants';
 import { getLetter } from '../../functions';
 
 
-const windowWidth = Dimensions.get('window').width;
-
 export default function ReadingScreen(props) {
-    const [isLoading, setIsLoading] = useState(false);
     const [userAnswers, setUserAnswers] = useState({});
     const [item, setItem] = useState(props.route.params.item)
     const isFocused = useIsFocused();
     const { setQuestions, setCoursedQuestion, nextNavigate } = useQuestionsHandler();
     const { validateReading, reset, isCorrect, correctAnswers } = useUserAnswers();
 
-
     const handleValidate = () => {
         validateReading(item.questions, userAnswers);
     }
 
-    const handleNext = () => {
-        
+    const handleNext = () => {        
         setCoursedQuestion(item, props.route.params.ids);
 
         nextNavigate(props.navigation, props.route.params, item, (next) => {
@@ -110,7 +103,6 @@ export default function ReadingScreen(props) {
                         item?.questions && item.questions.filter(q => q.type === 'question').map((q, i) =>
                             <View key={i}>
                                 <Text style={styles.questionsTitle}>{q.title}</Text>
-
                                 <View className='my-2'>
                                     {
                                         q?.options && q.options.map((o, j) =>
@@ -137,7 +129,6 @@ export default function ReadingScreen(props) {
                 onNext={handleNext}
                 showNextBtn={isCorrect}
             />
-            <LoadingOverlay isLoading={isLoading} />
         </SafeAreaView>
     )
 }
