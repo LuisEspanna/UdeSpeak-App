@@ -69,8 +69,11 @@ export default function useQuestionsHandler(toastProps) {
       }
     });
 
-    if (nextQuestion === null)
+    if (nextQuestion === null || nextQuestion === undefined || nextQuestion?.type === null || nextQuestion?.type === undefined){
       navigation.navigate('_questions', { ...params, item: nextQuestion });
+      setQuestions(newQuestions);
+      return;
+    }
 
     setQuestions(newQuestions);
     

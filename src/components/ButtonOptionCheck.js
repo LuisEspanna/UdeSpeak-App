@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
         width: 'auto',
         color: '#32BFC3',
         fontWeight: 'bold',
-        marginRight: 15,
+        marginRight: 7,
         fontSize: 16
     },
     description: {

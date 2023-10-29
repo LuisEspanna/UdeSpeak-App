@@ -1,7 +1,6 @@
-import { StyleSheet, Text, ScrollView, SafeAreaView, Image, View } from 'react-native';
+import { StyleSheet, Text, ScrollView, SafeAreaView, Image, View, Dimensions } from 'react-native';
 import React from 'react';
 import { useState, useEffect } from 'react';
-import NavBar from '../../components/NavBar';
 import LoadingOverlay from '../../components/LoadingOverlay';
 import CustomDropdown from '../../components/CustomDropdown';
 import ButtonOptionCheck from '../../components/ButtonOptionCheck';
@@ -13,6 +12,8 @@ import { QUESTIONS_TYPE } from '../../constants';
 import { getLetter } from '../../functions';
 
 
+const windowWidth = Dimensions.get('window').width;
+
 export default function ReadingScreen(props) {
     const [isLoading, setIsLoading] = useState(false);
     const [userAnswers, setUserAnswers] = useState({});
@@ -20,6 +21,7 @@ export default function ReadingScreen(props) {
     const isFocused = useIsFocused();
     const { setQuestions, setCoursedQuestion, nextNavigate } = useQuestionsHandler();
     const { validateReading, reset, isCorrect, correctAnswers } = useUserAnswers();
+
 
     const handleValidate = () => {
         validateReading(item.questions, userAnswers);
@@ -67,18 +69,15 @@ export default function ReadingScreen(props) {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
-            <NavBar 
-                navigation={props.navigation} 
-                toPrevScreen='_questions' 
-                routeParams={{...props.route.params, item: null, questions: null}}
-            />
+        <SafeAreaView style={styles.container}>           
             <ScrollView style={styles.scrollView}>
                 <Text style={styles.title}>{item.title}</Text>
                 {
-                    item?.image && <Image source={{ uri: item.image }} style={styles.image}/>
+                    item?.image && 
+                    <View style={styles.imageContainer}>
+                        <Image source={{ uri: item.image }} style={styles.image}/>
+                    </View>
                 }
-
                 <View style={styles.description}>
                     {
                         item?.description && item?.description?.split(' ').map((word, i) => {
@@ -151,17 +150,19 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     scrollView: {
-        marginTop: 40,
+        marginTop: 10,
         marginBottom: 20,
         borderRadius: 8,
-        padding: 9,
+        padding: 6,
         overflow: 'scroll'
     },
     description: {
         flexDirection: 'row',
         flexWrap: 'wrap',
         marginBottom: 10,
-        textTransform: 'capitalize'
+        textTransform: 'capitalize',
+        textAlign: 'justify',
+        color: '#212529',
     },
     word: {
         marginEnd: 4,
@@ -170,22 +171,27 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 23,
-        marginBottom: 30,
-        fontWeight: 'bold'
+        marginBottom: 15,
+        fontWeight: 'bold',
     },
     questionsTitle: {
         marginTop: 20,
-        marginBottom: 5,
         textTransform: 'capitalize',
         fontWeight: 'bold',
         fontSize: 16,
         textAlign: 'justify'
     },
     image: {
-        height: 180,
-        width: '100%',
-        borderRadius: 10,
+        flex: 1,
         resizeMode: 'contain',
-        marginBottom: 25
+        width: '100%',
+    },
+
+    imageContainer: {
+        height: 250,
+        width: '100%',
+        borderRadius: 8,
+        overflow: 'hidden',
+        marginBottom: 10,
     }
 })
