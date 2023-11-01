@@ -84,7 +84,8 @@ export default function useQuestionsHandler(toastProps) {
         else navigation.navigate('_reading', {...params, item: nextQuestion,  questions: newQuestions});
         break;
       case QUESTIONS_TYPE.LISTENING:
-        console.log('LISTENING')
+        if(callback) callback(nextQuestion);
+        else navigation.navigate('_listening', {...params, item: nextQuestion,  questions: newQuestions});
         break;
       case QUESTIONS_TYPE.SPEAKING:
         console.log('SPEAKING')
@@ -106,7 +107,8 @@ export default function useQuestionsHandler(toastProps) {
           else navigation.navigate('_reading', {...params, item: currentQuestion,  questions});
           break;
         case QUESTIONS_TYPE.LISTENING:
-          console.log('LISTENING')
+          if(callback) callback(currentQuestion);
+          else navigation.navigate('_listening', {...params, item: currentQuestion,  questions});
           break;
         case QUESTIONS_TYPE.SPEAKING:
           console.log('SPEAKING')
