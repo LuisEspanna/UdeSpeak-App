@@ -8,14 +8,18 @@ import useUserAnswers from '../../hooks/useUserAnswers';
 import useQuestionsHandler from '../../hooks/useQuestionsHandler';
 import { QUESTIONS_TYPE } from '../../constants';
 import { getLetter } from '../../functions';
+import SoundControls from '../../components/SoundControls';
+import useAudioControls from '../../hooks/useAudioControls';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import AudioIcon from '../../components/icons/AudioIcon';
 
-
-export default function ReadingScreen(props) {
+export default function ListeningScreen(props) {
     const [userAnswers, setUserAnswers] = useState({});
     const [item, setItem] = useState(props.route.params.item)
     const isFocused = useIsFocused();
     const { setQuestions, setCoursedQuestion, nextNavigate } = useQuestionsHandler();
     const { validateStandard, reset, isCorrect, correctAnswers } = useUserAnswers();
+    const { showAudioCtrl, handleAudioButton } = useAudioControls();
 
     const handleValidate = () => {
         validateStandard(item.questions, userAnswers);
@@ -25,7 +29,7 @@ export default function ReadingScreen(props) {
         setCoursedQuestion(item, props.route.params.ids);
 
         nextNavigate(props.navigation, props.route.params, item, (next) => {
-            if(next.type === QUESTIONS_TYPE.READING){
+            if(next.type === QUESTIONS_TYPE.LISTENING){
                 reset();
                 setItem(next);
             }
@@ -62,9 +66,18 @@ export default function ReadingScreen(props) {
     }
 
     return (
-        <SafeAreaView style={styles.container}>           
+        <SafeAreaView style={styles.container}> 
+            {
+                showAudioCtrl && <SoundControls url={item.audio}/>
+            }  
+            
             <ScrollView style={styles.scrollView}>
                 <Text style={styles.title}>{item.title}</Text>
+                <View style={styles.audioBtn}>
+                    <TouchableOpacity onPress={handleAudioButton}>
+                        <AudioIcon/>
+                    </TouchableOpacity>
+                </View>
                 {
                     item?.image && 
                     <View style={styles.imageContainer}>
@@ -123,29 +136,31 @@ export default function ReadingScreen(props) {
                 </View>
                 <View style={{height: 40}}/>
             </ScrollView>
-            <ButtonVerify 
-                text={'verify'} 
-                onPress={handleValidate}
-                onNext={handleNext}
-                showNextBtn={isCorrect}
-            />
+            <View style={styles.actionArea}>
+                <ButtonVerify 
+                    text={'verify'} 
+                    onPress={handleValidate}
+                    onNext={handleNext}
+                    showNextBtn={isCorrect}
+                />
+            </View>
         </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20,
         backgroundColor: '#FFFFFF',
         flex: 1,
         height: '100%',
+        width: '100%',
+        position: 'relative'
     },
     scrollView: {
-        marginTop: 10,
-        marginBottom: 20,
+        marginTop: 5,
         borderRadius: 8,
-        padding: 6,
-        overflow: 'scroll'
+        padding: 26,
+        overflow: 'scroll',
     },
     description: {
         flexDirection: 'row',
@@ -177,7 +192,6 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         width: '100%',
     },
-
     imageContainer: {
         height: 250,
         width: '100%',
@@ -185,5 +199,14 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         marginBottom: 10,
         backgroundColor: '#FFFFFF'
+    },
+    actionArea: {
+        padding: 15
+    },
+    audioBtn:{
+        display: 'flex',
+        justifyContent: 'flex-end',
+        width: '100%',
+        flexDirection: 'row',
     }
 })
