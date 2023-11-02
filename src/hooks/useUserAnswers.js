@@ -10,7 +10,7 @@ export default function useUserAnswers() {
         setIsCorrect(false);
     }
     
-    const validateReading = (questions, userAnswers) => {
+    const validateStandard = (questions, userAnswers) => {
         let maxScore = 0;
         let userScore = 0;
         
@@ -42,7 +42,7 @@ export default function useUserAnswers() {
     return {
         correctAnswers,
         isCorrect,
-        validateReading,
+        validateStandard,
         reset
     }
 }

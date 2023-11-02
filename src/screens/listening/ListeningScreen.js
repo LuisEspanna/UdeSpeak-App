@@ -18,11 +18,11 @@ export default function ListeningScreen(props) {
     const [item, setItem] = useState(props.route.params.item)
     const isFocused = useIsFocused();
     const { setQuestions, setCoursedQuestion, nextNavigate } = useQuestionsHandler();
-    const { validateReading, reset, isCorrect, correctAnswers } = useUserAnswers();
+    const { validateStandard, reset, isCorrect, correctAnswers } = useUserAnswers();
     const { showAudioCtrl, handleAudioButton } = useAudioControls();
 
     const handleValidate = () => {
-        validateReading(item.questions, userAnswers);
+        validateStandard(item.questions, userAnswers);
     }
 
     const handleNext = () => {        
