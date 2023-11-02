@@ -1,11 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native';
-//import TrackPlayer, { State } from 'react-native-track-player';
+import { StyleSheet, View } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Play75Icon from '../components/icons/Play75Icon';
-import PlayIcon from '../components/icons/PlayIcon';
-import PauseIcon from '../components/icons/PauseIcon';
-import StopIcon from '../components/icons/StopIcon';
+import Play75Icon from './icons/Play75Icon';
+import PlayIcon from './icons/PlayIcon';
+import PauseIcon from './icons/PauseIcon';
+import StopIcon from './icons/StopIcon';
 import Sound from 'react-native-sound';
 import { useIsFocused } from '@react-navigation/native';
 
@@ -99,12 +98,13 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         width: '100%',
-        height: 70,
-        minHeight: 70,
+        height: 55,
+        minHeight: 55,
         flexDirection: 'row',
-        padding: 4,
+        padding: 0,
         position: 'relative',
-        zIndex: 4
+        zIndex: 4,
+        marginTop: 2
     },
     actionArea: {
         backgroundColor: '#0FB4B9',
@@ -113,12 +113,15 @@ const styles = StyleSheet.create({
         width: 200,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 15,
         shadowOffset: {width: -2, height: 4},
         shadowOpacity: 0.2,
         shadowRadius: 3,
         elevation: 20,
-        shadowColor: '#0FB4B9',
+        shadowColor: '#000000',
+        marginBottom: 2,
+        padding: 11,
+        paddingRight: 12,
+        paddingLeft: 12
     },
     icon: {
         height: 30,

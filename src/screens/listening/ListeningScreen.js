@@ -8,7 +8,10 @@ import useUserAnswers from '../../hooks/useUserAnswers';
 import useQuestionsHandler from '../../hooks/useQuestionsHandler';
 import { QUESTIONS_TYPE } from '../../constants';
 import { getLetter } from '../../functions';
-import SoundPlayer from '../../components/SoundPlayer';
+import SoundControls from '../../components/SoundControls';
+import useAudioControls from '../../hooks/useAudioControls';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import AudioIcon from '../../components/icons/AudioIcon';
 
 export default function ListeningScreen(props) {
     const [userAnswers, setUserAnswers] = useState({});
@@ -16,6 +19,7 @@ export default function ListeningScreen(props) {
     const isFocused = useIsFocused();
     const { setQuestions, setCoursedQuestion, nextNavigate } = useQuestionsHandler();
     const { validateReading, reset, isCorrect, correctAnswers } = useUserAnswers();
+    const { showAudioCtrl, handleAudioButton } = useAudioControls();
 
     const handleValidate = () => {
         validateReading(item.questions, userAnswers);
@@ -62,10 +66,18 @@ export default function ListeningScreen(props) {
     }
 
     return (
-        <SafeAreaView style={styles.container}>   
-            <SoundPlayer url={item.audio}/>        
+        <SafeAreaView style={styles.container}> 
+            {
+                showAudioCtrl && <SoundControls url={item.audio}/>
+            }  
+            
             <ScrollView style={styles.scrollView}>
                 <Text style={styles.title}>{item.title}</Text>
+                <View style={styles.audioBtn}>
+                    <TouchableOpacity onPress={handleAudioButton}>
+                        <AudioIcon/>
+                    </TouchableOpacity>
+                </View>
                 {
                     item?.image && 
                     <View style={styles.imageContainer}>
@@ -190,5 +202,11 @@ const styles = StyleSheet.create({
     },
     actionArea: {
         padding: 15
+    },
+    audioBtn:{
+        display: 'flex',
+        justifyContent: 'flex-end',
+        width: '100%',
+        flexDirection: 'row',
     }
 })
