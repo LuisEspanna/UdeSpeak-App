@@ -80,18 +80,20 @@ export default function useQuestionsHandler(toastProps) {
     // TODO: 
     switch (nextQuestion.type) {
       case QUESTIONS_TYPE.READING:
-        if(callback) callback(nextQuestion);
+        if(callback && currentQuestion?.type === QUESTIONS_TYPE.READING) callback(nextQuestion);
         else navigation.navigate('_reading', {...params, item: nextQuestion,  questions: newQuestions});
+        console.log('debug reading')
         break;
       case QUESTIONS_TYPE.LISTENING:
-        if(callback) callback(nextQuestion);
+        if(callback && currentQuestion?.type === QUESTIONS_TYPE.LISTENING) callback(nextQuestion);
         else navigation.navigate('_listening', {...params, item: nextQuestion,  questions: newQuestions});
         break;
       case QUESTIONS_TYPE.SPEAKING:
         console.log('SPEAKING')
         break;
       case QUESTIONS_TYPE.WRITING:
-        console.log('WRITING')
+        if(callback && currentQuestion?.type === QUESTIONS_TYPE.WRITING) callback(nextQuestion);
+        else navigation.navigate('_writing', {...params, item: nextQuestion,  questions: newQuestions});
         break;
       default:
         navigation.navigate('_questions', { ...params, item: null });
@@ -99,7 +101,7 @@ export default function useQuestionsHandler(toastProps) {
     }
   }
 
-  const navigate = (navigation, params, currentQuestion, callback) => {    
+  const navigate = (navigation, params, currentQuestion, callback) => {  
     if(!isQuestionCoursed(currentQuestion)){
       switch (currentQuestion.type) {
         case QUESTIONS_TYPE.READING:
@@ -114,7 +116,8 @@ export default function useQuestionsHandler(toastProps) {
           console.log('SPEAKING')
           break;
         case QUESTIONS_TYPE.WRITING:
-          console.log('WRITING')
+          if(callback) callback(currentQuestion);
+          else navigation.navigate('_writing', {...params, item: currentQuestion,  questions});
           break;
         default:
           navigation.navigate('_questions', { ...params, item: null });
