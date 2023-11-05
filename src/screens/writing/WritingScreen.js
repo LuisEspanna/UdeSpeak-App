@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, ScrollView, SafeAreaView, Image, View } from 'react-native';
 import { useIsFocused } from "@react-navigation/native";
-import ButtonOptionCheck from '../../components/ButtonOptionCheck';
 import ButtonVerify from '../../components/ButtonVerify';
 import useUserAnswers from '../../hooks/useUserAnswers';
 import useQuestionsHandler from '../../hooks/useQuestionsHandler';
 import { QUESTIONS_TYPE } from '../../constants';
-import { getLetter } from '../../functions';
 import StudentInput from '../../components/StudentInput';
+import useAudioControls from '../../hooks/useAudioControls';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import AudioIcon from '../../components/icons/AudioIcon';
+import SoundControls from '../../components/SoundControls';
 
 
 export default function WritingScreen(props) {
@@ -16,6 +18,7 @@ export default function WritingScreen(props) {
     const isFocused = useIsFocused();
     const { setQuestions, setCoursedQuestion, nextNavigate } = useQuestionsHandler();
     const { validateWriring, reset, isCorrect, correctAnswers } = useUserAnswers();
+    const { showAudioCtrl, handleAudioButton } = useAudioControls();
 
     const handleValidate = () => {
         validateWriring(item.questions, userAnswers);
@@ -59,9 +62,21 @@ export default function WritingScreen(props) {
     }
 
     return (
-        <SafeAreaView style={styles.container}>           
+        <SafeAreaView style={styles.container}>
+            {
+                (showAudioCtrl && item?.audio) && <SoundControls url={item.audio}/>
+            }           
             <ScrollView style={styles.scrollView}>
                 <Text style={styles.title}>{item.title}</Text>
+                {
+                    (item?.audio) && 
+                    <View style={styles.audioBtn}>
+                        <TouchableOpacity onPress={handleAudioButton}>
+                            <AudioIcon/>
+                        </TouchableOpacity>
+                    </View>
+                }
+
                 {
                     item?.image && 
                     <View style={styles.imageContainer}>
@@ -150,5 +165,11 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         marginBottom: 10,
         backgroundColor: '#FFFFFF'
+    },
+    audioBtn:{
+        display: 'flex',
+        justifyContent: 'flex-end',
+        width: '100%',
+        flexDirection: 'row',
     }
 })
