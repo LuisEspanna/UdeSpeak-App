@@ -39,10 +39,35 @@ export default function useUserAnswers() {
         setCorrectAnswers(localCorrectAnswers);
     }
 
+    const validateWriring = (questions, userAnswers) => {        
+        let maxScore = 0;
+        let userScore = 0;
+        
+        setCorrectAnswers(null);
+
+        let localCorrectAnswers = {};
+
+        questions.forEach(question => {
+
+            maxScore = maxScore + 1;
+
+            question.options.forEach(option => {
+                if(userAnswers[question.id]?.toLocaleLowerCase()?.trim() === option?.description.toLocaleLowerCase()?.trim()){
+                    userScore = userScore + 1;
+                    localCorrectAnswers = {...localCorrectAnswers, [question.id]: option.id };
+                }
+            });
+        });
+
+        setIsCorrect(maxScore === userScore);
+        setCorrectAnswers(localCorrectAnswers);
+    }
+
     return {
         correctAnswers,
         isCorrect,
         validateStandard,
+        validateWriring,
         reset
     }
 }

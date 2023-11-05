@@ -10,7 +10,7 @@ export default function CustomDropdown({ data, onSelect, buttonTextAfterSelectio
     const dropdownRef = useRef({});  
 
     useEffect(() => {
-        if(correctAnswers !== null &&!correctAnswers[data[0].parent]){
+        if(correctAnswers !== null && !correctAnswers[data[0].parent]){
             setIsCorrect(false);
         } else {
             setIsCorrect(true);
