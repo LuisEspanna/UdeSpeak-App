@@ -10,14 +10,20 @@ import useAudioControls from '../../hooks/useAudioControls';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AudioIcon from '../../components/icons/AudioIcon';
 import RecordBtn from '../../components/RecordBtn';
+import useRecord from '../../hooks/useRecord';
+import LoadingOverlay from '../../components/LoadingOverlay';
+import Toast from '../../components/Toast';
+import useToast from '../../hooks/useToast';
 
 export default function ListeningScreen(props) {
     const [userAnswers, setUserAnswers] = useState({});
     const [item, setItem] = useState(props.route.params.item)
     const isFocused = useIsFocused();
+    const toastProps = useToast();
     const { setQuestions, setCoursedQuestion, nextNavigate } = useQuestionsHandler();
     const { validateStandard, reset, isCorrect, correctAnswers } = useUserAnswers();
     const { showAudioCtrl, handleAudioButton } = useAudioControls();
+    const { startRecording, stopRecording, isLoading, serverOnline } = useRecord(toastProps);
 
     const handleValidate = () => {
         //validateStandard(item.questions, userAnswers);
@@ -33,8 +39,6 @@ export default function ListeningScreen(props) {
             }
         });
     }
-
-    //console.log(item)
 
     useEffect(() => {
         if (isFocused) {
@@ -84,7 +88,11 @@ export default function ListeningScreen(props) {
             </ScrollView>
             <View style={styles.actionArea}>
                 {
-                    !isCorrect ? <RecordBtn/> : 
+                    !isCorrect ? 
+                    <RecordBtn
+                        onStart={startRecording}
+                        onFinish={stopRecording}
+                    /> : 
                     <ButtonVerify
                         text={'verify'}
                         onPress={handleValidate}
@@ -94,6 +102,8 @@ export default function ListeningScreen(props) {
                 }
 
             </View>
+            <LoadingOverlay isLoading={(isLoading && serverOnline.length === 0)}/>
+            <Toast {...toastProps}/>
         </SafeAreaView>
     )
 }

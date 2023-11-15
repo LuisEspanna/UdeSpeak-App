@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View, Animated, Easing, TouchableHighlight, Touchable } from 'react-native';
+import { StyleSheet, View, Animated, Easing } from 'react-native';
 import React, { useRef, useState } from 'react';
 import MicIcon from './icons/MicIcon';
 import { useEffect } from 'react';
-import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 
 const BgCircleAnimation = () => {

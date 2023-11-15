@@ -78,6 +78,22 @@ const getLetter = (index) => {
     return letters.charAt(index);
 }
 
+
+/**
+ * 
+ * @param {Number} length 
+ * @returns 
+ */
+const idGenerator = (length) => {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  
+    for (var i = 0; i < length; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+  
+    return text;
+  }
+
 module.exports = {
     getUserDataFromResult,
     sleep,
@@ -90,5 +106,6 @@ module.exports = {
     getHour,
     toISOFormat,
     toDateFormatShort,
-    getLetter
+    getLetter,
+    idGenerator
 }
