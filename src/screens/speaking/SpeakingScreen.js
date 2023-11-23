@@ -23,7 +23,7 @@ export default function ListeningScreen(props) {
     const { setQuestions, setCoursedQuestion, nextNavigate } = useQuestionsHandler();
     const { validateStandard, reset, isCorrect, correctAnswers } = useUserAnswers();
     const { showAudioCtrl, handleAudioButton } = useAudioControls();
-    const { startRecording, stopRecording, isLoading, serverOnline } = useRecord(toastProps);
+    const { startRecording, stopRecording, isLoading } = useRecord(toastProps);
 
     const handleValidate = () => {
         //validateStandard(item.questions, userAnswers);
@@ -102,7 +102,7 @@ export default function ListeningScreen(props) {
                 }
 
             </View>
-            <LoadingOverlay isLoading={(isLoading && serverOnline.length === 0)}/>
+            <LoadingOverlay isLoading={(isLoading)}/>
             <Toast {...toastProps}/>
         </SafeAreaView>
     )

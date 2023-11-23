@@ -1,13 +1,18 @@
 import { useState } from 'react';
 import { COLLECTIONS } from '../constants';
 import { readFromFirestore } from '../services/firebase';
+import { useEffect } from 'react';
 
+const developMode = true;
 
 export default function useServers() {
+    const [isLoading, setIsLoading] = useState(false);
+    const [servers, setServers] = useState([]);
 
-    const [serverOnline, setServerOnline] = useState('');
-    const [isLoading, setIsLoading] = useState(false)
-
+    useEffect(() => {
+        getServers();
+    }, []);
+    
     const getServers = async () => {
         setIsLoading(true);
         const snapshot = await readFromFirestore(COLLECTIONS.SERVERS);
@@ -16,37 +21,22 @@ export default function useServers() {
         snapshot.forEach(async (doc) => {
             const item = { ...doc.data() };
             item.id = doc.id;
-            myRes.push(item);
+            if(item?.env !== 'develop'){
+                myRes.push(item);
+            } 
+            
+            if(developMode && item?.env === 'develop'){
+                myRes.push(item);
+            }
         });
 
-        for (let i = 0; i < myRes.length; i++) {
-            const server = myRes[i];
-            
-            try {
-                const response = await fetch(
-                    server?.url,
-                );
-                const json = await response.json();
-                item.status = json?.status;
-                console.log('Server:', json);
-                setServerOnline(server?.url);
-                setIsLoading(false);
-                break;
-            }
-            catch (error) {                
-                console.log('Error al conectarse con el servidor:  ', server?.url);
-            }
-        }
-
         setIsLoading(false);
-
-        return (myRes);
+        setServers(myRes);
     }
 
     return {
-        serverOnline,
         isLoading,
-        getServers,
+        servers,
         setIsLoading
     };
 }

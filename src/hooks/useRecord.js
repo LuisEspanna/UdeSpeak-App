@@ -43,39 +43,41 @@ const requestMicPermission = async () => {
 
 export default function useAudioRecord(toastProps) {
   const [file, setFile] = useState('');
-  const { serverOnline, isLoading, getServers, setIsLoading } = useServers();
+  const { isLoading, servers, setIsLoading } = useServers();
+  const [localSTT, setLocalSTT] = useState(false);
 
   useEffect(() => {
     requestMicPermission();
     AudioRecord.init(options);
-    fetchData();
   }, []);
 
-  const fetchData = async () => {
-    const local = await getServers();
-    console.log(local);
-  }
-
   const startRecording = async () => {
-    if(!isLoading && serverOnline.length === 0 ){
-      toastProps.showAlert('Error en el servidor :(', TOASTS_TYPE.ERROR, true);
+    if (!isLoading) {
+      if (servers.length === 0) {
+        //toastProps.showAlert('Error en el servidor :(', TOASTS_TYPE.ERROR, true);
+        // TODO proceder localmente
+        console.log('No hay servidores :(');
+      } else {
+        console.log('Inicio');
+        AudioRecord.start();
+      }
+
+      setLocalSTT(servers.length === 0);
+    } else {
       return;
     }
-    
-    console.log('Inicio')
-    AudioRecord.start();
   }
 
   const stopRecording = async () => {
-    if(!isLoading && serverOnline.length === 0 ){
+    if (isLoading) {
       return;
     }
-    console.log('Pausa')
 
-    const audioFile = await AudioRecord.stop();
-    setFile(audioFile);
+    if (!localSTT) {
+      console.log('Pausa');
+      const audioFile = await AudioRecord.stop();
+      setFile(audioFile);
 
-    if (serverOnline.length > 0) {
       var files = [
         {
           name: "file",
@@ -86,7 +88,7 @@ export default function useAudioRecord(toastProps) {
       ];
 
       uploadFiles({
-        toUrl: serverOnline.replace('/test', ''),
+        toUrl: servers[0].url,
         files: files,
         method: "POST",
         headers: {
@@ -98,7 +100,12 @@ export default function useAudioRecord(toastProps) {
         },
         // You can use this callback to show a progress indicator.
         progress: ({ totalBytesSent, totalBytesExpectedToSend }) => { },
+      }).promise.then((response) => {
+        setIsLoading(false);
+        console.log(response);
       });
+    } else {
+      console.log('stop stt local');
     }
   }
 
@@ -106,7 +113,6 @@ export default function useAudioRecord(toastProps) {
     startRecording,
     stopRecording,
     file,
-    serverOnline,
     isLoading
   }
 }
