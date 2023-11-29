@@ -68,7 +68,7 @@ export default function useAudioRecord(toastProps) {
     }
   }
 
-  const stopRecording = async () => {
+  const stopRecording = async (onFinishRecord) => {
     if (isLoading) {
       return;
     }
@@ -102,7 +102,7 @@ export default function useAudioRecord(toastProps) {
         progress: ({ totalBytesSent, totalBytesExpectedToSend }) => { },
       }).promise.then((response) => {
         setIsLoading(false);
-        console.log(response);
+        onFinishRecord(JSON.parse(response.body));
       });
     } else {
       console.log('stop stt local');

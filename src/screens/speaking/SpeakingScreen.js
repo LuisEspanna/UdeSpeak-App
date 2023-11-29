@@ -16,17 +16,19 @@ import Toast from '../../components/Toast';
 import useToast from '../../hooks/useToast';
 
 export default function ListeningScreen(props) {
-    const [userAnswers, setUserAnswers] = useState({});
     const [item, setItem] = useState(props.route.params.item)
     const isFocused = useIsFocused();
     const toastProps = useToast();
     const { setQuestions, setCoursedQuestion, nextNavigate } = useQuestionsHandler();
-    const { validateStandard, reset, isCorrect, correctAnswers } = useUserAnswers();
+    const { validateSpeaking, reset, isCorrect, correctAnswers } = useUserAnswers();
     const { showAudioCtrl, handleAudioButton } = useAudioControls();
     const { startRecording, stopRecording, isLoading } = useRecord(toastProps);
 
-    const handleValidate = () => {
-        //validateStandard(item.questions, userAnswers);
+
+    const handleStop = () => {
+        stopRecording((res) => {
+            validateSpeaking(item, res?.text);
+        });
     }
 
     const handleNext = () => {
@@ -42,20 +44,11 @@ export default function ListeningScreen(props) {
 
     useEffect(() => {
         if (isFocused) {
-            setUserAnswers({});
             reset();
             setItem(props.route.params.item);
             setQuestions(props.route.params.questions);
         }
     }, [isFocused]);
-
-
-    const handleAnswer = (option) => {
-        setUserAnswers({ ...userAnswers, [option.parent]: option.id });
-        if (!isCorrect) {
-            reset();
-        }
-    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -91,11 +84,10 @@ export default function ListeningScreen(props) {
                     !isCorrect ? 
                     <RecordBtn
                         onStart={startRecording}
-                        onFinish={stopRecording}
+                        onFinish={handleStop}
                     /> : 
                     <ButtonVerify
                         text={'verify'}
-                        onPress={handleValidate}
                         onNext={handleNext}
                         showNextBtn={isCorrect}
                     />
