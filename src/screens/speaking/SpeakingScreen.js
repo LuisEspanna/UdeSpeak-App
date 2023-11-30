@@ -23,7 +23,7 @@ export default function ListeningScreen(props) {
     const { validateSpeaking, reset, isCorrect, correctAnswers } = useUserAnswers();
     const { showAudioCtrl, handleAudioButton } = useAudioControls();
     const { startRecording, stopRecording, isLoading } = useRecord(toastProps);
-
+    const [ arrayDescription, setArrayDescription] = useState([]);
 
     const handleStop = () => {
         stopRecording((res) => {
@@ -42,11 +42,25 @@ export default function ListeningScreen(props) {
         });
     }
 
+    const isCorrectWord = (word) => {
+        let found = false;
+        if(correctAnswers)
+            correctAnswers?.forEach((w) => {
+                if(w.toLowerCase() ===  word.toLowerCase())
+                    found = true;
+            });
+        return found;
+    }
+
     useEffect(() => {
         if (isFocused) {
             reset();
             setItem(props.route.params.item);
             setQuestions(props.route.params.questions);
+
+            // Speaking description
+            let description = props.route.params.item?.description.replace(",", " ,").replace("?", " ?");
+            setArrayDescription(description.split(" "));
         }
     }, [isFocused]);
 
@@ -73,9 +87,15 @@ export default function ListeningScreen(props) {
                             </TouchableOpacity>
                         </View>
                     }
-                    <Text style={styles.description}>
-                        {item?.description}
-                    </Text>
+                    <View style={styles.description}>
+                        {
+                            arrayDescription.map((word, i) => 
+                            <Text key={i} style={[{...styles.word}, {color: (isCorrectWord(word) ? '#0FB4B9' : '#4C4C4C' )}]}>
+                                {word}
+                            </Text>)
+                        }
+                    </View>
+                    
                 </View>
                 <View style={{ height: 40 }} />
             </ScrollView>
@@ -115,21 +135,20 @@ const styles = StyleSheet.create({
         overflow: 'scroll',
     },
     description: {
+        marginTop: 5,
         flexDirection: 'row',
         flexWrap: 'wrap',
-        marginTop: 0,
-        textAlign: 'center',
-        color: '#4C4C4C',
-        alignItems: 'center',
-        alignSelf: 'center',
-        fontWeight: '500',
-        fontSize: 18,
-        maxWidth: '80%'
+        marginBottom: 10,
+        textTransform: 'capitalize',
+        textAlign: 'justify',
     },
     word: {
+        marginTop: 3,
         marginEnd: 4,
         marginBottom: 6,
-        fontSize: 17
+        fontSize: 21,
+        color: '#4C4C4C',
+        fontWeight: 'bold'
     },
     title: {
         fontSize: 23,
