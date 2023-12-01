@@ -7,7 +7,8 @@ const COLLECTIONS = {
     LANGUAGES: 'languages',
     GROUPS: 'groups',
     QUESTIONNARIES: 'questionnaries',
-    QUESTIONS: 'questions'
+    QUESTIONS: 'questions',
+    SERVERS: 'servers'
 }
 
 const PERMISSIONS = {

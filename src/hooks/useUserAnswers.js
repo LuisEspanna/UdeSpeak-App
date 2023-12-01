@@ -63,11 +63,42 @@ export default function useUserAnswers() {
         setCorrectAnswers(localCorrectAnswers);
     }
 
+    const validateSpeaking = (exercise, userResponse) => {
+        let validationText = exercise?.validation_text;
+        let validArray = validationText.toLocaleLowerCase().replace(",","").replace(".","").replace("?","").split(" ");
+
+        let userArray = userResponse.toLocaleLowerCase().replace(",","").replace(".","").replace("?","").split(" ");
+
+        let score = 0;
+        let maxScore = validArray.length;
+        let percentage = 0.0;
+
+        for (let i = 0; i < userArray.length; i++) {
+            const userWord = userArray[i];
+            
+            for (let j = 0; j < validArray.length; j++) {
+                const correctWord = validArray[j];
+                if(userWord === correctWord){
+                    score = score + 1;
+                    break;
+                }
+            }
+        }
+        
+        percentage = ((score * 100.0) / maxScore);
+
+        if(percentage >= 60){
+            setIsCorrect(true);
+            setCorrectAnswers(userArray.filter(correctWord => validArray.includes(correctWord)));
+        }
+    }
+
     return {
         correctAnswers,
         isCorrect,
         validateStandard,
         validateWriring,
-        reset
+        reset,
+        validateSpeaking
     }
 }

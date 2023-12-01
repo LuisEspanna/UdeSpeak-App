@@ -89,7 +89,8 @@ export default function useQuestionsHandler(toastProps) {
         else navigation.navigate('_listening', {...params, item: nextQuestion,  questions: newQuestions});
         break;
       case QUESTIONS_TYPE.SPEAKING:
-        console.log('SPEAKING')
+        if(callback && currentQuestion?.type === QUESTIONS_TYPE.SPEAKING) callback(nextQuestion);
+        else navigation.navigate('_speaking', {...params, item: nextQuestion,  questions: newQuestions});
         break;
       case QUESTIONS_TYPE.WRITING:
         if(callback && currentQuestion?.type === QUESTIONS_TYPE.WRITING) callback(nextQuestion);
@@ -113,7 +114,8 @@ export default function useQuestionsHandler(toastProps) {
           else navigation.navigate('_listening', {...params, item: currentQuestion,  questions});
           break;
         case QUESTIONS_TYPE.SPEAKING:
-          console.log('SPEAKING')
+          if(callback) callback(currentQuestion);
+          else navigation.navigate('_speaking', {...params, item: currentQuestion,  questions});
           break;
         case QUESTIONS_TYPE.WRITING:
           if(callback) callback(currentQuestion);

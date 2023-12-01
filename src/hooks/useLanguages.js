@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { COLLECTIONS } from '../constants';
 import { readFromFirestore } from '../services/firebase';
 
