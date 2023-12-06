@@ -11,6 +11,7 @@ import LoadingOverlay from '../../components/LoadingOverlay';
 import { useIsFocused } from "@react-navigation/native";
 import KeyPrompt from './helper/KeyPrompt';
 import { addKey } from '../../state/reducers/userSlice';
+import useUsers from '../../hooks/useUsers';
 
 
 export default function GroupsScreen(props) {
@@ -22,6 +23,7 @@ export default function GroupsScreen(props) {
     const [showPrompt, setShowPrompt] = useState(false);
     const [currentItem, setCurrentItem] = useState({});
     const dispatch = useDispatch();
+    const { editUserKeys } = useUsers();
 
     const handleItem = (item) => {
         let found = false;
@@ -44,9 +46,14 @@ export default function GroupsScreen(props) {
         setShowPrompt(false);
         
         if(key === currentItem?.access_key){
-            props.navigation.navigate('_questionnaries', { group_id: currentItem.id, ids: {...props.route.params.ids, group: currentItem.id} });
             dispatch(addKey(key));
-            // TODO: save key on firebase
+            let  keys =  [];
+            user?.keys?.forEach((k)=>{
+                keys.push(k)
+            });
+            keys.push(key);
+            editUserKeys(keys, user?.uid);
+            props.navigation.navigate('_questionnaries', { group_id: currentItem.id, ids: {...props.route.params.ids, group: currentItem.id} });
         } else {
             Alert.alert('Error', 'Clave de grupo incorrecta', [
                 {text: 'OK', onPress: () => console.log('OK Pressed')},
