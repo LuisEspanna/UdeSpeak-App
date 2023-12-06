@@ -22,6 +22,16 @@ export default function useUsers() {
         return await updateFirestoreDoc(COLLECTIONS.USERS, uid, {coursed: {...coursed}});
     }
 
+    /**
+     * 
+     * @param {[]} keys 
+     * @param {string} uid 
+     * @returns 
+     */
+    const editUserKeys = async(keys, uid) => {
+        return await updateFirestoreDoc(COLLECTIONS.USERS, uid, {keys: keys});
+    }
+
     const deleteUser = (uid) => {
         console.log('Editing user' , uid);
     }
@@ -30,6 +40,7 @@ export default function useUsers() {
         getUser,
         createUser,
         editUserCoursed,
-        deleteUser
+        deleteUser,
+        editUserKeys
     };
 }
