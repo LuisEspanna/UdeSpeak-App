@@ -102,9 +102,11 @@ const styles = StyleSheet.create({
         minHeight: 55,
         flexDirection: 'row',
         padding: 0,
-        position: 'relative',
+        position: 'absolute',
         zIndex: 4,
-        marginTop: 2
+        marginTop: 2,
+        alignItems: 'center',
+        backgroundColor: "#FFFFFF"
     },
     actionArea: {
         backgroundColor: '#0FB4B9',

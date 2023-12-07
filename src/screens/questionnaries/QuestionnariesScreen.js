@@ -52,6 +52,7 @@ export default function QuestionnariesScreen(props) {
                 handleSearch={(text) => search(text)}
                 toPrevScreen='_groups' 
                 routeParams={{...props.route.params, group_id: null}}
+                show={true}
             />
             <ScrollView style={styles.scrollView}>
                 {
@@ -73,7 +74,7 @@ export default function QuestionnariesScreen(props) {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 15,
+        padding: 0,
         backgroundColor: '#F6FBFF',
         flex: 1,
         height: 1500,
@@ -121,7 +122,8 @@ const styles = StyleSheet.create({
         marginTop: 7
     },
     scrollView: {
-        marginTop: 50
+        padding: 15,
+        paddingTop: 0
     },
     coursedIndicator: {
         position: 'absolute',

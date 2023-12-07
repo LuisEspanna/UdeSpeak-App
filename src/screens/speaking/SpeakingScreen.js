@@ -14,6 +14,8 @@ import useRecord from '../../hooks/useRecord';
 import LoadingOverlay from '../../components/LoadingOverlay';
 import Toast from '../../components/Toast';
 import useToast from '../../hooks/useToast';
+import useScroll from '../../hooks/useScroll';
+import NavBar from '../../components/NavBar';
 
 export default function ListeningScreen(props) {
     const [item, setItem] = useState(props.route.params.item)
@@ -24,6 +26,7 @@ export default function ListeningScreen(props) {
     const { showAudioCtrl, handleAudioButton } = useAudioControls();
     const { startRecording, stopRecording, isLoading } = useRecord(toastProps);
     const [ arrayDescription, setArrayDescription] = useState([]);
+    const { handleScrollStart, handleScrollEnd, isScrollDown } = useScroll();
 
     const handleStop = () => {
         stopRecording((res) => {
@@ -66,11 +69,21 @@ export default function ListeningScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
+            <NavBar
+                navigation={props.navigation}
+                toPrevScreen='_questions'
+                routeParams={{ ...props.route.params }}
+                show={isScrollDown}
+            />
             {
                 showAudioCtrl && <SoundControls url={item.audio} />
             }
 
-            <ScrollView style={styles.scrollView}>
+            <ScrollView 
+                style={styles.scrollView}
+                onScrollBeginDrag={handleScrollStart}
+                onScrollEndDrag={handleScrollEnd}
+            >
                 <Text style={styles.title}>{item.title}</Text>
                 {
                     item?.image &&
@@ -112,7 +125,6 @@ export default function ListeningScreen(props) {
                         showNextBtn={isCorrect}
                     />
                 }
-
             </View>
             <LoadingOverlay isLoading={(isLoading)}/>
             <Toast {...toastProps}/>
@@ -126,13 +138,14 @@ const styles = StyleSheet.create({
         flex: 1,
         height: '100%',
         width: '100%',
-        position: 'relative'
+        position: 'relative',
+        padding: 0,
     },
     scrollView: {
-        marginTop: 5,
         borderRadius: 8,
-        padding: 26,
+        padding: 20,
         overflow: 'scroll',
+        paddingTop: 0
     },
     description: {
         marginTop: 5,

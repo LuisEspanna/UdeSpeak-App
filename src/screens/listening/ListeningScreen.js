@@ -12,6 +12,8 @@ import SoundControls from '../../components/SoundControls';
 import useAudioControls from '../../hooks/useAudioControls';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AudioIcon from '../../components/icons/AudioIcon';
+import NavBar from '../../components/NavBar';
+import useScroll from '../../hooks/useScroll';
 
 export default function ListeningScreen(props) {
     const [userAnswers, setUserAnswers] = useState({});
@@ -20,6 +22,7 @@ export default function ListeningScreen(props) {
     const { setQuestions, setCoursedQuestion, nextNavigate } = useQuestionsHandler();
     const { validateStandard, reset, isCorrect, correctAnswers } = useUserAnswers();
     const { showAudioCtrl, handleAudioButton } = useAudioControls();
+    const { handleScrollStart, handleScrollEnd, isScrollDown } = useScroll();
 
     const handleValidate = () => {
         validateStandard(item.questions, userAnswers);
@@ -66,12 +69,22 @@ export default function ListeningScreen(props) {
     }
 
     return (
-        <SafeAreaView style={styles.container}> 
+        <SafeAreaView style={styles.container}>
+            <NavBar
+                navigation={props.navigation}
+                toPrevScreen='_questions'
+                routeParams={{ ...props.route.params }}
+                show={isScrollDown}
+            />
             {
                 showAudioCtrl && <SoundControls url={item.audio}/>
             }  
             
-            <ScrollView style={styles.scrollView}>
+            <ScrollView 
+                style={styles.scrollView}
+                onScrollBeginDrag={handleScrollStart}
+                onScrollEndDrag={handleScrollEnd}
+            >
                 <Text style={styles.title}>{item.title}</Text>
                 <View style={styles.audioBtn}>
                     <TouchableOpacity onPress={handleAudioButton}>
@@ -136,14 +149,12 @@ export default function ListeningScreen(props) {
                 </View>
                 <View style={{height: 40}}/>
             </ScrollView>
-            <View style={styles.actionArea}>
-                <ButtonVerify 
-                    text={'verify'} 
-                    onPress={handleValidate}
-                    onNext={handleNext}
-                    showNextBtn={isCorrect}
-                />
-            </View>
+            <ButtonVerify 
+                text={'verify'} 
+                onPress={handleValidate}
+                onNext={handleNext}
+                showNextBtn={isCorrect}
+            />
         </SafeAreaView>
     )
 }
@@ -154,21 +165,21 @@ const styles = StyleSheet.create({
         flex: 1,
         height: '100%',
         width: '100%',
-        position: 'relative'
+        position: 'relative',
+        padding: 0,
     },
     scrollView: {
-        marginTop: 5,
         borderRadius: 8,
-        padding: 26,
+        padding: 20,
         overflow: 'scroll',
+        paddingTop: 0
     },
     description: {
         flexDirection: 'row',
         flexWrap: 'wrap',
         marginBottom: 10,
         textTransform: 'capitalize',
-        textAlign: 'justify',
-        color: '#212529',
+        textAlign: 'justify',        
     },
     word: {
         marginEnd: 4,
@@ -199,9 +210,6 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         marginBottom: 10,
         backgroundColor: '#FFFFFF'
-    },
-    actionArea: {
-        padding: 15
     },
     audioBtn:{
         display: 'flex',

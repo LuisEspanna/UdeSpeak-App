@@ -14,12 +14,12 @@ import { TextInput } from 'react-native-gesture-handler';
  * @param {object} props.navigation
  * @param {string} props.toPrevScreen
  * @param {object} props.routeParams
+ * @param {string} props.title
+ * @param {boolean} props.show
  * @returns 
  */
-export default function NavBar({ navigation, title, handleSearch, toPrevScreen, routeParams }) {
-
+export default function NavBar({ navigation, title, handleSearch, toPrevScreen, routeParams, show }) {
   const [isSearching, setIsSearching] = useState(false);
-
 
   const onAction = () => {
     navigation.openDrawer();
@@ -28,7 +28,7 @@ export default function NavBar({ navigation, title, handleSearch, toPrevScreen, 
   const onSearchBtn = () => {
     setIsSearching(!isSearching);
 
-    if(isSearching){
+    if (isSearching) {
       handleSearch("");
     }
   }
@@ -38,52 +38,55 @@ export default function NavBar({ navigation, title, handleSearch, toPrevScreen, 
   }
 
   const handleBack = () => {
-    navigation.navigate(toPrevScreen, {...routeParams, fromBack: true });
+    navigation.navigate(toPrevScreen, { ...routeParams, fromBack: true });
   }
 
-  if (isSearching) {
-    return (
-      <View style={styles.searchContainer}>
-        <TextInput placeholder='Search' style={styles.searchText}  onChangeText={handleChange}/>  
-        <TouchableOpacity onPress={onSearchBtn} style={styles.closeBtn}>    
-          <CloseIcon style={styles.closeIcon}/>
-        </TouchableOpacity>
-      </View>
-    )
-  } else {
-    return (
-      <View style={styles.container}>
-        {
-          toPrevScreen ?
-          <TouchableOpacity onPress={handleBack} style={styles.backBtn}>
-            <BackIcon/>
-          </TouchableOpacity> : 
-          <TouchableOpacity onPress={onAction} style={styles.hamburguerBtn}>
-            <HamburgerIcon />
+  if (show) {
+    if (isSearching) {
+      return (
+        <View style={styles.searchContainer}>
+          <TextInput placeholder='Search' style={styles.searchText} onChangeText={handleChange} />
+          <TouchableOpacity onPress={onSearchBtn} style={styles.closeBtn}>
+            <CloseIcon style={styles.closeIcon} />
           </TouchableOpacity>
-        }
-        <Text style={styles.title}>{title}</Text>
-        {
-          handleSearch ?
-            <TouchableOpacity onPress={onSearchBtn} style={styles.searchBtn}>
-              <SearchIcon />
-            </TouchableOpacity> : <View style={styles.searchBtn}></View>
-        }
-      </View>
-    )
+        </View>
+      )
+    } else {
+      return (
+        <View style={styles.container}>
+          {
+            toPrevScreen ?
+              <TouchableOpacity onPress={handleBack} style={styles.backBtn}>
+                <BackIcon />
+              </TouchableOpacity> :
+              <TouchableOpacity onPress={onAction} style={styles.hamburguerBtn}>
+                <HamburgerIcon />
+              </TouchableOpacity>
+          }
+          <Text style={styles.title}>{title}</Text>
+          {
+            handleSearch ?
+              <TouchableOpacity onPress={onSearchBtn} style={styles.searchBtn}>
+                <SearchIcon />
+              </TouchableOpacity> : <View style={styles.searchBtn}></View>
+          }
+        </View>
+      )
+    }
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
+    position: 'relative',
     left: 0,
     right: 0,
     top: 0,
-    marginBottom: 15,
-    padding: 16,
+    padding: 15,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    height: 70,
+    alignItems: 'center'
   },
   title: {
     fontSize: 18,
@@ -104,15 +107,15 @@ const styles = StyleSheet.create({
     padding: 5,
     flex: 3
   },
-  searchContainer:{
-    position: 'absolute',
+  searchContainer: {
+    position: 'relative',
     left: 0,
     right: 0,
     top: 0,
-    marginBottom: 15,
     padding: 15,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    height: 70
   },
   closeBtn: {
     backgroundColor: '#FBE9E7',
@@ -126,7 +129,7 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   closeIcon: {
-    fill: '#D9491D', 
+    fill: '#D9491D',
     stroke: '#D9491D'
   },
   backBtn: {

@@ -8,7 +8,8 @@ import useUserAnswers from '../../hooks/useUserAnswers';
 import useQuestionsHandler from '../../hooks/useQuestionsHandler';
 import { QUESTIONS_TYPE } from '../../constants';
 import { getLetter } from '../../functions';
-
+import useScroll from '../../hooks/useScroll';
+import NavBar from '../../components/NavBar';
 
 export default function ReadingScreen(props) {
     const [userAnswers, setUserAnswers] = useState({});
@@ -16,6 +17,7 @@ export default function ReadingScreen(props) {
     const isFocused = useIsFocused();
     const { setQuestions, setCoursedQuestion, nextNavigate } = useQuestionsHandler();
     const { validateStandard, reset, isCorrect, correctAnswers } = useUserAnswers();
+    const { handleScrollStart, handleScrollEnd, isScrollDown } = useScroll();
 
     const handleValidate = () => {
         validateStandard(item.questions, userAnswers);
@@ -62,7 +64,13 @@ export default function ReadingScreen(props) {
     }
 
     return (
-        <SafeAreaView style={styles.container}>           
+        <SafeAreaView style={styles.container}>
+            <NavBar
+                navigation={props.navigation}
+                toPrevScreen='_questions'
+                routeParams={{ ...props.route.params }}
+                show={isScrollDown}
+            />        
             <ScrollView style={styles.scrollView}>
                 <Text style={styles.title}>{item.title}</Text>
                 {
@@ -135,17 +143,18 @@ export default function ReadingScreen(props) {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20,
         backgroundColor: '#FFFFFF',
         flex: 1,
         height: '100%',
+        width: '100%',
+        position: 'relative',
+        padding: 0,
     },
     scrollView: {
-        marginTop: 10,
-        marginBottom: 20,
         borderRadius: 8,
-        padding: 6,
-        overflow: 'scroll'
+        padding: 20,
+        overflow: 'scroll',
+        paddingTop: 0
     },
     description: {
         flexDirection: 'row',
@@ -153,7 +162,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         textTransform: 'capitalize',
         textAlign: 'justify',
-        color: '#212529',
     },
     word: {
         marginEnd: 4,

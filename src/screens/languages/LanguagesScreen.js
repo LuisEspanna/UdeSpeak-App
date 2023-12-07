@@ -51,6 +51,7 @@ export default function LanguageScreen(props) {
                 title={'Idiomas'} handleSearch={(text) => search(text)}
                 toPrevScreen='Mis cursos'
                 routeParams={{...props.route.params}}
+                show={true}
             />
             <ScrollView style={styles.scrollView}>
                 {
@@ -72,7 +73,7 @@ export default function LanguageScreen(props) {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 15,
+        padding: 0,
         backgroundColor: '#F6FBFF',
         flex: 1,
         height: 1500,
@@ -125,7 +126,8 @@ const styles = StyleSheet.create({
         color: '#0FB4B9'
       },
       scrollView: {
-          marginTop: 50
+          padding: 15,
+          paddingTop: 0
       },
       coursedIndicator: {
         position: 'absolute',
