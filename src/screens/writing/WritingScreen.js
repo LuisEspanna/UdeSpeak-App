@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, ScrollView, SafeAreaView, Image, View } from 'react-native';
+import { StyleSheet, Text, ScrollView, SafeAreaView, Image, View, Animated } from 'react-native';
 import { useIsFocused } from "@react-navigation/native";
 import ButtonVerify from '../../components/ButtonVerify';
 import useUserAnswers from '../../hooks/useUserAnswers';
@@ -10,6 +10,8 @@ import useAudioControls from '../../hooks/useAudioControls';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AudioIcon from '../../components/icons/AudioIcon';
 import SoundControls from '../../components/SoundControls';
+import NavBar from '../../components/NavBar';
+import useScroll from '../../hooks/useScroll';
 
 
 export default function WritingScreen(props) {
@@ -19,6 +21,7 @@ export default function WritingScreen(props) {
     const { setQuestions, setCoursedQuestion, nextNavigate } = useQuestionsHandler();
     const { validateWriring, reset, isCorrect, correctAnswers } = useUserAnswers();
     const { showAudioCtrl, handleAudioButton } = useAudioControls();
+    const { handleScrollStart, handleScrollEnd, isScrollDown } = useScroll();
 
     const handleValidate = () => {
         validateWriring(item.questions, userAnswers);
@@ -61,12 +64,26 @@ export default function WritingScreen(props) {
         setUserAnswers({...userAnswers, [option.parent]: option.value});
     }
 
+    const handleScroll = (e) => {
+        console.log(e);
+    }
+
     return (
         <SafeAreaView style={styles.container}>
+            <NavBar
+                navigation={props.navigation}
+                toPrevScreen='_questions'
+                routeParams={{ ...props.route.params }}
+                show={isScrollDown}
+            />
             {
                 (showAudioCtrl && item?.audio) && <SoundControls url={item.audio}/>
             }           
-            <ScrollView style={styles.scrollView}>
+            <Animated.ScrollView 
+                style={styles.scrollView}              
+                onScrollBeginDrag={handleScrollStart}
+                onScrollEndDrag={handleScrollEnd}
+            >
                 <Text style={styles.title}>{item.title}</Text>
                 {
                     (item?.audio) && 
@@ -102,7 +119,7 @@ export default function WritingScreen(props) {
                     }
                 </View>
                 <View style={{height: 40}}/>
-            </ScrollView>
+            </Animated.ScrollView>
             <ButtonVerify 
                 text={'verify'} 
                 onPress={handleValidate}
@@ -115,17 +132,18 @@ export default function WritingScreen(props) {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20,
         backgroundColor: '#FFFFFF',
         flex: 1,
         height: '100%',
+        width: '100%',
+        position: 'relative',
+        padding: 0,
     },
-    scrollView: {
-        marginTop: 10,
-        marginBottom: 20,
+    scrollView: {        
         borderRadius: 8,
-        padding: 6,
-        overflow: 'scroll'
+        padding: 20,
+        overflow: 'scroll',
+        paddingTop: 0
     },
     description: {
         flexDirection: 'row',

@@ -87,6 +87,7 @@ export default function GroupsScreen(props) {
                 handleSearch={(text) => search(text)}
                 toPrevScreen='_levels'
                 routeParams={{...props.route.params, id_level: null}}
+                show={true}
             />
             <ScrollView style={styles.scrollView}>
                 {
@@ -103,7 +104,7 @@ export default function GroupsScreen(props) {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 15,
+        padding: 0,
         backgroundColor: '#F6FBFF',
         flex: 1,
         height: 1500,
@@ -125,6 +126,7 @@ const styles = StyleSheet.create({
         color: '#0FB4B9'
     },
     scrollView: {
-        marginTop: 50
+        padding: 15,
+        paddingTop: 0
     }
 })

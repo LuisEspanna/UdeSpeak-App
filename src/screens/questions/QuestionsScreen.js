@@ -3,11 +3,9 @@ import React from 'react';
 import { useEffect } from 'react';
 import useQuestions from '../../hooks/useQuestions';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import NavBar from '../../components/NavBar';
 import useGenericSearch from '../../hooks/useGenericSearch';
 import LoadingOverlay from '../../components/LoadingOverlay';
-import { QUESTIONS_TYPE } from '../../constants';
 import { useIsFocused } from "@react-navigation/native";
 import useQuestionsHandler from '../../hooks/useQuestionsHandler';
 import useToast from '../../hooks/useToast';
@@ -16,7 +14,6 @@ import Toast from '../../components/Toast';
 export default function QuestionsScreen(props) {
     const [isLoading, setIsLoading] = useState(false);
     const { getAll } = useQuestions();
-    const user = useSelector((state) => state.user);
     const { results, search, setItems } = useGenericSearch();
     const isFocused = useIsFocused();
     const toastProps = useToast();
@@ -50,6 +47,7 @@ export default function QuestionsScreen(props) {
                 handleSearch={(text) => search(text)}
                 toPrevScreen='_questionnaries'
                 routeParams={{ ...props.route.params, questionnary_id: null }}
+                show={true}
             />
             <ScrollView style={styles.scrollView}>
                 {
@@ -89,7 +87,7 @@ export default function QuestionsScreen(props) {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 15,
+        padding: 0,
         backgroundColor: '#F6FBFF',
         flex: 1,
         height: 1500,
@@ -138,7 +136,8 @@ const styles = StyleSheet.create({
         textTransform: 'capitalize'
     },
     scrollView: {
-        marginTop: 50
+        padding: 20,
+        paddingTop: 0
     },
     coursedIndicator: {
         position: 'absolute',
