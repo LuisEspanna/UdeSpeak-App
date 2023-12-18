@@ -10,7 +10,6 @@ import LoadingOverlay from '../../components/LoadingOverlay';
 import { useIsFocused } from "@react-navigation/native";
 
 export default function LevelsScreen(props) {
-    //const [levels, setLevels] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const { getAll } = useLevels();
     const user = useSelector((state) => state.user);
@@ -52,6 +51,7 @@ export default function LevelsScreen(props) {
                 title={'Niveles'} handleSearch={(text) => search(text)}
                 toPrevScreen='Explorar cursos'
                 routeParams={{...props.route.params, id_level: null}}
+                show={true}
             />
             <ScrollView style={styles.scrollView}>
                 {
@@ -73,7 +73,7 @@ export default function LevelsScreen(props) {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 15,
+        padding: 0,
         backgroundColor: '#F6FBFF',
         flex: 1,
         height: 1500,
@@ -126,7 +126,8 @@ const styles = StyleSheet.create({
         
     },
     scrollView: {
-        marginTop: 50
+        padding: 15,
+        paddingTop: 0
     },
     coursedIndicator: {
       position: 'absolute',

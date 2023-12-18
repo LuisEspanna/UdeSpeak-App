@@ -10,9 +10,9 @@ export default function HomeScreen({navigation}) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar navigation={navigation}/>
+            <NavBar navigation={navigation} show={true}/>
             <ScrollView style={styles.scrollView}>
-                <View style={{marginTop: 20, marginBottom: 20}}>
+                <View style={{marginTop: 0, marginBottom: 20}}>
                     <Text style={styles.greeting}>Hello,</Text>
                     <Text style={styles.name}>{getDisplayName(user)}</Text>
                     <Text style={styles.title}>Explore your course</Text>
@@ -26,7 +26,7 @@ export default function HomeScreen({navigation}) {
 
 const styles = StyleSheet.create({
     container:{
-        padding: 15,
+        padding: 0,
         backgroundColor: '#F6FBFF',
         flex: 1,
         height: 1500,
@@ -48,6 +48,6 @@ const styles = StyleSheet.create({
         color: '#0FB4B9'
     },
     scrollView: {
-        marginTop: 50
+        padding: 15,
     }
 });
