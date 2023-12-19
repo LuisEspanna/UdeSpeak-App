@@ -39,7 +39,9 @@ export default function GroupsScreen(props) {
                 setShowPrompt(true);
                 setCurrentItem(item);
             }
-        }    
+        } else {
+            props.navigation.navigate('_questionnaries', { group_id: item.id, ids: {...props.route.params.ids, group: item.id} });
+        }
     }
 
     const handlePrompt = (key) => {
