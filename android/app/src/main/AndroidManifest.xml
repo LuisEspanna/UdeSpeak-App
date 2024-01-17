@@ -31,6 +31,14 @@
                 android:host="udespeak-b580c.web.app"
                 android:pathPrefix="/dashboard/bugs" />
         </intent-filter>
+        <intent-filter android:label="UdespeakHelp">
+          <action android:name="android.intent.action.VIEW" />
+          <category android:name="android.intent.category.DEFAULT" />
+          <category android:name="android.intent.category.BROWSABLE" />
+          <data android:scheme="https"
+                android:host="udespeak-b580c.web.app"
+                android:pathPrefix="/help" />
+        </intent-filter>
 
       </activity>
     </application>
