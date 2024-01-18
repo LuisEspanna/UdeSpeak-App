@@ -10,7 +10,9 @@ export default function useQuestions() {
         snapshot.forEach(doc => {
             const item = {...doc.data()};
             item.id = doc.id;
-            localLevels.push(item);
+            if(!item?.isEmpty){
+                localLevels.push(item);
+            }
         });
 
         return(localLevels);
