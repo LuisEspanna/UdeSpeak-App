@@ -31,7 +31,7 @@ export default function NavigationDrawer({isAuth, isLoading}) {
             <Drawer.Screen name="Mis cursos" component={HomeScreen}/>
             <Drawer.Screen name="Explorar cursos" component={LanguagesScreen}/>
             <Drawer.Screen name="Mi cuenta" component={HomeScreen}/>
-            <Drawer.Screen name="Configuración" component={SettingsScreen}/>
+            <Drawer.Screen name="_Configuración" component={SettingsScreen}/>
             <Drawer.Screen name="Reportar problema" component={BugsScreen}/>
             <Drawer.Screen name="Ayuda" component={HelpScreen} />
             <Drawer.Screen name="_levels" component={LevelsScreen} />
