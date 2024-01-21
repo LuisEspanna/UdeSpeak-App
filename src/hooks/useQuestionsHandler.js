@@ -11,7 +11,7 @@ export default function useQuestionsHandler(toastProps) {
   const { editUserCoursed } = useUsers();
 
   const setCoursedQuestion = (question, route) => {
-    let coursed = toDbCoursedFormat(question.id, route);
+    let coursed = toDbCoursedFormat(question, route);
 
     editUserCoursed(coursed, user.uid).finally(()=>{
       dispatch(addCoursed(coursed));
@@ -23,15 +23,25 @@ export default function useQuestionsHandler(toastProps) {
 
   const isQuestionCoursed = (question) => {
     let found = false;
-    user?.coursed?.questions?.forEach(item => {
-      if (item === question.id)
-        found = true;
-    });
+
+    if(user?.coursed?.questions){
+      const questions = user?.coursed?.questions;
+
+      for (const key in questions) {
+        if (Object.hasOwnProperty.call(questions, key)) {
+          if (key === question.id)
+          found = true;
+        }
+      }
+    }
+
     return found;
   }
 
-  const toDbCoursedFormat = (questionId, route) => {
+  const toDbCoursedFormat = (question, route) => {
+    
     const coursed = {};
+
     if (user?.coursed?.languages) {
       coursed.languages = [...user.coursed.languages.filter(c => c != route.language), route.language];
     } else {
@@ -51,9 +61,18 @@ export default function useQuestionsHandler(toastProps) {
     }
 
     if (user?.coursed?.questions) {
-      coursed.questions = [...user.coursed.questions.filter(c => c != questionId), questionId];
+      coursed.questions = {...user.coursed.questions};
+
+      coursed.questions[question.id] = {
+        type: question.type,
+        date: new Date().getTime()
+      };
     } else {
-      coursed.questions = [questionId];
+      coursed.questions = {}
+      coursed.questions[question.id] = {
+        type: question.type,
+        date: new Date().getTime()
+      };
     }
 
     return coursed;
