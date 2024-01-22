@@ -1,8 +1,6 @@
 import { StyleSheet, View, Text } from 'react-native'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { PieChart } from "react-native-gifted-charts";
-import { useEffect } from 'react';
-import { useState } from 'react';
 
 const colors = [
     '#0088FF',
@@ -25,7 +23,6 @@ export default function CDonutChart({ coursed }) {
     const [totalQuestions, setTotalQuestions] = useState(0);
 
     useEffect(() => {
-
         function transform() {
             const values = [{ value: 0, color: colors[0] }, { value: 0, color: colors[1] }, { value: 0, color: colors[2] }, { value: 0, color: colors[3] }]
     
@@ -49,16 +46,14 @@ export default function CDonutChart({ coursed }) {
 
                 setLabels(newLabels);
                 setTotalQuestions(counter);
-            }
-    
+            }    
             setData(values);
         }
-
-        transform();
-        
+        transform();        
     }, [coursed])
     
 
+    if (coursed?.questions)
     return (
         <View style={styles.container}>
             <PieChart
