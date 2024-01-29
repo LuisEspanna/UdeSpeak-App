@@ -1,38 +1,31 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import useLanguages from '../../../hooks/useLanguages';
+import useNews from '../../../hooks/useNews';
 import { useState, useEffect } from 'react';
+import NewsCard from '../../../components/NewsCard';
 
 
-export default function Language(props) {
-  const { getAll } = useLanguages();
-  const [languages, setLanguages] = useState([]);
+export default function SectionNews(props) {
+  const { getAllNews } = useNews();
+  const [news, setNews] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    async function fetchLanguages() {
+    async function fetchNews() {
       setIsLoading(true);
-      const localItems = await getAll();
-      setLanguages(localItems);
+      const localItems = await getAllNews();
+      setNews(localItems);
       setIsLoading(false);
     }
-
-    fetchLanguages();
+    fetchNews();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const handleLanguage = (item) => {
-    props.navigation.navigate('_levels', { id_language: item.id, ids: {language: item.id} });
-  }
 
   return (
     <View style={styles.container}>
       {
-        languages?.map((item, i) =>
-          <TouchableOpacity key={i} style={styles.languageItem} onPress={() => handleLanguage(item)}>
-            <Image source={{ uri: item.image }} style={styles.languageImage} />
-            <Text style={styles.languageText}>{item.name}</Text>
-          </TouchableOpacity>
+        news?.map((item) =>
+          <NewsCard key={item.id} {...item} />
         )
       }
     </View>

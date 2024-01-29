@@ -8,7 +8,8 @@ const COLLECTIONS = {
     GROUPS: 'groups',
     QUESTIONNARIES: 'questionnaries',
     QUESTIONS: 'questions',
-    SERVERS: 'servers'
+    SERVERS: 'servers',
+    NEWS: 'news'
 }
 
 const PERMISSIONS = {

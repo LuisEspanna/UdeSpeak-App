@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { getDisplayName } from '../../functions'
 import NavBar from '../../components/NavBar';
 import SectionLanguages from './sections/SectionLanguages';
+import SectionNews from './sections/SectionNews';
 
 export default function HomeScreen({navigation}) {
     const user = useSelector((state) => state.user);
@@ -13,12 +14,14 @@ export default function HomeScreen({navigation}) {
             <NavBar navigation={navigation} show={true}/>
             <ScrollView style={styles.scrollView}>
                 <View style={{marginTop: 0, marginBottom: 20}}>
-                    <Text style={styles.greeting}>Hello,</Text>
+                    <Text style={styles.greeting}>Hola,</Text>
                     <Text style={styles.name}>{getDisplayName(user)}</Text>
-                    <Text style={styles.title}>Explore your course</Text>
+                    <Text style={styles.title}>Explora los cursos disponibles</Text>
                 </View>
 
                 <SectionLanguages navigation={navigation} />
+                <Text style={[styles.title, {marginTop: 20}]}>Noticias</Text>
+                <SectionNews/>
             </ScrollView>
         </SafeAreaView>
     )
