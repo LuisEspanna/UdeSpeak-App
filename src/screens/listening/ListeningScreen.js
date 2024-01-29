@@ -22,7 +22,7 @@ export default function ListeningScreen(props) {
     const { setQuestions, setCoursedQuestion, nextNavigate } = useQuestionsHandler();
     const { validateStandard, reset, isCorrect, correctAnswers } = useUserAnswers();
     const { showAudioCtrl, handleAudioButton } = useAudioControls();
-    const { handleScrollStart, handleScrollEnd, isScrollDown } = useScroll();
+    const { handleScrollStart, handleScrollEnd } = useScroll();
 
     const handleValidate = () => {
         validateStandard(item.questions, userAnswers);
@@ -74,7 +74,7 @@ export default function ListeningScreen(props) {
                 navigation={props.navigation}
                 toPrevScreen='_questions'
                 routeParams={{ ...props.route.params }}
-                show={isScrollDown}
+                show={true}
             />
             {
                 showAudioCtrl && <SoundControls url={item.audio}/>
