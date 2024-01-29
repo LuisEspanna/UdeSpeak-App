@@ -49,7 +49,7 @@ export default function LanguageScreen(props) {
             <NavBar
                 navigation={props.navigation} 
                 title={'Idiomas'} handleSearch={(text) => search(text)}
-                toPrevScreen='Mis cursos'
+                toPrevScreen='Inicio'
                 routeParams={{...props.route.params}}
                 show={true}
             />
