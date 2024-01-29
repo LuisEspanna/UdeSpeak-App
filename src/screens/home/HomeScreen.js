@@ -20,7 +20,6 @@ export default function HomeScreen({navigation}) {
                 </View>
 
                 <SectionLanguages navigation={navigation} />
-                <Text style={[styles.title, {marginTop: 20}]}>Noticias</Text>
                 <SectionNews/>
             </ScrollView>
         </SafeAreaView>

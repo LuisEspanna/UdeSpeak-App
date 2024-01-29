@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import useNews from '../../../hooks/useNews';
 import { useState, useEffect } from 'react';
@@ -23,6 +23,9 @@ export default function SectionNews(props) {
 
   return (
     <View style={styles.container}>
+      {
+        news?.length > 0 && <Text style={styles.sectionTitle}>Noticias</Text>
+      }
       {
         news?.map((item) =>
           <NewsCard key={item.id} {...item} />
@@ -65,6 +68,12 @@ const styles = StyleSheet.create({
   languageText: {
     marginLeft: 20,
     fontSize: 16,
+    fontWeight: 'bold',
+    color: '#0FB4B9'
+  },
+  sectionTitle:{
+    marginTop: 26,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#0FB4B9'
   }
