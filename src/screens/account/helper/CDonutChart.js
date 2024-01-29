@@ -41,7 +41,7 @@ export default function CDonutChart({ coursed }) {
                 let newLabels = [];
 
                 values.forEach((item, i) => {
-                    newLabels.push(((item.value / counter) * 100))
+                    newLabels.push(Math.floor((item.value / counter) * 100))
                 })
 
                 setLabels(newLabels);
