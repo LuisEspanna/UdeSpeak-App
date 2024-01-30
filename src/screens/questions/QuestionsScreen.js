@@ -64,10 +64,8 @@ export default function QuestionsScreen(props) {
                         <View key={i}>
                             {
                                 i === 0 &&
-                                <View>
-                                    < View style={styles.separator} />
-                                    <Text>Ejercicios realizados</Text>
-                                    <View style={styles.separator} />
+                                <View style={styles.separatorCard}>
+                                    <Text style={styles.separatorText}>Ejercicios realizados</Text>
                                 </View>
                             }
                             <TouchableOpacity  style={styles.item} onPress={() => handleItem(item)}>
@@ -149,11 +147,19 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 4,
         borderBottomRightRadius: 4
     },
-    separator: {
+    separatorCard: {
         width: '100%',
-        height: 1,
-        backgroundColor: '#c4c4c4',
-        marginTop: 20,
-        marginBottom: 20
+        backgroundColor: '#0FB4B9',
+        height: 60,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 7,
+        marginTop: 30,
+        marginBottom: 10
+    },
+    separatorText: {
+        color: '#FFFFFF',
+        fontSize: 17,
+        fontWeight: 'bold'
     }
 })
