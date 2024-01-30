@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import AudioRecord from 'react-native-audio-record';
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['new NativeEventEmitter']);
 import {
   PermissionsAndroid,
 } from 'react-native';
