@@ -30,7 +30,7 @@ export default function NavigationDrawer({isAuth, isLoading}) {
           screenOptions={{ headerShown: false }} initialRouteName="Home"
           drawerContent={props => <CustomDrawer {...props}/>}
         >
-            <Drawer.Screen name="Mis cursos" component={HomeScreen}/>
+            <Drawer.Screen name="Inicio" component={HomeScreen}/>
             <Drawer.Screen name="Explorar cursos" component={LanguagesScreen}/>
             <Drawer.Screen name="Mi cuenta" component={AccountScreen}/>
             <Drawer.Screen name="_Configuración" component={SettingsScreen}/>

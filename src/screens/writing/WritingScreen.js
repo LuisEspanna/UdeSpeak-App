@@ -21,7 +21,7 @@ export default function WritingScreen(props) {
     const { setQuestions, setCoursedQuestion, nextNavigate } = useQuestionsHandler();
     const { validateWriring, reset, isCorrect, correctAnswers } = useUserAnswers();
     const { showAudioCtrl, handleAudioButton } = useAudioControls();
-    const { handleScrollStart, handleScrollEnd, isScrollDown } = useScroll();
+    const { handleScrollStart, handleScrollEnd } = useScroll();
 
     const handleValidate = () => {
         validateWriring(item.questions, userAnswers);
@@ -64,17 +64,13 @@ export default function WritingScreen(props) {
         setUserAnswers({...userAnswers, [option.parent]: option.value});
     }
 
-    const handleScroll = (e) => {
-        console.log(e);
-    }
-
     return (
         <SafeAreaView style={styles.container}>
             <NavBar
                 navigation={props.navigation}
                 toPrevScreen='_questions'
                 routeParams={{ ...props.route.params }}
-                show={isScrollDown}
+                show={true}
             />
             {
                 (showAudioCtrl && item?.audio) && <SoundControls url={item.audio}/>

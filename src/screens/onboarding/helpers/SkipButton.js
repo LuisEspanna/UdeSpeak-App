@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity } from 'react-native';
-//import CanvasSemiCircle from './CanvasSemiCircle';
 import Svg, { G, Circle, Path, Defs } from "react-native-svg";
 //import SemiCircle from './SemiCircle';
 import * as Progress from 'react-native-progress';

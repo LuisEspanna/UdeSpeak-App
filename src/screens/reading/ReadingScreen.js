@@ -8,7 +8,6 @@ import useUserAnswers from '../../hooks/useUserAnswers';
 import useQuestionsHandler from '../../hooks/useQuestionsHandler';
 import { QUESTIONS_TYPE } from '../../constants';
 import { getLetter } from '../../functions';
-import useScroll from '../../hooks/useScroll';
 import NavBar from '../../components/NavBar';
 
 export default function ReadingScreen(props) {
@@ -17,7 +16,6 @@ export default function ReadingScreen(props) {
     const isFocused = useIsFocused();
     const { setQuestions, setCoursedQuestion, nextNavigate } = useQuestionsHandler();
     const { validateStandard, reset, isCorrect, correctAnswers } = useUserAnswers();
-    const { handleScrollStart, handleScrollEnd, isScrollDown } = useScroll();
 
     const handleValidate = () => {
         validateStandard(item.questions, userAnswers);
@@ -28,8 +26,8 @@ export default function ReadingScreen(props) {
 
         nextNavigate(props.navigation, props.route.params, item, (next) => {
             if(next.type === QUESTIONS_TYPE.READING){
-                reset();
                 setItem(next);
+                reset();
             }
         });
     }
@@ -69,7 +67,7 @@ export default function ReadingScreen(props) {
                 navigation={props.navigation}
                 toPrevScreen='_questions'
                 routeParams={{ ...props.route.params }}
-                show={isScrollDown}
+                show={true}
             />        
             <ScrollView style={styles.scrollView}>
                 <Text style={styles.title}>{item.title}</Text>
