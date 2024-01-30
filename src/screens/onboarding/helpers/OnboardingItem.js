@@ -1,8 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-
-//const {width, height} = Dimensions.get('window');
 
 export default function OnboardingItem({item, width}) {
     return (

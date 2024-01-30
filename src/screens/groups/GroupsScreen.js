@@ -79,8 +79,6 @@ export default function GroupsScreen(props) {
         setIsLoading(false);
     }
 
-    // TODO: Show coursed
-
     return (
         <SafeAreaView style={styles.container}>
             <NavBar
@@ -94,7 +92,12 @@ export default function GroupsScreen(props) {
             <ScrollView style={styles.scrollView}>
                 {
                     results.map((item, i) =>
-                        <GroupItem item={item} key={i} handleItem={()=>handleItem(item)} user={user}/>                   
+                        <GroupItem 
+                            key={i}
+                            item={item}
+                            handleItem={()=>handleItem(item)}
+                            user={user}
+                        />                   
                     )
                 }                
             </ScrollView>

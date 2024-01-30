@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
 
 export default function useScrollDown() {
     const [isScrollDown, setIsScrollDown] = useState(true);

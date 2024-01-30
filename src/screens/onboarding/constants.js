@@ -7,20 +7,19 @@ const slides = [
     {
         id: '1',
         title: "¡Practica desde cualquier lugar!",
-        description: "Unicamente necesitas conexion a internet",
+        description: "Únicamente necesitas conexión a internet",
         image: (props) => <Slide1 {...props}/>
     },
     {
         id: '2',
         title: "Speaking and listening",
-        description: "Secciones donde  tendras que hablar y escuchar",
+        description: "Secciones donde tendras que hablar y escuchar",
         image: (props) => <Slide2 {...props}/>
-    },
-    
+    },    
     {
         id: '3',
-        title: "Indices de desempeño",
-        description: "a medida que avanzas obtendras un puntaje",
+        title: "Índices de desempeño",
+        description: "a medida que avanzas obtendrás un puntaje",
         image: (props) => <Slide3 {...props}/>
     }
 ];

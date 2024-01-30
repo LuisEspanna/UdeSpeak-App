@@ -16,8 +16,6 @@ export default function useLevels() {
         return(localLevels);
     }
 
-    // TODO: implementar Search
-
     return {
         getAll
     };

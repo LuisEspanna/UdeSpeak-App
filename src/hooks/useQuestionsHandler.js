@@ -54,6 +54,12 @@ export default function useQuestionsHandler(toastProps) {
       coursed.levels = [route.level];
     }
 
+    if (user?.coursed?.groups) {
+      coursed.groups = [...user.coursed.groups.filter(c => c != route.group), route.group];
+    } else {
+      coursed.groups = [route.group];
+    }
+
     if (user?.coursed?.questionnaries) {
       coursed.questionnaries = [...user.coursed.questionnaries.filter(c => c != route.questionnary), route.questionnary];
     } else {

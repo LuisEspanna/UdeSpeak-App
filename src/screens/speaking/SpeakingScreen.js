@@ -26,7 +26,7 @@ export default function ListeningScreen(props) {
     const { showAudioCtrl, handleAudioButton } = useAudioControls();
     const { startRecording, stopRecording, isLoading } = useRecord(toastProps);
     const [ arrayDescription, setArrayDescription] = useState([]);
-    const { handleScrollStart, handleScrollEnd, isScrollDown } = useScroll();
+    const { handleScrollStart, handleScrollEnd } = useScroll();
 
     const handleStop = () => {
         stopRecording((res) => {
@@ -62,8 +62,10 @@ export default function ListeningScreen(props) {
             setQuestions(props.route.params.questions);
 
             // Speaking description
-            let description = props.route.params.item?.description.replace(",", " ,").replace("?", " ?");
-            setArrayDescription(description.split(" "));
+            if(props.route.params.item?.description){
+                let description = props.route.params.item?.description?.replace(",", " ,")?.replace("?", " ?");
+                setArrayDescription(description.split(" "));
+            }
         }
     }, [isFocused]);
 
@@ -73,7 +75,7 @@ export default function ListeningScreen(props) {
                 navigation={props.navigation}
                 toPrevScreen='_questions'
                 routeParams={{ ...props.route.params }}
-                show={isScrollDown}
+                show={true}                
             />
             {
                 showAudioCtrl && <SoundControls url={item.audio} />

@@ -1,8 +1,5 @@
-import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-
-
 
 export default function useStatusBar() {
     const isDarkMode = useColorScheme() === 'dark';
