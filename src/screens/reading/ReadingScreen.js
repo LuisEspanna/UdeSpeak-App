@@ -26,8 +26,8 @@ export default function ReadingScreen(props) {
 
         nextNavigate(props.navigation, props.route.params, item, (next) => {
             if(next.type === QUESTIONS_TYPE.READING){
-                reset();
                 setItem(next);
+                reset();
             }
         });
     }

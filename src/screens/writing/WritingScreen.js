@@ -64,10 +64,6 @@ export default function WritingScreen(props) {
         setUserAnswers({...userAnswers, [option.parent]: option.value});
     }
 
-    const handleScroll = (e) => {
-        console.log(e);
-    }
-
     return (
         <SafeAreaView style={styles.container}>
             <NavBar
