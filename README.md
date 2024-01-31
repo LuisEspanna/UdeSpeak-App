@@ -26,5 +26,15 @@ npx react-native run-android
 ### Firebase login config
 https://www.pradipdebnath.com/2020/10/06/how-to-implement-google-login-in-react-native-with-firebase/
 
-# Generar APK
+## Generar APK
 https://tincode.es/blog/genera-apk-react-native-cli
+
+```
+cd android
+gradlew bundleRelease
+```
+
+## Test release APK
+```
+npx react-native run-android --variant=release
+```
