@@ -1,11 +1,13 @@
 import { View, Text, Alert, Linking, StyleSheet } from 'react-native'
 import React, { useCallback } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import HelpAsset from '../../components/assets/HelpAsset';
+import NavBar from '../../components/NavBar';
 
 
 const url = 'https://udespeak-b580c.web.app/help';
 
-export default function HelpScreen() {
+export default function HelpScreen({navigation}) {
     const openURL = useCallback(async () => {
         // Checking if the link is supported for links with custom URL scheme.
         const supported = await Linking.canOpenURL(url);
@@ -21,9 +23,18 @@ export default function HelpScreen() {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={openURL} style={styles.button}>
+            <View style={styles.asset}>
+                <HelpAsset/>
+            </View>
+            <NavBar navigation={navigation} show={true} title='Ayuda'/>
+            <View style={{ padding: 20, backgroundColor: 'rgba(255, 255, 255, 0.80)' }}>
+                <Text style={{ color: '#000000' }}>
+                    De momento los canales de atención se encuentran en nuestra página Web
+                </Text>
+                <TouchableOpacity onPress={openURL} style={styles.button}>
                     <Text style={styles.buttonText}>Abrir en navegador</Text>
-            </TouchableOpacity>       
+                </TouchableOpacity>
+            </View>       
         </View>
     )
 }
@@ -36,6 +47,17 @@ const styles = StyleSheet.create({
         width: '100%',
         position: 'relative',
         padding: 0,
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+        position: 'relative'
+    },
+    asset:{
+        flex: 1,
+        width: '100%',
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
         justifyContent: 'center',
         alignContent: 'center',
         flexDirection: 'row',
@@ -45,9 +67,12 @@ const styles = StyleSheet.create({
         height: 40,
         padding: 10, 
         borderRadius: 5,
-        top: '40%',        
+        top: '40%',
+        justifyContent: 'center',
+        marginBottom: 10
     },
     buttonText: {
-        color: '#FFFFFF'
+        color: '#FFFFFF',
+        textAlign: 'center'
     }
 })
