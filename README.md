@@ -31,6 +31,7 @@ https://tincode.es/blog/genera-apk-react-native-cli
 
 ```
 cd android
+gradlew clean
 gradlew bundleRelease
 ```
 
