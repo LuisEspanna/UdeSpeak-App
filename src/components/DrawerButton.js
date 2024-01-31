@@ -8,7 +8,7 @@ export default function DrawerButton({onPress, route, icons, index, active, hidd
         <View style={styles.icon}>
             { icons[index] }
         </View>
-        <Text>{route.name}</Text>
+        <Text  style={{ color: '#626466' }}>{route.name}</Text>
     </TouchableOpacity>
      : null
   )

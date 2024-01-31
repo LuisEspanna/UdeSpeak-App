@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { COLLECTIONS } from '../constants';
 import { readFromFirestore } from '../services/firebase';
 import { useEffect } from 'react';
+import config from '../../config'
 
-const developMode = true;
+const developMode = config().appConfig === config().DEBUG;
 
 export default function useServers() {
     const [isLoading, setIsLoading] = useState(false);
@@ -12,20 +13,21 @@ export default function useServers() {
     useEffect(() => {
         getServers();
     }, []);
-    
+
     const getServers = async () => {
         setIsLoading(true);
         const snapshot = await readFromFirestore(COLLECTIONS.SERVERS);
         const myRes = [];
 
-        snapshot.forEach(async (doc) => {
+        snapshot.forEach((doc) => {
             const item = { ...doc.data() };
             item.id = doc.id;
-            if(item?.env !== 'develop'){
+
+            if (developMode && item?.env === 'develop' && item?.status === 'online') {
                 myRes.push(item);
-            } 
-            
-            if(developMode && item?.env === 'develop'){
+            }
+
+            if (item?.env !== 'develop' && item?.status === 'online') {
                 myRes.push(item);
             }
         });

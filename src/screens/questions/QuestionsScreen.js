@@ -131,7 +131,8 @@ const styles = StyleSheet.create({
     itemText: {
         fontSize: 14,
         marginTop: 7,
-        textTransform: 'capitalize'
+        textTransform: 'capitalize',
+        color: '#626466'
     },
     scrollView: {
         padding: 20,

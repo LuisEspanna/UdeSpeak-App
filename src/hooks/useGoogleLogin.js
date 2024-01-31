@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../state/reducers/userSlice';
 import useUsers from './useUsers';
 import useDBCounters from '../hooks/useDBCounters';
+import {Alert} from 'react-native';
 
 export default function useGoogleLogin() {
   const [isLoading, setIsLoading] = useState(false);
@@ -39,6 +40,9 @@ export default function useGoogleLogin() {
       login(user);
     } catch (error) {
       console.log(error);
+      Alert.alert('Error', (error?.message), [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ]);
     }
     setIsLoading(false)
   }
@@ -77,6 +81,10 @@ export default function useGoogleLogin() {
             incrementUsers(1);
           });
         }
+      }).catch(error => {
+        Alert.alert('Error', (error?.message), [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]);
       });
     }
   }
@@ -95,6 +103,9 @@ export default function useGoogleLogin() {
       })
       .catch((err) => {
         if(onError) onError(getAuthErrorMessage(err?.message));
+        Alert.alert('Error', (err?.message), [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]);
       })
       .finally(()=>{
         setIsLoading(false);

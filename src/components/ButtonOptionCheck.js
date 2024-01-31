@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
         textTransform: 'capitalize',
         padding: 15,
         width: '90%',
-        textAlign: 'justify'
+        textAlign: 'justify',
+        color: '#626466'
     },
     container: {
         width: '100%',
@@ -52,6 +53,7 @@ const styles = StyleSheet.create({
     active: {
         backgroundColor: '#D8F3F4',        
         borderRadius: 10,
+        color: '#626466'
     },
     wLetter:{
         width: 'auto',

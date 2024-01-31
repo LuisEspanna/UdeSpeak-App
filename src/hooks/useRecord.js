@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import AudioRecord from 'react-native-audio-record';
-import { LogBox } from 'react-native';
+import { Alert, LogBox } from 'react-native';
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 import {
   PermissionsAndroid,
 } from 'react-native';
-import { uploadFiles, DocumentDirectoryPath } from "react-native-fs";
+import { uploadFiles } from "react-native-fs";
 import useServers from './useServers';
 import { idGenerator } from '../functions';
 import { TOASTS_TYPE } from '../constants';
@@ -56,9 +56,8 @@ export default function useAudioRecord(toastProps) {
   const startRecording = async () => {
     if (!isLoading) {
       if (servers.length === 0) {
-        //toastProps.showAlert('Error en el servidor :(', TOASTS_TYPE.ERROR, true);
+        toastProps.showAlert('El servidor de reconicimiento de voz no está disponible en este momento :(', TOASTS_TYPE.ERROR, true);
         // TODO proceder localmente
-        console.log('No hay servidores :(');
       } else {
         console.log('Inicio');
         AudioRecord.start();
@@ -105,6 +104,9 @@ export default function useAudioRecord(toastProps) {
       }).promise.then((response) => {
         setIsLoading(false);
         onFinishRecord(JSON.parse(response.body));
+      }).catch(err => {
+        setIsLoading(false);
+        toastProps.showAlert('Error: ' + err?.message, TOASTS_TYPE.ERROR, true);
       });
     } else {
       console.log('stop stt local');

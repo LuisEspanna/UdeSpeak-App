@@ -33,8 +33,8 @@ export default function GroupItem({ item, handleItem, user }) {
             <Text style={styles.descriptionText}>{item.description}</Text>
             {!collapsed &&
                 <View style={styles.dateContainer}>
-                    <Text style={styles.dateText}>Created: {toDateFormatShort(item.created_at)}</Text>
-                    <Text style={styles.dateText}>Last update: {toDateFormatShort(item.edited_at)}</Text>
+                    <Text style={styles.dateText}>Creado: {toDateFormatShort(item.created_at)}</Text>
+                    <Text style={styles.dateText}>Última actualización : {toDateFormatShort(item.edited_at)}</Text>
                     {item.access_key && <Text style={styles.infoText}>Necesita clave de acceso</Text>}
                 </View>
             }
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
     },
     descriptionText: {
         fontSize: 15,
+        color: '#626466'
     },
     creatorText: {
         fontWeight: 'bold',
@@ -83,6 +84,7 @@ const styles = StyleSheet.create({
     },
     dateText: {
         fontSize: 10,
+        color: '#626466'
     },
     infoText: {
         color: '#0FB4B9',
