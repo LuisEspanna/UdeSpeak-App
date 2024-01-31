@@ -169,6 +169,7 @@ const styles = StyleSheet.create({
         fontSize: 23,
         marginBottom: 15,
         fontWeight: 'bold',
+        color: '#626466'
     },
     questionsTitle: {
         marginTop: 20,

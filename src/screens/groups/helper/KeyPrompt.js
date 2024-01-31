@@ -13,6 +13,8 @@ export default function KeyPrompt({ isVisible, onHandle }) {
                     style={styles.input}
                     onChangeText={(text) => setValue(text)}
                     value={value}
+                    placeholderTextColor={'#ADB0B2'}
+                    placeholder='Ingrese clave del grupo'
                 />
                 <TouchableOpacity 
                     onPress={() => onHandle(value)}

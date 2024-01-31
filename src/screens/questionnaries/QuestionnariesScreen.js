@@ -119,7 +119,8 @@ const styles = StyleSheet.create({
     },
     itemText: {
         fontSize: 16,
-        marginTop: 7
+        marginTop: 7,
+        color: '#626466'
     },
     scrollView: {
         padding: 15,

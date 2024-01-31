@@ -20,8 +20,8 @@ export default function RegisterScreen({ navigation }) {
   } = useRegister(navigation, alertProps.showAlert);
 
   return (
-    <SafeAreaView>
-      <ScrollView>
+    <SafeAreaView style={{ backgroundColor: '#F6FBFF', flex: 1 }}>
+      <ScrollView style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.headerIcon}>
             <HeaderIcon />
@@ -29,18 +29,18 @@ export default function RegisterScreen({ navigation }) {
           <View style={styles.form}>
             <Button onPress={onGoogleLogin}>
               <GoogleIcon style={styles.googleIcon} />
-              <Text style={{ marginBottom: 3 }}>Iniciar sesión con google</Text>
+              <Text style={{ marginBottom: 3, color: '#626466' }}>Iniciar sesión con google</Text>
             </Button>
             <View style={styles.hr} />
-            <TextInput style={styles.textInput} placeholder='Nombre completo' onChangeText={(text) => onChange({ name: text })} />
-            <TextInput style={styles.textInput} placeholder='Correo' keyboardType='email-address' onChangeText={(text) => onChange({ email: text })} />
-            <TextInput style={styles.textInput} placeholder='Contraseña' secureTextEntry onChangeText={(text) => onChange({ password: text })} />
-            <TextInput style={styles.textInput} placeholder='Confirmar contraseña' secureTextEntry onChangeText={(text) => onChange({ rpassword: text })} />
+            <TextInput style={styles.textInput} placeholderTextColor={'#ADB0B2'} placeholder='Nombre completo' onChangeText={(text) => onChange({ name: text })} />
+            <TextInput style={styles.textInput} placeholderTextColor={'#ADB0B2'} placeholder='Correo' keyboardType='email-address' onChangeText={(text) => onChange({ email: text })} />
+            <TextInput style={styles.textInput} placeholderTextColor={'#ADB0B2'} placeholder='Contraseña' secureTextEntry onChangeText={(text) => onChange({ password: text })} />
+            <TextInput style={styles.textInput} placeholderTextColor={'#ADB0B2'} placeholder='Confirmar contraseña' secureTextEntry onChangeText={(text) => onChange({ rpassword: text })} />
             <Button style={styles.button} onPress={onRegister}>
               <Text style={styles.buttonText}>Registrarse</Text>
             </Button>
             <TouchableOpacity style={styles.footer} onPress={onLogin}>
-              <Text>¿ya tienes una cuenta? </Text>
+              <Text style={{ color: '#626466', marginRight: 1 }}>¿ya tienes una cuenta? </Text>
               <Text style={styles.textLink}>Inicia sesión</Text>
             </TouchableOpacity>
           </View>

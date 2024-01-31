@@ -164,12 +164,14 @@ const styles = StyleSheet.create({
     word: {
         marginEnd: 4,
         marginBottom: 6,
-        fontSize: 17
+        fontSize: 17,
+        color: '#626466'
     },
     title: {
         fontSize: 23,
         marginBottom: 15,
         fontWeight: 'bold',
+        color: '#626466'
     },
     questionsTitle: {
         marginTop: 20,

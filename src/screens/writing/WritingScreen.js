@@ -152,19 +152,22 @@ const styles = StyleSheet.create({
     word: {
         marginEnd: 4,
         marginTop: 3,
-        fontSize: 17
+        fontSize: 17,
+        color: '#626466'
     },
     title: {
         fontSize: 23,
-        marginBottom: 15,
+        marginBottom: 40,
         fontWeight: 'bold',
+        color: '#626466'
     },
     questionsTitle: {
         marginTop: 20,
         textTransform: 'capitalize',
         fontWeight: 'bold',
         fontSize: 16,
-        textAlign: 'justify'
+        textAlign: 'justify',
+        color: '#626466'
     },
     image: {
         flex: 1,

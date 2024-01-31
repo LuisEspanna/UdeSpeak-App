@@ -97,6 +97,9 @@ export default function ListeningScreen(props) {
                         <Image source={{ uri: item.image }} style={styles.image}/>
                     </View>
                 }
+                {
+                    // TODO:
+                }
                 <View style={styles.description}>
                     {
                         item?.description && item?.description?.split(' ').map((word, i) => {
@@ -179,24 +182,28 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         marginBottom: 10,
         textTransform: 'capitalize',
-        textAlign: 'justify',        
+        textAlign: 'justify',
+        color: '#626466'   
     },
     word: {
         marginEnd: 4,
         marginBottom: 6,
-        fontSize: 17
+        fontSize: 17,        
+        color: '#626466'
     },
     title: {
         fontSize: 23,
         marginBottom: 15,
         fontWeight: 'bold',
+        color: '#626466'
     },
     questionsTitle: {
         marginTop: 20,
         textTransform: 'capitalize',
         fontWeight: 'bold',
         fontSize: 16,
-        textAlign: 'justify'
+        textAlign: 'justify',
+        color: '#626466'
     },
     image: {
         flex: 1,

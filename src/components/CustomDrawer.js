@@ -32,7 +32,7 @@ export default function CustomDrawer(props) {
                 >
                     <View style={styles.userInfo}>
                         {                        
-                            user.photoURL && typeof(user.photoURL) === 'string' && user.photoURL !== ''? 
+                            (user.photoURL && typeof(user.photoURL) === 'string' && user.photoURL !== '' && user.photoURL !== 'null') ? 
                             <Image source={{uri: user.photoURL}} style={styles.userImage}/> :
                             <Image source={require('../assets/defaultUser.png')} style={styles.userImage}/> 
                         }
