@@ -8,7 +8,7 @@ export default function UserCard({ user }) {
         <View style={styles.container}>
             <View style={styles.imageContainer}>
                 {
-                    user.photoURL && typeof (user.photoURL) === 'string' && user.photoURL !== '' ?
+                    (user.photoURL && typeof (user.photoURL) === 'string' && user.photoURL !== '' && user.photoURL !== 'null') ?
                         <Image source={{ uri: user.photoURL }} style={styles.userImage} /> :
                         <Image source={require('../../../assets/defaultUser.png')} style={styles.userImage} />
                 }

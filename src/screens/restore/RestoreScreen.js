@@ -10,7 +10,7 @@ import useRestoreScreen from './hooks/useRestoreScreen';
 import useToast from '../../hooks/useToast';
 
 
-export default function RestoreScreen({navigation}) {
+export default function RestoreScreen({ navigation }) {
 
     const alertProps = useToast();
     const {
@@ -19,43 +19,53 @@ export default function RestoreScreen({navigation}) {
         onSend,
         onLogin,
     } = useRestoreScreen(navigation, alertProps.showAlert);
-        
+
     return (
-        <SafeAreaView style={{flex: 1, height: '100%', backgroundColor: '#F6FBFF'}}>
-            <ScrollView style={{flex: 1, height: '100%'}}>
-                <View style={styles.container}>
-                    <View style={styles.headerIcon}>
-                        <HeaderIcon />
-                    </View>
-                    <View style={styles.form}>        
+        <SafeAreaView style={styles.container}>
+            <View style={styles.headerIcon}>
+                <HeaderIcon />
+            </View>
+            <View style={{ flex: 2, width: '100%' }}>
+                <ScrollView style={styles.scrollView}>
+                    <View style={styles.form}>
                         <Text style={styles.title}>Ingresa el correo electrónico asociado a tu cuenta</Text>
-                        <View style={{flex: 1, alignItems: 'flex-start', justifyContent: 'flex-start', width: '100%'}}>
+                        <View style={{ flex: 1, alignItems: 'flex-start', justifyContent: 'flex-start', width: '100%' }}>
                             <TextInput style={styles.textInput} placeholder='Correo electrónico' keyboardType='email-address' onChangeText={(text) => onChange({ 'email': text })} />
-                        </View>                        
-                        <Button style={styles.button} onPress={onSend}>
-                            <Text style={styles.buttonText}>Enviar</Text>
-                        </Button>
-                        <TouchableOpacity style={styles.footer} onPress={onLogin}>
-                            <Text>¿ya tienes una cuenta? </Text>
-                            <Text style={styles.textLink}>Inicia sesión</Text>
-                        </TouchableOpacity>
+                        </View>
                     </View>
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </View>            
+            <View style={styles.footer}>
+                <Button style={styles.button} onPress={onSend}>
+                    <Text style={styles.buttonText}>Enviar</Text>
+                </Button>
+                <TouchableOpacity onPress={onLogin} style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                    <Text>¿ya tienes una cuenta? </Text>
+                    <Text style={styles.textLink}>Inicia sesión</Text>
+                </TouchableOpacity>
+            </View>
             <LoadingOverlay isLoading={isLoading} />
             <Toast {...alertProps} />
         </SafeAreaView>
     )
 }
 
+//style={{flex: 1, height: '100%', backgroundColor: '#F6FBFF'}}
+
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#F6FBFF',
         alignItems: 'center',
-        height: 660
+        flex: 1,
+        position: 'relative',
     },
-    title:{
-        fontSize: 22,        
+    scrollView: {
+        width: '100%',
+        flex: 1,
+        paddingTop: 30
+    },
+    title: {
+        fontSize: 22,
         fontWeight: 'bold',
         textAlign: 'center',
         marginBottom: 30,
@@ -63,6 +73,9 @@ const styles = StyleSheet.create({
     },
     headerIcon: {
         width: '100%',
+        position: 'absolute',
+        top: -1,
+        left: -1
     },
     googleIcon: {
         width: 25,
@@ -70,12 +83,12 @@ const styles = StyleSheet.create({
         marginRight: 10
     },
     form: {
-        padding: 35,
-        flex: 1,
+        padding: 20,
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
-        maxWidth: 500,
+        height: 200,
+        marginTop: 30
     },
     textInput: {
         width: '100%',
@@ -112,6 +125,10 @@ const styles = StyleSheet.create({
         display: 'flex'
     },
     footer: {
-        flexDirection: 'row'
+        flex: 1,
+        width: '100%',
+        padding: 7,
+        paddingLeft: 20,
+        paddingRight: 20
     }
 })

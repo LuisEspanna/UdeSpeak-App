@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     levelText: {
         marginLeft: 20,
         fontSize: 16,
-        
+        color: '#626466'
     },
     scrollView: {
         padding: 15,

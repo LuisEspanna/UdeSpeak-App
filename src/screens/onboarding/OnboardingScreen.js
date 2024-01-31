@@ -62,8 +62,8 @@ export default function OnboardingScreen({onFinish }) {
   );
 
   return (
-    <ScrollView style={styles.container}>
-      <SafeAreaView style={{height: '100%'}}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={{height: '100%', flex: 1}}>
         <HeaderIcon />
 
         <View style={{flex: 2}}>
@@ -87,8 +87,8 @@ export default function OnboardingScreen({onFinish }) {
             value={skipButtonValue/100}
           />
         </View>
-      </SafeAreaView >
-    </ScrollView>
+      </ScrollView >
+    </SafeAreaView>
   );
 }
 
@@ -99,9 +99,9 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   flatList: {
-    //flex: 2,
     alignItems: 'flex-start',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    minHeight: 400,
   },
   nextButton: {
     flex: 2,
