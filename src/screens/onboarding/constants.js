@@ -19,7 +19,7 @@ const slides = [
     {
         id: '3',
         title: "Índices de desempeño",
-        description: "a medida que avanzas obtendrás un puntaje",
+        description: "A medida que avanzas obtendrás un puntaje",
         image: (props) => <Slide3 {...props}/>
     }
 ];
