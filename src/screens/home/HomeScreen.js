@@ -5,6 +5,7 @@ import { getDisplayName } from '../../functions'
 import NavBar from '../../components/NavBar';
 import SectionLanguages from './sections/SectionLanguages';
 import SectionNews from './sections/SectionNews';
+import SectionProgress from './sections/SectionProgress';
 
 export default function HomeScreen({navigation}) {
     const user = useSelector((state) => state.user);
@@ -21,6 +22,7 @@ export default function HomeScreen({navigation}) {
 
                 <SectionLanguages navigation={navigation} />
                 <SectionNews/>
+                <SectionProgress questions={user?.coursed?.questions}/>
             </ScrollView>
         </SafeAreaView>
     )

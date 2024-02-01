@@ -45,7 +45,7 @@ export default function NavBar({ navigation, title, handleSearch, toPrevScreen, 
     if (isSearching) {
       return (
         <View style={styles.searchContainer}>
-          <TextInput placeholder='Search' style={styles.searchText} onChangeText={handleChange} />
+          <TextInput placeholder='Search' placeholderTextColor={'#cacaca'} style={styles.searchText} onChangeText={handleChange} />
           <TouchableOpacity onPress={onSearchBtn} style={styles.closeBtn}>
             <CloseIcon style={styles.closeIcon} />
           </TouchableOpacity>
@@ -101,11 +101,12 @@ const styles = StyleSheet.create({
     height: 35
   },
   searchText: {
-    borderRadius: 4,
-    borderColor: '#cacaca',
-    borderWidth: 1,
+    borderRadius: 50,
     padding: 5,
-    flex: 3
+    flex: 3,
+    backgroundColor: '#FFFFFF',
+    paddingLeft: 20,
+    color: '#000111'
   },
   searchContainer: {
     position: 'relative',
@@ -115,7 +116,8 @@ const styles = StyleSheet.create({
     padding: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    height: 70
+    height: 70,
+    backgroundColor: '#0FB4B9'
   },
   closeBtn: {
     backgroundColor: '#FBE9E7',
@@ -126,7 +128,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     textAlign: 'center',
     padding: 13,
-    borderRadius: 5
+    borderRadius: 50
   },
   closeIcon: {
     fill: '#D9491D',

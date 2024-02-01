@@ -13,22 +13,22 @@ export default function LevelsScreen(props) {
     const [isLoading, setIsLoading] = useState(false);
     const { getAll } = useLevels();
     const user = useSelector((state) => state.user);
-    const {results, search, setItems} = useGenericSearch();
+    const { results, search, setItems } = useGenericSearch();
     const isFocused = useIsFocused();
 
     const handleLanguage = (item) => {
-        props.navigation.navigate('_groups', { id_level: item.id, ids: {...props.route.params.ids, level: item.id} });
+        props.navigation.navigate('_groups', { id_level: item.id, ids: { ...props.route.params.ids, level: item.id } });
     }
 
     useEffect(() => {
-        if(isFocused){ 
-            if(!props?.route?.params?.fromBack){
+        if (isFocused) {
+            if (!props?.route?.params?.fromBack) {
                 fetchLevels();
             }
         }
     }, [isFocused]);
 
-    const fetchLevels = async() => {
+    const fetchLevels = async () => {
         setIsLoading(true);
         const localLevels = await getAll(props.route.params.id_language);
         setItems(localLevels);
@@ -38,7 +38,7 @@ export default function LevelsScreen(props) {
     const evalCoursed = (curItem) => {
         let found = false;
         user?.coursed?.levels?.forEach(item => {
-            if(item === curItem.id)
+            if (item === curItem.id)
                 found = true;
         });
         return found;
@@ -47,10 +47,10 @@ export default function LevelsScreen(props) {
     return (
         <SafeAreaView style={styles.container}>
             <NavBar
-                navigation={props.navigation} 
+                navigation={props.navigation}
                 title={'Niveles'} handleSearch={(text) => search(text)}
                 toPrevScreen='Explorar cursos'
-                routeParams={{...props.route.params, id_level: null}}
+                routeParams={{ ...props.route.params, id_level: null }}
                 show={true}
             />
             <ScrollView style={styles.scrollView}>
@@ -60,13 +60,13 @@ export default function LevelsScreen(props) {
                             <Text style={styles.levelTitle}>{item.title}</Text>
                             <Text style={styles.levelText}>{item.description}</Text>
                             {
-                                evalCoursed(item) && <View style={styles.coursedIndicator}/>
+                                evalCoursed(item) && <View style={styles.coursedIndicator} />
                             }
                         </TouchableOpacity>
                     )
-                }                
+                }
             </ScrollView>
-            <LoadingOverlay isLoading={isLoading}/>
+            <LoadingOverlay isLoading={isLoading} />
         </SafeAreaView>
     )
 }
@@ -98,8 +98,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         shadowColor: "#000",
         shadowOffset: {
-          width: 0,
-          height: 1,
+            width: 0,
+            height: 1,
         },
         shadowOpacity: 0.22,
         shadowRadius: 2.22,
@@ -130,13 +130,13 @@ const styles = StyleSheet.create({
         paddingTop: 0
     },
     coursedIndicator: {
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      right: 0,
-      backgroundColor: '#0FB4B9',
-      height: 5,
-      borderBottomLeftRadius: 4,
-      borderBottomRightRadius: 4
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: '#0FB4B9',
+        height: 5,
+        borderBottomLeftRadius: 4,
+        borderBottomRightRadius: 4
     }
 })
