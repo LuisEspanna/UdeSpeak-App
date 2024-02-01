@@ -29,6 +29,7 @@ export default function NavigationDrawer({isAuth, isLoading}) {
         <Drawer.Navigator
           screenOptions={{ headerShown: false }} initialRouteName="Home"
           drawerContent={props => <CustomDrawer {...props}/>}
+          backBehavior='history'          
         >
             <Drawer.Screen name="Inicio" component={HomeScreen}/>
             <Drawer.Screen name="Explorar cursos" component={LanguagesScreen}/>
