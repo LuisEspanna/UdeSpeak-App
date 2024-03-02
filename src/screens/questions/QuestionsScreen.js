@@ -10,6 +10,7 @@ import { useIsFocused } from "@react-navigation/native";
 import useQuestionsHandler from '../../hooks/useQuestionsHandler';
 import useToast from '../../hooks/useToast';
 import Toast from '../../components/Toast';
+import { QUESTIONS_TYPE } from '../../constants'
 
 export default function QuestionsScreen(props) {
     const [isLoading, setIsLoading] = useState(false);
@@ -51,11 +52,35 @@ export default function QuestionsScreen(props) {
             />
             <ScrollView style={styles.scrollView}>
                 {
-                    results.filter(p => !isQuestionCoursed(p)).map((item, i) =>
-                        <TouchableOpacity key={i} style={styles.item} onPress={() => handleItem(item)}>
-                            <Text style={styles.itemTitle}>{item.title}</Text>
-                            <Text style={styles.itemText}>{item.type}</Text>
-                        </TouchableOpacity>
+                    results.filter(p => p?.type === QUESTIONS_TYPE.NOTE).map((item, i) =>
+                        <View key={i}>
+                            {
+                                i === 0 &&
+                                <View style={styles.separatorCard}>
+                                    <Text style={styles.separatorText}>Notas/Ayuda</Text>
+                                </View>
+                            }
+                            <TouchableOpacity  style={styles.item} onPress={() => handleItem(item)}>
+                                <Text style={styles.itemTitle}>{item.title}</Text>
+                                <Text style={styles.itemText}>{item.type}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    )
+                }
+                {
+                    results.filter(p => !isQuestionCoursed(p) && p?.type !== QUESTIONS_TYPE.NOTE).map((item, i) =>
+                        <View key={i}>
+                            {
+                                i === 0 &&
+                                <View style={styles.separatorCard}>
+                                    <Text style={styles.separatorText}>Ejercicios pendientes</Text>
+                                </View>
+                            }
+                            <TouchableOpacity key={i} style={styles.item} onPress={() => handleItem(item)}>
+                                <Text style={styles.itemTitle}>{item.title}</Text>
+                                <Text style={styles.itemText}>{item.type}</Text>
+                            </TouchableOpacity>
+                        </View>
                     )
                 }
 

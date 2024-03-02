@@ -22,7 +22,8 @@ const QUESTIONS_TYPE = {
     LISTENING: 'listening',
     READING: 'reading',
     SPEAKING: 'speaking',
-    WRITING: 'writing'
+    WRITING: 'writing',
+    NOTE: 'note'
 }
 
 const TOASTS_TYPE = {
