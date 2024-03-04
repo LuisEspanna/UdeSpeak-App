@@ -86,7 +86,7 @@ export default function useQuestionsHandler(toastProps) {
 
   const nextNavigate = (navigation, params, currentQuestion, callback) => {
     let nextQuestion = null;
-    let newQuestions = questions.filter(q => q.id !== currentQuestion.id);
+    let newQuestions = questions.filter(q => q.id !== currentQuestion.id && q?.type !== QUESTIONS_TYPE.NOTE);
 
     newQuestions.forEach(q => {
       if (!isQuestionCoursed(q)) {
@@ -145,6 +145,10 @@ export default function useQuestionsHandler(toastProps) {
         case QUESTIONS_TYPE.WRITING:
           if(callback) callback(currentQuestion);
           else navigation.navigate('_writing', {...params, item: currentQuestion,  questions});
+        break;
+        case QUESTIONS_TYPE.NOTE:
+          if(callback) callback(currentQuestion);
+          else navigation.navigate('_note', {...params, item: currentQuestion,  questions});
           break;
         default:
           navigation.navigate('_questions', { ...params, item: null });

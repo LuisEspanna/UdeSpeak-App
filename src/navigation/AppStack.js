@@ -16,6 +16,7 @@ import SpeakingScreen from '../screens/speaking/SpeakingScreen';
 import BugsScreen from '../screens/bugs/BugsScreen';
 import HelpScreen from '../screens/help/HelpScreen';
 import AccountScreen from '../screens/account/AccountScreen';
+import NoteScreen from '../screens/note/NoteScreen';
 
 
 //Drawers
@@ -45,6 +46,7 @@ export default function NavigationDrawer({isAuth, isLoading}) {
             <Drawer.Screen name="_listening" component={ListeningScreen} />
             <Drawer.Screen name="_writing" component={WritingScreen} />
             <Drawer.Screen name="_speaking" component={SpeakingScreen} />
+            <Drawer.Screen name="_note" component={NoteScreen} />
         </Drawer.Navigator> : null
   )
 }
